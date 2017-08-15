@@ -3,6 +3,7 @@ package com.exercise.rest_assured;
 import org.testng.annotations.Test;
 
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
@@ -13,10 +14,10 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import static org.junit.Assert.*;
 
 public class AssuredTest {
 
-	@Test
 	public static void JsonParamers(){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("password", "96e79218965eb72c92a549dd5a330112");
@@ -45,10 +46,11 @@ public class AssuredTest {
 		System.out.println(body);
 	}
 	
+	@Test
 	public static void FormParamers(){
 		Response response = null;
 		response = given().
-			proxy("192.168.0.110",8888).
+			proxy("127.0.0.1",8888).
 			contentType("application/x-www-form-urlencoded").
 			formParam("password", "96e79218965eb72c92a549dd5a330112").
 			formParam("deviceToken", "AmtSMUgxJ613ZOIBVt5c2N_W2-lmWvJw6nJ1-ir8s1u4").
@@ -62,14 +64,17 @@ public class AssuredTest {
 			formParam("ver", "1.6").
 			formParam("model", "OD105").
 		when().
-			post("http://wanjia.microfastup.com/chetu/app/login").
-		then().
-			statusCode(200).
+			post("http://wanjia.microfastup.com/chetu/app/login");
+//		then().
+//			statusCode(200).
 //			body("userId", equalTo(0)).
-		extract().
-			response();
-		String body = response.asString();
-		System.out.println(body);
+//		extract().
+//			response();
+		JsonPath jsonPath = new JsonPath(response.asString()).setRoot("user");
+		int userId = jsonPath.getInt("userId");
+//		String body = response.asString();
+		System.out.println("userId:"+userId);
+		assertThat(userId, is(46));
 	}
 	
 	public static void main(String[] args) {
