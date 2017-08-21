@@ -130,21 +130,20 @@ public class AssuredTest {
 	public void basic(){
 		String path = System.getProperty("user.dir");
 		String filePath = path + "\\resources\\case\\Basic.xlsx";
-		String sheetName = "Base";
-		String caseName = "Params";
+		String caseName = "Basic";
 		Map<String, String> map = null;
 		Map<String, String> paramsMap = null;
 		
-		ExcelReader excelReader = new ExcelReader(filePath, sheetName, "Basic");
-		ExcelReader paramsExcel = new ExcelReader(filePath, sheetName, "Basic");
-		
-		map = excelReader.mapFromSheet(filePath, sheetName, caseName);
-		paramsMap = paramsExcel.mapFromSheet(filePath, sheetName, caseName);
+		ExcelReader baseExcel = new ExcelReader(filePath, "Base", caseName);
+		map = baseExcel.getRowMap();
+		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
+		paramsMap = paramsExcel.getRowMap();
 		
 		Response response = null;
 		response = given().
 			proxy("localhost",8888).
 //			contentType(ContentType.JSON).
+			log().all().
 			contentType("application/x-www-form-urlencoded;charset=UTF-8").
 			params(paramsMap).
 //			body(map).
