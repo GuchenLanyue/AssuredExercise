@@ -1,0 +1,47 @@
+{
+  "case": "Basic",
+  "expected": [
+    {
+      "root": "value",
+      "id": "12",
+      "user_id": "6",
+      "name": "灰太狼",
+      "head_img": "/attach/image/object/201708/16/20170816113200_36042.jpg",
+      "signature": "",
+      "sex": 1,
+      "birth": "1997-08-16T12:05:11+08:00",
+      "education": 2,
+      "major": null,
+      "majors": null,
+      "id_code": "130722199708170723",
+      "h_address": "",
+      "h_province": null,
+      "h_city": null,
+      "h_district": null,
+      "l_province": null,
+      "l_city": null,
+      "l_district": null,
+      "healthy": null,
+      "work_life": 1,
+      "marriage": null,
+      "current": 2,
+      "lang": null,
+      "leve": null,
+      "lang1": null,
+      "leve1": null,
+      "it": null,
+      "tel": "",
+      "phone": "",
+      "email": "",
+      "qq": "",
+      "homepage": "",
+      "status": "1",
+      "create_time": "1502854095"
+    },
+    {
+      "root": "",
+      "status": "1",
+      "msg": "success"
+    }
+  ]
+}
