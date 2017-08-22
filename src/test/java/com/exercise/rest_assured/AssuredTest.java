@@ -1,6 +1,8 @@
 package com.exercise.rest_assured;
 
 import static org.junit.Assert.*;
+
+import org.mozilla.javascript.regexp.SubString;
 import org.testng.annotations.Test;
 
 import io.restassured.RestAssured;
@@ -16,15 +18,19 @@ import static io.restassured.path.json.JsonPath.from;
 import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.utils.ExcelReader;
+import com.exercise.rest_assured.utils.JsonUtils;
 
-public class AssuredTest {
+public class AssuredTest extends BaseTest{
 
 //	@Test
-	public static void JsonParamers(){
+	public static void JsonParamers() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("password", "96e79218965eb72c92a549dd5a330112");
 		map.put("deviceToken", "AmtSMUgxJ613ZOIBVt5c2N_W2-lmWvJw6nJ1-ir8s1u4");
@@ -118,19 +124,11 @@ public class AssuredTest {
 		System.out.println(jsonPath.getString("status"));
 	}
 	
-	public static void main(String[] args) {
-//		System.out.println("Hello rest-assured");
-//		FormParamers();
-//		JsonParamers();
-//		URL_Body();
-//		JsonPath();
-	}
-	
-	@Test
-	public void basic(){
-		String path = System.getProperty("user.dir");
-		String filePath = path + "\\resources\\case\\Basic.xlsx";
-		String caseName = "Basic";
+	@Test(dataProvider = "CaseList")
+	public void basic(Object[]data){
+		
+		String filePath = data[1].toString();
+		String caseName = data[2].toString();
 		Map<String, String> map = null;
 		Map<String, String> paramsMap = null;
 		
@@ -143,7 +141,7 @@ public class AssuredTest {
 		response = given().
 			proxy("localhost",8888).
 //			contentType(ContentType.JSON).
-			log().all().
+//			log().all().
 			contentType("application/x-www-form-urlencoded;charset=UTF-8").
 			params(paramsMap).
 //			body(map).
@@ -154,9 +152,22 @@ public class AssuredTest {
 //			body("userId", equalTo(0)).
 		extract().
 			response();
-		response.getBody().prettyPrint();
 		
-//		System.out.println(map.get("Desc"));
+		response.getBody().prettyPrint();
+		String str = response.getBody().asString();
+		str = str.substring(1,str.length());
+		JsonPath jsonPath = new JsonPath(str);
+		
+		String jsonFile = System.getProperty("user.dir")+
+				"\\resources\\expected\\basic.json";
+		JsonUtils jsonUtil = new JsonUtils();
+
+		
+		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
 	
+//	@Test(dataProvider = "CaseList")
+	public void testDataProvider(Object[]data){
+		System.out.println(data[0]+":"+data[1]+":"+data[2]);
+	}
 }

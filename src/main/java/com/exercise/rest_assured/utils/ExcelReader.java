@@ -2,7 +2,10 @@ package com.exercise.rest_assured.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -55,7 +58,7 @@ public class ExcelReader {
 			throw new IllegalArgumentException("不支持除：xls/xlsx以外的文件格式!!!") ;
 		}
 	}
-
+	
 	/**
 	 * 获取指定行的数据
 	 * @param fileName 文件名(全路径)
@@ -106,5 +109,71 @@ public class ExcelReader {
 		}
 		
 		return map;
+	}
+	
+	/**
+	 * 获取所有行的数据
+	 * @param fileName 文件名(全路径)
+	 * @param sheetName sheet表名
+	 * @param caseName 用例名
+	 * @return HashMap<key,value> key:首行cell的值，value:指定行cell的值
+	 * */
+	public HashMap<String, String> sheetMap(String fileName, String sheetName, int rowNum){
+		
+		Workbook workbook = null;
+		Sheet sheet = null;
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		try {
+			workbook = setWorkbook(fileName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sheet = workbook.getSheet(sheetName);
+		
+		for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
+			if (sheet.getRow(0).getCell(i).toString()==null) {
+				throw new IllegalArgumentException("参数错误："+fileName+"表："+sheetName+"第1行第"+i+"列的值为空!!!") ;
+			}
+			
+			if (sheet.getRow(rowNum).getCell(i)==null) {
+				map.put(sheet.getRow(0).getCell(i).toString(), null);
+			} else {
+				map.put(sheet.getRow(0).getCell(i).toString(), sheet.getRow(rowNum).getCell(i).toString());
+			}
+			
+		}
+		
+		return map;
+	}
+	
+	public Object[][] sheetArray(){
+		String[][] caseData = null;
+		
+		return caseData;
+	}
+	
+	public List<Map<String, String>> mapList(String filePath,String sheetName){
+		Workbook wb = null;
+		Sheet sheet = null;
+		int rows = 0;
+		List<Map<String, String>> caseList= new ArrayList<Map<String,String>>();
+		
+		try {
+			wb = setWorkbook(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sheet = wb.getSheet(sheetName);
+		rows = sheet.getLastRowNum();
+		
+		for (int i = 0; i < rows; i++) {
+			caseList.add(sheetMap(filePath, sheetName, i));
+		}
+		
+		return caseList;
 	}
 }
