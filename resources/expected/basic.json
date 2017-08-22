@@ -40,7 +40,7 @@
       }
     },
     {
-      "root": "$",
+      "root": "",
       "values": {
         "status": "1",
         "msg": "success"

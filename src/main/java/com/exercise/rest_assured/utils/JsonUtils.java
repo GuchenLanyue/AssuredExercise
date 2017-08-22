@@ -1,6 +1,5 @@
 package com.exercise.rest_assured.utils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -35,10 +34,17 @@ public class JsonUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		for(int i = 0; i < expectedList.size(); i++){
-
-			Map<String, Object> map = JsonPath.from(jsonFile).get("expected["+i+"].values");
+			try {
+				jsonFile = new FileInputStream(file);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			Map<String, Object> map = JsonPath.with(jsonFile).
+					get("expected["+i+"].values");
 			
 			String root = expectedJson.get("expected["+i+"].root");
 			responseJson = responseJson.setRoot(root);
@@ -51,8 +57,7 @@ public class JsonUtils {
 
 				String actual = null;
 				String expected = null;
-				
-				if (responseJson.get(key)!=null) 
+				if (responseJson.get(key)!=null)
 					actual = responseJson.get(key).toString();
 				
 				if (mapEntry.getValue()!=null) 

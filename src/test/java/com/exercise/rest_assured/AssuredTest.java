@@ -117,11 +117,11 @@ public class AssuredTest extends BaseTest{
 		String name = jsonPath.getString("name");
 		System.out.println(name);
 	}
-	
+//	@Test
 	public static void JsonPath(){
 		String json = "{\"status\":1,\"msg\":\"success\",\"value\":{\"id\":15,\"bid\":\"12\",\"name\":\"微迅大学\",\"start_time\":\"\",\"end_time\":\"2017-08-16T11:46:29+08:00\",\"magor\":\"1\",\"magors\":29,\"education\":\"3\",\"provice\":null,\"city\":null,\"district\":null,\"certificate\":\"\",\"des\":\"\",\"is_deleted\":\"0\"}}";
 		JsonPath jsonPath = new JsonPath(json).setRoot("");
-		System.out.println(jsonPath.getString("status"));
+		System.out.println(jsonPath.getString("msg"));
 	}
 	
 	@Test(dataProvider = "CaseList")
