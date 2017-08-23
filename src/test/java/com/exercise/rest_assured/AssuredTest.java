@@ -2,24 +2,15 @@ package com.exercise.rest_assured;
 
 import static org.junit.Assert.*;
 
-import org.mozilla.javascript.regexp.SubString;
 import org.testng.annotations.Test;
 
-import io.restassured.RestAssured;
-import io.restassured.config.DecoderConfig;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import io.restassured.path.json.config.JsonPathConfig;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.matcher.RestAssuredMatchers.*;
 import static io.restassured.path.json.JsonPath.from;
-import static io.restassured.module.jsv.JsonSchemaValidator.*;
 import static org.hamcrest.Matchers.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -124,46 +115,12 @@ public class AssuredTest extends BaseTest{
 		System.out.println(jsonPath.getString("msg"));
 	}
 	
-	@Test(dataProvider = "CaseList")
-	public void basic(Object[]data){
+	@Test(dataProvider = "CaseList",description="南昌人力")
+	public void nanchangPC(Object[]data){
 		
 		String filePath = data[1].toString();
 		String caseName = data[2].toString();
-		Map<String, String> map = null;
-		Map<String, String> paramsMap = null;
-		
-		ExcelReader baseExcel = new ExcelReader(filePath, "Base", caseName);
-		map = baseExcel.getRowMap();
-		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
-		paramsMap = paramsExcel.getRowMap();
-		
-		Response response = null;
-		response = given().
-			proxy("localhost",8888).
-//			contentType(ContentType.JSON).
-//			log().all().
-			contentType("application/x-www-form-urlencoded;charset=UTF-8").
-			params(paramsMap).
-//			body(map).
-		when().
-			post(map.get("Protocol")+"://"+map.get("Host")+map.get("path")).
-		then().
-			statusCode(200).
-//			body("userId", equalTo(0)).
-		extract().
-			response();
-		
-		response.getBody().prettyPrint();
-		String str = response.getBody().asString();
-		str = str.substring(1,str.length());
-		JsonPath jsonPath = new JsonPath(str);
-		
-		String jsonFile = System.getProperty("user.dir")+
-				"\\resources\\expected\\basic.json";
-		JsonUtils jsonUtil = new JsonUtils();
-
-		
-		jsonUtil.equalsJson(jsonFile, jsonPath);
+		request(filePath, caseName);
 	}
 	
 //	@Test(dataProvider = "CaseList")

@@ -64,7 +64,6 @@ public class JsonUtils {
 					expected = mapEntry.getValue().toString();
 				
 				Assert.assertEquals(actual, expected);
-				System.out.println(mapEntry.getKey()+":"+mapEntry.getValue());
 			}
 		}
 	}
