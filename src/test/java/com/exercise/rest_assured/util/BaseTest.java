@@ -56,13 +56,13 @@ public class BaseTest {
 
 		ExcelReader baseExcel = new ExcelReader(filePath, "Base", caseName);
 		Map<String, String> baseMap = baseExcel.getRowMap();
-		
+
 		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
 		Map<String, String> paramsMap = paramsExcel.getRowMap();
-		
+
 		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
 		Map<String, String> expectedMap = expectedExcel.getRowMap();
-		
+
 		Response response = null;
 		Method Method = null;
 
@@ -76,37 +76,51 @@ public class BaseTest {
 
 		switch (Method) {
 		case POST:
-			response = given().proxy("localhost", 8888).
-			// log().all().
-					contentType("application/x-www-form-urlencoded;charset=UTF-8").params(paramsMap).when()
-					.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path")).then()
-					.statusCode(200).extract().response();
-			
-			equalResponse(response,expectedMap.get("Path"));
-			
+			response = given().
+				proxy("localhost", 8888)
+				.log().all()
+				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
+				.params(paramsMap)
+			.when()
+				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+			.then()
+				.log().all()
+				.statusCode(200)
+			.extract()
+				.response();
+
+			equalResponse(response, expectedMap.get("Path"));
+
 			break;
 		case GET:
-			response = given().proxy("localhost", 8888).
-			// log().all().
-					contentType(baseMap.get("contentType")).params(paramsMap).when()
-					.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path")).then()
-					.statusCode(200).extract().response();
-			
-			equalResponse(response,expectedMap.get("Path"));
-			
+			response = given()
+				.proxy("localhost", 8888)
+				.log().all()
+				.contentType(baseMap.get("contentType"))
+				.params(paramsMap)
+			.when()
+				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+			.then()
+				.log().all()
+				.statusCode(200)
+				.extract().response();
+
+			equalResponse(response, expectedMap.get("Path"));
+
 			break;
 		default:
 			break;
 		}
 	}
 
-	public void equalResponse(Response response,String path){
+	public void equalResponse(Response response, String path) {
 		String str = response.getBody().asString();
-		
-		while (str.charAt(0)!='{'){
+
+		while (str.charAt(0) != '{') {
 			str = str.substring(1, str.length());
-		};
-		
+		}
+		;
+
 		JsonPath jsonPath = new JsonPath(str);
 
 		String jsonFile = System.getProperty("user.dir") + path;
@@ -114,6 +128,7 @@ public class BaseTest {
 
 		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
+
 	@AfterTest
 	public void AfterTest() {
 		System.out.println("测试完毕");
