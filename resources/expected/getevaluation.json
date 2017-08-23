@@ -1,0 +1,13 @@
+{
+  "case": "getevaluation",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "id": "2",
+        "bid": "12",
+        "evaluation": "年轻帅气的小狼"
+      }
+    }
+  ]
+}
