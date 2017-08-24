@@ -6,6 +6,9 @@ import org.testng.annotations.DataProvider;
 import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.JsonUtils;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
+import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -20,7 +23,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 
 public class BaseTest {
-	enum Method {
+	public enum Method {
 		POST, GET
 	}
 
@@ -32,7 +35,7 @@ public class BaseTest {
 	@DataProvider(name = "CaseList")
 	public Iterator<Object[]> caseData() {
 		String workPath = System.getProperty("user.dir");
-		String casePath = workPath + "\\resources\\case\\";
+		String casePath = workPath + "\\src\\test\\resources\\case\\";
 		String filePath = casePath + "CaseList.xlsx";
 		String sheetName = "CaseList";
 		ExcelReader excel = new ExcelReader();
@@ -51,7 +54,7 @@ public class BaseTest {
 
 		return test_IDs.iterator();
 	}
-
+	
 	public void request(String filePath, String caseName) {
 
 		ExcelReader baseExcel = new ExcelReader(filePath, "Base", caseName);
@@ -64,27 +67,27 @@ public class BaseTest {
 		Map<String, String> expectedMap = expectedExcel.getRowMap();
 
 		Response response = null;
-		Method Method = null;
+		Method method = null;
 
 		if (baseMap.get("Method").equals("POST")) {
-			Method = Method.POST;
+			method = Method.POST;
 		} else if (baseMap.get("Method").equals("GET")) {
-			Method = Method.GET;
+			method = Method.GET;
 		} else {
 			Assert.fail("目前支持POST和GET方法");
 		}
 
-		switch (Method) {
+		switch (method) {
 		case POST:
 			response = given().
 				proxy("localhost", 8888)
-				.log().all()
+//				.log().all()
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.params(paramsMap)
 			.when()
 				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-				.log().all()
+//				.log().all()
 				.statusCode(200)
 			.extract()
 				.response();
@@ -95,16 +98,18 @@ public class BaseTest {
 		case GET:
 			response = given()
 				.proxy("localhost", 8888)
-				.log().all()
+//				.log().all()
 				.contentType(baseMap.get("contentType"))
 				.params(paramsMap)
 			.when()
 				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-				.log().all()
+//				.log().all()
 				.statusCode(200)
-				.extract().response();
+			.extract()
+				.response();
 
+			saveResponseBody(response);
 			equalResponse(response, expectedMap.get("Path"));
 
 			break;
@@ -113,6 +118,7 @@ public class BaseTest {
 		}
 	}
 
+	@Step
 	public void equalResponse(Response response, String path) {
 		String str = response.getBody().asString();
 
@@ -129,6 +135,14 @@ public class BaseTest {
 		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
 
+	
+	@Attachment(value = "Response.Body",type = "String")
+	public String saveResponseBody(Response response) {
+		String body = response.getBody().asString();
+		Allure.addAttachment("Response.body", body);
+	    return body;
+	}
+	
 	@AfterTest
 	public void AfterTest() {
 		System.out.println("测试完毕");

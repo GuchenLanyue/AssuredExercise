@@ -4,12 +4,20 @@ import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.util.BaseTest;
 
-public class AssuredTest extends BaseTest {
-	@Test(dataProvider = "CaseList", description = "南昌人力")
-	public void nanchangPC(Object[] data) {
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 
+public class AssuredTest extends BaseTest {
+	
+	@Test(dataProvider = "CaseList",description="南昌人力资源项目PC")
+	@Description("南昌人力资源项目PC端接口测试")
+	@Issue("043")
+    @Issue("044")
+    @Issue("045")
+	public void nanchangPC(Object[] data) {
 		String filePath = data[1].toString();
 		String caseName = data[2].toString();
 		request(filePath, caseName);
 	}
+	
 }
