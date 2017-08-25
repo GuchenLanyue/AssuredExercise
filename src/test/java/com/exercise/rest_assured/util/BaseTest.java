@@ -5,6 +5,7 @@ import org.testng.annotations.DataProvider;
 
 import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.JsonUtils;
+import com.exercise.rest_assured.utils.TextData;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
@@ -55,14 +56,19 @@ public class BaseTest {
 		return test_IDs.iterator();
 	}
 	
-	public void request(String filePath, String caseName) {
-
-		ExcelReader baseExcel = new ExcelReader(filePath, "Base", caseName);
+	@Step
+	public void request(String api,String filePath, String caseName) {
+		
+		ExcelReader baseExcel = new ExcelReader(filePath, "Base", api);
 		Map<String, String> baseMap = baseExcel.getRowMap();
 
 		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
 		Map<String, String> paramsMap = paramsExcel.getRowMap();
-
+		paramsMap.remove("Case");
+		TextData data = new TextData();
+		String token = data.readTxtFile(System.getProperty("user.dir")+paramsMap.get("token"));
+		paramsMap.put("token", token);
+		
 		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
 		Map<String, String> expectedMap = expectedExcel.getRowMap();
 
@@ -74,7 +80,7 @@ public class BaseTest {
 		} else if (baseMap.get("Method").equals("GET")) {
 			method = Method.GET;
 		} else {
-			Assert.fail("目前支持POST和GET方法");
+			Assert.fail("目前只支持POST和GET方法");
 		}
 
 		switch (method) {
@@ -92,8 +98,6 @@ public class BaseTest {
 			.extract()
 				.response();
 
-			equalResponse(response, expectedMap.get("Path"));
-
 			break;
 		case GET:
 			response = given()
@@ -109,13 +113,13 @@ public class BaseTest {
 			.extract()
 				.response();
 
-			saveResponseBody(response);
-			equalResponse(response, expectedMap.get("Path"));
-
 			break;
 		default:
 			break;
 		}
+		
+		saveResponseBody(response);
+		equalResponse(response, expectedMap.get("Path"));
 	}
 
 	@Step
@@ -124,21 +128,20 @@ public class BaseTest {
 
 		while (str.charAt(0) != '{') {
 			str = str.substring(1, str.length());
-		}
-		;
+		};
 
 		JsonPath jsonPath = new JsonPath(str);
 
 		String jsonFile = System.getProperty("user.dir") + path;
 		JsonUtils jsonUtil = new JsonUtils();
-
+		
 		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
-
 	
 	@Attachment(value = "Response.Body",type = "String")
 	public String saveResponseBody(Response response) {
 		String body = response.getBody().asString();
+		System.out.println(body);
 		Allure.addAttachment("Response.body", body);
 	    return body;
 	}

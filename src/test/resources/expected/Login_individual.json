@@ -1,0 +1,31 @@
+{
+  "case": "",
+  "expected": [
+    {
+      "root": "",
+      "values": {
+        "status": 1,
+        "msg": "success"
+      }
+    },
+    {
+      "root": "value",
+      "values": {
+        "user_id": "6",
+        "type": 1
+      }
+    },
+    {
+      "root": "value.user_info",
+      "values": {
+        "id": "6",
+        "username": "灰太狼",
+        "sex": "1",
+        "contact_number": "18612819427",
+        "email": "sam.hou@microfastup.com",
+        "status": "1",
+        "create_time": "1502854029"
+      }
+    }
+  ]
+}
