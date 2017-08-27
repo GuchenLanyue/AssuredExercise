@@ -103,6 +103,8 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
+					<!-- 解决用maven执行test时 日志乱码的问题，详见：http://www.cnblogs.com/discuss/archive/2010/10/27/1862225.html -->
+					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<argLine>
 						-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
 					</argLine>
@@ -117,7 +119,18 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<repositories>
+		<repository>
+			<id>saucelabs-repository</id>
+			<url>https://repository-saucelabs.forge.cloudbees.com/release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<reporting>
 		<excludeDefaults>true</excludeDefaults>
 		<plugins>
