@@ -85,15 +85,15 @@ public class BaseTest {
 
 		switch (method) {
 		case POST:
-			response = given().
-				proxy("localhost", 8888)
-//				.log().all()
+			response = given()
+				.proxy("localhost", 8888)
+				.log().params()
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.params(paramsMap)
 			.when()
 				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-//				.log().all()
+				.log().body()
 				.statusCode(200)
 			.extract()
 				.response();
@@ -102,13 +102,13 @@ public class BaseTest {
 		case GET:
 			response = given()
 				.proxy("localhost", 8888)
-//				.log().all()
+				.log().params()
 				.contentType(baseMap.get("contentType"))
 				.params(paramsMap)
 			.when()
 				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-//				.log().all()
+				.log().body()
 				.statusCode(200)
 			.extract()
 				.response();
