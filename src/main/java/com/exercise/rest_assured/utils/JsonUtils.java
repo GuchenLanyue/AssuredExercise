@@ -1,12 +1,16 @@
 package com.exercise.rest_assured.utils;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
 import org.testng.Assert;
 
+import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 
 public class JsonUtils {
@@ -24,27 +28,23 @@ public class JsonUtils {
 		return json;
 	}
 	
+	@Step
 	public void equalsJson(String file, JsonPath responseJson){
 		JsonPath expectedJson = jsonReader(file);
 		List<JsonPath> expectedList = expectedJson.getList("expected");
-		FileInputStream jsonFile =null;
-		try {
-			jsonFile = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		BufferedReader br = null;
 		
 		for(int i = 0; i < expectedList.size(); i++){
 			try {
-				jsonFile = new FileInputStream(file);
-			} catch (FileNotFoundException e) {
+				br=new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			
-			Map<String, Object> map = JsonPath.with(jsonFile).
-					get("expected["+i+"].values");
+			Map<String, Object> map = JsonPath.with(br).get("expected["+i+"].values");
 			
 			String root = expectedJson.get("expected["+i+"].root");
 			responseJson = responseJson.setRoot(root);
@@ -63,7 +63,7 @@ public class JsonUtils {
 				if (mapEntry.getValue()!=null) 
 					expected = mapEntry.getValue().toString();
 				
-				Assert.assertEquals(actual, expected);
+				Assert.assertEquals(actual, expected,"文件\""+file+"\"["+key+"]:的预期值为："+expected+"，实际值为："+actual);
 			}
 		}
 	}

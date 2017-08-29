@@ -21,18 +21,46 @@ import java.util.List;
 import java.util.Map;
 
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 
 public class BaseTest {
 	public enum Method {
 		POST, GET
 	}
-
-	@BeforeTest
-	public void BeforeTest() {
-		System.out.println("开始测试了");
+	
+	public enum Platform{
+		GuanWang,ZhongDuan,HouTai,WeiZhan
 	}
+	
+	@BeforeTest
+	public void BeforeTest(ITestContext context) {
+		Login login = new Login();
+		User user = new User();
+		Platform platform = null;
+		String platformStr = context.getCurrentXmlTest().getParameter("platform");
+		if (platformStr.equals("GuanWang")){
+			platform = Platform.GuanWang;
+		}else if (platformStr.equals("ZhongDuan")) {
+			platform = Platform.ZhongDuan;
+		}else if (platformStr.equals("HouTai")) {
+			platform = Platform.HouTai;
+		}else if (platformStr.equals("WeiZhan")) {
+			platform = Platform.WeiZhan;
+		}else {
+			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
+		}
+		
+		switch (platform) {
+		case GuanWang:
+			login.gwLogin(user);
+			break;
 
+		default:
+			break;
+		}
+	}
+	
 	@DataProvider(name = "CaseList")
 	public Iterator<Object[]> caseData() {
 		String workPath = System.getProperty("user.dir");

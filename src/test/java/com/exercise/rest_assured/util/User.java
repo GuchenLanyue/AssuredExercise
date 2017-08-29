@@ -1,21 +1,21 @@
 package com.exercise.rest_assured.util;
 
 public class User {
-	private String username = "灰太狼";
-	private String password = "123456";
-	private String v_code = "testing";
-	private String uuid = "86f4ae22-d9aa-4644-9f69-520da8ee361d";
-	public String getUsername() {
-		return username;
+	private String gwname = "灰太狼";
+	private String gwpassword = "123456";
+	private String gwv_code = "testing";
+	private String gwuuid = "86f4ae22-d9aa-4644-9f69-520da8ee361d";
+	public String getgwUsername() {
+		return gwname;
 	}
-	public String getPassword() {
-		return password;
+	public String getgwPassword() {
+		return gwpassword;
 	}
-	public String getV_code() {
-		return v_code;
+	public String getgwV_code() {
+		return gwv_code;
 	}
-	public String getUuid() {
-		return uuid;
+	public String getgwUuid() {
+		return gwuuid;
 	}
 	
 }
