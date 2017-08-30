@@ -45,7 +45,8 @@ public class Education {
 		String id = json.getString("id");
 		
 		TextData textData = new TextData();
-		String path = srcDir+params.get("id");
+		String path = srcDir+"/case/";
+		System.out.println(path);
 		textData.writerText(path, "eduID.txt", id);
 	}
 	

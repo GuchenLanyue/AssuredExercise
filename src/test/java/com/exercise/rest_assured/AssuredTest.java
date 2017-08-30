@@ -20,6 +20,6 @@ public class AssuredTest extends BaseTest {
 		String api = baseData.get("API");
 		String filePath = getSrcDir()+"/case/"+baseData.get("FilePath");
 		String caseName = baseData.get("Case");
-		request(api,filePath, caseName);
+		setParams(api,filePath, caseName);
 	}
 }

@@ -11,12 +11,12 @@ import com.exercise.rest_assured.utils.TextData;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
-
 import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -115,7 +115,7 @@ public class BaseTest {
 	}
 	
 	@Step
-	public void request(String api,String filePath, String caseName) {
+	public void setParams(String api,String filePath, String caseName) {
 		
 		ExcelReader baseExcel = new ExcelReader(filePath, "Base", api);
 		Map<String, String> baseMap = baseExcel.getCaseMap();
@@ -130,57 +130,14 @@ public class BaseTest {
 		
 		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
 		Map<String, String> expectedMap = expectedExcel.getCaseMap();
-
-		Response response = null;
-		RequestMethod method = null;
-
-		if (baseMap.get("Method").equals("POST")) {
-			method = RequestMethod.POST;
-		} else if (baseMap.get("Method").equals("GET")) {
-			method = RequestMethod.GET;
-		} else {
-			Assert.fail("目前只支持POST和GET方法");
-		}
-
-		switch (method) {
-		case POST:
-			response = given()
-				.proxy("localhost", 8888)
-//				.log().params()
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.params(paramsMap)
-			.when()
-				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
-			.then()
-//				.log().body()
-				.statusCode(200)
-			.extract()
-				.response();
-
-			break;
-		case GET:
-			response = given()
-				.proxy("localhost", 8888)
-//				.log().params()
-				.contentType(baseMap.get("contentType"))
-				.params(paramsMap)
-			.when()
-				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
-			.then()
-//				.log().body()
-				.statusCode(200)
-			.extract()
-				.response();
-
-			break;
-		default:
-			break;
-		}
-		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, paramsMap);
 		saveResponseBody(response);
 		equalResponse(response.getBody().asString(), expectedMap.get("Path"));
 	}
 
+	
+	
 	@Step
 	public void equalResponse(String response, String path) {
 		
