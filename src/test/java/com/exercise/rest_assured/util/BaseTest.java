@@ -25,6 +25,7 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 
 public class BaseTest {
+	private String srcDir = null;
 	public enum Method {
 		POST, GET
 	}
@@ -33,8 +34,18 @@ public class BaseTest {
 		GuanWang,ZhongDuan,HouTai,WeiZhan
 	}
 	
+	public String setSrcDir(ITestContext context){
+		return System.getProperty("user.dir")+context.getCurrentXmlTest().getParameter("sourcesDir");
+	}
+	
+	public String getSrcDir(){
+		return srcDir;
+	}
+	
 	@BeforeTest
 	public void BeforeTest(ITestContext context) {
+		System.out.println("开始测试");
+		srcDir = setSrcDir(context);
 		Login login = new Login();
 		User user = new User();
 		Platform platform = null;
@@ -62,9 +73,9 @@ public class BaseTest {
 	}
 	
 	@DataProvider(name = "CaseList")
-	public Iterator<Object[]> caseData() {
-		String workPath = System.getProperty("user.dir");
-		String casePath = workPath + "\\src\\test\\resources\\case\\";
+	public Iterator<Object[]> caseData(ITestContext context) {
+		System.out.println(context.getName());
+		String casePath = getSrcDir()+"\\case\\";
 		String filePath = casePath + "CaseList.xlsx";
 		String sheetName = "CaseList";
 		ExcelReader excel = new ExcelReader();
@@ -93,9 +104,12 @@ public class BaseTest {
 		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
 		Map<String, String> paramsMap = paramsExcel.getRowMap();
 		paramsMap.remove("Case");
-		TextData data = new TextData();
-		String token = data.readTxtFile(System.getProperty("user.dir")+paramsMap.get("token"));
-		paramsMap.put("token", token);
+		
+		if(paramsMap.containsKey("token")){	
+			TextData data = new TextData();
+			String token = data.readTxtFile(getSrcDir()+paramsMap.get("token"));
+			paramsMap.put("token", token);
+		}
 		
 		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
 		Map<String, String> expectedMap = expectedExcel.getRowMap();
@@ -115,13 +129,13 @@ public class BaseTest {
 		case POST:
 			response = given()
 				.proxy("localhost", 8888)
-				.log().params()
+//				.log().params()
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.params(paramsMap)
 			.when()
 				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-				.log().body()
+//				.log().body()
 				.statusCode(200)
 			.extract()
 				.response();
@@ -130,13 +144,13 @@ public class BaseTest {
 		case GET:
 			response = given()
 				.proxy("localhost", 8888)
-				.log().params()
+//				.log().params()
 				.contentType(baseMap.get("contentType"))
 				.params(paramsMap)
 			.when()
 				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
 			.then()
-				.log().body()
+//				.log().body()
 				.statusCode(200)
 			.extract()
 				.response();
@@ -147,20 +161,19 @@ public class BaseTest {
 		}
 		
 		saveResponseBody(response);
-		equalResponse(response, expectedMap.get("Path"));
+		equalResponse(response.getBody().asString(), expectedMap.get("Path"));
 	}
 
 	@Step
-	public void equalResponse(Response response, String path) {
-		String str = response.getBody().asString();
-
-		while (str.charAt(0) != '{') {
-			str = str.substring(1, str.length());
+	public void equalResponse(String response, String path) {
+		
+		while (response.charAt(0) != '{') {
+			response = response.substring(1, response.length());
 		};
 
-		JsonPath jsonPath = new JsonPath(str);
+		JsonPath jsonPath = new JsonPath(response);
 
-		String jsonFile = System.getProperty("user.dir") + path;
+		String jsonFile = getSrcDir() + path;
 		JsonUtils jsonUtil = new JsonUtils();
 		
 		jsonUtil.equalsJson(jsonFile, jsonPath);
@@ -169,7 +182,6 @@ public class BaseTest {
 	@Attachment(value = "Response.Body",type = "String")
 	public String saveResponseBody(Response response) {
 		String body = response.getBody().asString();
-		System.out.println(body);
 		Allure.addAttachment("Response.body", body);
 	    return body;
 	}

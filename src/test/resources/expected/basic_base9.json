@@ -1,0 +1,44 @@
+{
+  "case": "Basic",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "id": "12",
+        "user_id": "6",
+        "name": "灰太狼",
+        "head_img": "/attach/image/object/201708/16/20170816113200_36042.jpg",
+        "signature": "别看爷只是一只狼，狼儿的聪明难以想象",
+        "sex": 1,
+        "birth": "1997-08-16T12:05:11+08:00",
+        "education": 9,
+        "id_code": "341001199807020595",
+        "h_province": 9,
+        "h_city": 109,
+        "h_district": 1064,
+        "l_province": 18,
+        "l_city": 221,
+        "l_district": 1956,
+        "healthy": 4,
+        "work_life": 4,
+        "marriage": 1,
+        "current": 1,
+        "lang": 3,
+        "leve": 1,
+        "lang1": 3,
+        "leve1": 3,
+        "tel": "0105321123",
+        "phone": "18612819427",
+        "email": "sam.hou@microfastup.com",
+        "qq": "2728740240",
+      }
+    },
+    {
+      "root": "",
+      "values": {
+        "status": "1",
+        "msg": "success"
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "case": "Basic",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "id": "12",
+        "user_id": "6",
+        "name": "灰太狼",
+        "head_img": "/attach/image/object/201708/29/20170829143116_39939.png",
+        "signature": "嗷呜嗷呜嗷呜~",
+        "sex": 2,
+        "birth": "1988-08-16T12:05:11+08:00",
+        "education": 6,
+        "id_code": "41042119940605641X",
+        "h_province": 6,
+        "h_city": 78,
+        "h_district": 823,
+        "l_province": 15,
+        "l_city": 177,
+        "l_district": 1600,
+        "healthy": 1,
+        "work_life": 1,
+        "marriage": 2,
+        "current": 2,
+        "lang": 6,
+        "leve": 2,
+        "lang1": 12,
+        "leve1": 4,
+        "tel": "0105321123",
+        "phone": "18612819427",
+        "email": "sam.hou@microfastup.com",
+        "qq": "2728740240",
+      }
+    },
+    {
+      "root": "",
+      "values": {
+        "status": "1",
+        "msg": "success"
+      }
+    }
+  ]
+}
