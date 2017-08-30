@@ -1,7 +1,8 @@
-package com.exercise.rest_assured.util;
+package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 
+import com.exercise.rest_assured.util.User;
 import com.exercise.rest_assured.utils.TextData;
 
 import io.qameta.allure.Step;

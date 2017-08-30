@@ -31,7 +31,7 @@ public class ExcelReader {
 		map = mapFromSheet(path, sheetName, caseName);
 	}
 	
-	public HashMap<String, String> getRowMap(){
+	public HashMap<String, String> getCaseMap(){
 		return map;
 	}
 	
@@ -53,12 +53,12 @@ public class ExcelReader {
 			wb = new XSSFWorkbook(new FileInputStream(filePath));
 			return wb ;
 		} else {
-			throw new IllegalArgumentException("不支持除：xls/xlsx以外的文件格式!!!") ;
+			throw new IllegalArgumentException("不支持除：xls/xlsx以外的文件格式!!! "+filePath) ;
 		}
 	}
 	
 	/**
-	 * 获取指定行的数据
+	 * 获取指定Case的数据
 	 * @param fileName 文件名(全路径)
 	 * @param sheetName sheet表名
 	 * @param caseName 用例名
@@ -110,13 +110,13 @@ public class ExcelReader {
 	}
 	
 	/**
-	 * 获取所有行的数据
+	 * 获取指定行的数据
 	 * @param fileName 文件名(全路径)
 	 * @param sheetName sheet表名
 	 * @param caseName 用例名
 	 * @return HashMap<key,value> key:首行cell的值，value:指定行cell的值
 	 * */
-	public HashMap<String, String> sheetMap(String fileName, String sheetName, int rowNum){
+	public HashMap<String, String> rowMap(String fileName, String sheetName, int rowNum){
 		
 		Workbook workbook = null;
 		Sheet sheet = null;
@@ -135,7 +135,7 @@ public class ExcelReader {
 			if (sheet.getRow(0).getCell(i).toString()==null) {
 				throw new IllegalArgumentException("参数错误："+fileName+"表："+sheetName+"第1行第"+i+"列的值为空!!!") ;
 			}
-			
+
 			if (sheet.getRow(rowNum).getCell(i)==null) {
 				map.put(sheet.getRow(0).getCell(i).toString(), null);
 			} else {
@@ -153,7 +153,7 @@ public class ExcelReader {
 		return caseData;
 	}
 	
-	public List<Map<String, String>> mapList(String filePath,String sheetName){
+	public List<Map<String, String>> mapList(int firstRow,String filePath,String sheetName){
 		Workbook wb = null;
 		Sheet sheet = null;
 		int rows = 0;
@@ -167,9 +167,8 @@ public class ExcelReader {
 		}
 		sheet = wb.getSheet(sheetName);
 		rows = sheet.getLastRowNum();
-		
-		for (int i = 0; i < rows+1; i++) {
-			caseList.add(sheetMap(filePath, sheetName, i));
+		for (int i = firstRow; i < rows+1; i++) {
+			caseList.add(rowMap(filePath, sheetName, i));
 		}
 		
 		return caseList;

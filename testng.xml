@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="1">
-	<parameter name="platform" value="GuanWang"/>
-	<parameter name="sourcesDir" value="/src/test/resources"/>
-	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr"/>
-	<test name="Test">
+	<parameter name="platform" value="GuanWang" />
+	<parameter name="sourcesDir" value="/src/test/resources" />
+	<parameter name="CaseList" value="/case/CaseList.xlsx" />
+	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
+	<!--  
+	<test name="AllApi">
 		<classes>
 			<class name="com.exercise.rest_assured.AssuredTest" />
 		</classes>
-	</test> <!-- Test -->
+	</test> 
+	-->
+	
+	<test name="education" preserve-order="true">
+		<groups>
+			<define name="EditEducation">
+				<include name="addEducationTest" />
+				<include name="updateEducationTest" />
+				<include name="delEducationTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.EducationTest">
+				<methods>
+					<include name="addEducationTest" />
+					<exclude name="updateEducationTest" />
+					<include name="delEducationTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite> <!-- Suite -->
