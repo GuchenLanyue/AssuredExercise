@@ -2,8 +2,10 @@ package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import com.exercise.rest_assured.util.HttpMethods;
 import com.exercise.rest_assured.utils.TextData;
 
 import io.qameta.allure.Description;
@@ -18,60 +20,39 @@ public class Education {
 	
 	@Step
 	@Description("添加教育背景信息")
-	public void addEducation(Map<String, String> params,String token,String srcDir){
-		Response response = given()
-	//		.proxy("http://127.0.0.1:8888")
-			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.param("token", token)
-			.param("name", params.get("name"))
-			.param("education", params.get("education"))
-			.param("magor", params.get("magor"))
-			.param("end_time", params.get("end_time"))
-			.param("magors", params.get("magors"))
-		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/education")
-		.then()
-			.statusCode(200)
-		.extract()
-			.response();
+	public void addEducation(Map<String, String> params,String srcDir){
 		
-		String body = response.getBody().asString();
-		while (body.charAt(0) != '{') {
-			body = body.substring(1, body.length());
-		};
+		Map<String, String> baseMap = new HashMap<String, String>();
+		baseMap.put("Method", "POST");
+		baseMap.put("Protocol", "http");
+		baseMap.put("Host", "nchr.release.microfastup.com");
+		baseMap.put("path", "/nchr/personresume/education");
+		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, params);
+		String body = http.getBody(response);
 		
 		JsonPath json = new JsonPath(body).setRoot("value");
-		
 		String id = json.getString("id");
 		
 		TextData textData = new TextData();
 		String path = srcDir+"/case/";
-		System.out.println(path);
 		textData.writerText(path, "eduID.txt", id);
 	}
 	
 	@Step
 	@Description("修改教育背景信息")
-	public Response editEducation(Map<String, String> params,String token,String srcDir){
-		TextData textData = new TextData();
-		String path = srcDir+params.get("id");
-		String id = textData.readTxtFile(path);
-		Response response = given()
-	//		.proxy("http://127.0.0.1:8888")
-			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.param("token", token)
-			.param("name", params.get("name"))
-			.param("education", params.get("education"))
-			.param("magor", params.get("magor"))
-			.param("end_time", params.get("end_time"))
-			.param("magors", params.get("magors"))
-			.param("id", id)
-		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/education")
-		.then()
-			.statusCode(200)
-		.extract()
-			.response();
+	public Response editEducation(Map<String, String> params){
+		Map<String, String> baseMap = new HashMap<String, String>();
+		baseMap.put("Method", "POST");
+		baseMap.put("Protocol", "http");
+		baseMap.put("Host", "nchr.release.microfastup.com");
+		baseMap.put("path", "/nchr/personresume/education");
+		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, params);
+		String body = http.getBody(response);
+		
 		return response;
 	}
 	
