@@ -126,16 +126,13 @@ public class BaseTest {
 		return test_IDs.iterator();
 	}
 	
-	public void setParams(String api,String caseName) {
+	public void setParams(String api,Map<String, String> paramsMap) {
 	
+		String caseName = paramsMap.get("Case");
 		String file = getSrcDir()+"/case/"+method.getName()+".xlsx";
 		Parameter parameter = new Parameter();
 		Map<String, String> baseMap = parameter.setUrlData(file, api);
 		
-		Map<String, String> paramsMap = parameter.setParams(file, caseName);
-		if(paramsMap.containsKey("token")){	
-			paramsMap.put("token", token);
-		}
 
 		Map<String, String> expectedMap = parameter.setExpectedMap(file, caseName);
 		

@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.Assert;
 
 public class ExcelReader {
 	private HashMap<String, String> map = null;
@@ -92,6 +93,8 @@ public class ExcelReader {
 				break;
 			}
 		}
+		
+		Assert.assertTrue(rowNum!=0, "没有在"+fileName+"中找到Case："+caseName+"!");
 		
 		for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
 			if (sheet.getRow(0).getCell(i).toString()==null) {

@@ -1,8 +1,10 @@
 package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.path.json.JsonPath.from;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.exercise.rest_assured.util.HttpMethods;
@@ -86,5 +88,29 @@ public class Education {
 		String body = http.getBody(response);
 		
 		return body;
+	}
+	
+	@Step
+	@Description("获取教育背景信息列表")
+	public List<String> getEducations(String token){
+		Response response = given()
+//				.proxy("http://127.0.0.1:8888")
+				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
+				.param("token",token)
+			.when()
+				.post("http://nchr.release.microfastup.com/nchr/personresume/geteducations")
+			.then()
+				.statusCode(200)
+			.extract()
+				.response();
+		String json = response.asString();
+		
+		while (json.charAt(0)!='{') {
+			json = json.substring(1, json.length());
+		}
+		
+		List<String> educationIDs = from(json).getList("value.id");
+		
+		return educationIDs;
 	}
 }

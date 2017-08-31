@@ -28,7 +28,7 @@ public class HttpMethods {
 		switch (method) {
 		case POST:
 			response = given()
-//				.proxy("127.0.0.1", 8888)
+				.proxy("127.0.0.1", 8888)
 //				.log().all()
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.params(paramsMap)

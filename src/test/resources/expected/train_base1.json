@@ -1,0 +1,15 @@
+{
+  "case": "train_base1",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "微迅教育",
+        "start_time": "2017-08-31T15:37:22+08:00",
+        "end_time": "2017-08-31T15:37:22+08:00",
+        "curriculum": "开发（Android、Ios...）",
+        "education": "1",
+      }
+    }
+  ]
+}

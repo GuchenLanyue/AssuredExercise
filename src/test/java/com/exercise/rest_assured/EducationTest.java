@@ -3,21 +3,22 @@ package com.exercise.rest_assured;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.util.apis.Education;
-import com.exercise.rest_assured.util.apis.GetEducations;
 
 import io.qameta.allure.Description;
+
 import io.restassured.path.json.JsonPath;
 
 public class EducationTest extends BaseTest{
 
-	@Test(dataProvider = "SingleCase",description="增加教育背景信息")
+	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
 	public void addEducationTest(Map<String,String> params){
 		params.put("token", getToken());
-		setParams("education", params.get("Case"));
+		setParams("education", params);
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		String id = json.getString("id");
 		Education education = new Education();
@@ -26,25 +27,34 @@ public class EducationTest extends BaseTest{
 	}
 	
 	@Test(dataProvider = "SingleCase",description="编辑教育背景信息")
-	@Description("编辑教育背景信息")
+	@Description("修改教育背景信息")
 	public void editEducationTest(Map<String,String> params){
-		params.put("token", getToken());
-		setParams("education", params.get("Case"));
 		
 		Education education = new Education();
+		List<String> ids = education.getEducations(getToken());
+		String id = null;
+		if (ids.size()>0) {
+			id = ids.get(0);
+		}else{
+			Assert.fail("当前没有添加任何教育背景，无法编辑");
+		}
+		
+		params.put("token", getToken());
+		params.put("id", id);
+		
+		setParams("education", params);
+		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		String id = json.getString("id");
+		id = json.getString("id");
 		String actualJson = education.getEducation(getToken(), id, getSrcDir());
 		equalResponse(actualJson, getExpectedJson());
 	}
 	
-	@Test
+	@Test(description = "删除教育背景信息")
 	@Description("删除教育背景信息")
 	public void delEducationTest(){
-		GetEducations educations = new GetEducations();
-		
-		List<String> list = educations.getEducationList(getToken());
 		Education education = new Education();
+		List<String> list = education.getEducations(getToken());
 		for (int i = 0; i < list.size(); i++) {
 			education.delEducation(getToken(), list.get(i));
 		}

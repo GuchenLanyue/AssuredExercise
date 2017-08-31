@@ -1,0 +1,15 @@
+{
+  "case": "train_base8",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "壹迅Edu",
+        "start_time": "2017-08-31T15:37:22+08:00",
+        "end_time": "2017-08-31T15:37:22+08:00",
+        "curriculum": "财务",
+        "education": "8",
+      }
+    }
+  ]
+}

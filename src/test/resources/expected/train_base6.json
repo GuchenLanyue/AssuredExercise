@@ -1,0 +1,15 @@
+{
+  "case": "train_base6",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "微迅Edu",
+        "start_time": "2017-08-31T15:37:22+08:00",
+        "end_time": "2017-08-31T15:37:22+08:00",
+        "curriculum": "cto",
+        "education": "6",
+      }
+    }
+  ]
+}

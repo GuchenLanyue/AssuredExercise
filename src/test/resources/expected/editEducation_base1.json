@@ -1,0 +1,15 @@
+{
+  "case": "base1",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "微迅建筑大学",
+        "end_time": "2017-08-29T15:50:56+08:00",
+        "magor": "1",
+        "magors": 31,
+        "education": 1,
+      }
+    }
+  ]
+}

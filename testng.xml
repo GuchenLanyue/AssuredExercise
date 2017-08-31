@@ -5,30 +5,57 @@
 	<parameter name="sourcesDir" value="/src/test/resources" />
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
-	
-	<test name="AllApi">
+
+	<test name="AllApi" preserve-order="true">
+		<groups>
+			<define name="Process">
+				<include name="ProcessTest" />
+			</define>
+		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.AssuredTest" />
+			<class name="com.exercise.rest_assured.AssuredTest">
+				<methods>
+					<exclude name="ProcessTest" />
+				</methods>
+			</class>
 		</classes>
-	</test> 
-	
+	</test>
+
 	<test name="education" preserve-order="true">
 		<groups>
 			<define name="EditEducation">
 				<include name="addEducationTest" />
-				<include name="updateEducationTest" />
+				<include name="editEducationTest" />
 				<include name="delEducationTest" />
 			</define>
 		</groups>
 		<classes>
 			<class name="com.exercise.rest_assured.EducationTest">
 				<methods>
-					<include name="addEducationTest" />
-					<exclude name="updateEducationTest" />
-					<include name="delEducationTest" />
+					<exclude name="addEducationTest" />
+					<exclude name="editEducationTest" />
+					<exclude name="delEducationTest" />
 				</methods>
 			</class>
 		</classes>
 	</test>
 
+	<test name="TrainTest" preserve-order="true">
+		<groups>
+			<define name="Train">
+				<include name="addTrainTest" />
+				<include name="editTrainTest" />
+				<include name="delTrainTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.TrainTest">
+				<methods>
+					<include name="addTrainTest" />
+					<include name="editTrainTest" />
+					<include name="delTrainTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
 </suite><!-- Suite -->
