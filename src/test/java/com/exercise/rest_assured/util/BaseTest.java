@@ -29,6 +29,9 @@ import org.testng.annotations.AfterTest;
 public class BaseTest {
 	private String srcDir = null;
 	private String token = null;
+	private Method method = null;
+	private String responseStr = null;
+	private String expectedJson = null;
 	
 	public enum RequestMethod {
 		POST, GET
@@ -48,6 +51,14 @@ public class BaseTest {
 	
 	public String getToken(){
 		return token;
+	}
+	
+	public String getBodyStr(){
+		return responseStr;
+	}
+	
+	public String getExpectedJson(){
+		return expectedJson;
 	}
 	
 	@BeforeTest
@@ -86,7 +97,7 @@ public class BaseTest {
 	@DataProvider(name = "CaseList")
 	public Iterator<Object[]> caseData(ITestContext context) {
 		String casePath = getSrcDir()+"\\case\\";
-		String filePath = casePath + "CaseList.xlsx";
+		String filePath = casePath + "ProcessTest.xlsx";
 		String sheetName = "CaseList";
 		ExcelReader excel = new ExcelReader();
 		List<Map<String, String>> caseList = excel.mapList(1,filePath, sheetName);
@@ -100,7 +111,8 @@ public class BaseTest {
 	}
 	
 	@DataProvider(name = "SingleCase")
-	public Iterator<Object[]> singleCase(Method method) {
+	public Iterator<Object[]> singleCase(Method testMethod) {
+		method = testMethod;
 		String filePath = getSrcDir()+"/case/"+method.getName()+".xlsx";
 		String sheetName = "Params";
 		ExcelReader excel = new ExcelReader();
@@ -114,29 +126,42 @@ public class BaseTest {
 		return test_IDs.iterator();
 	}
 	
-	@Step
-	public void setParams(String api,String filePath, String caseName) {
+	public void setParams(String api,String caseName) {
+	
+		String file = getSrcDir()+"/case/"+method.getName()+".xlsx";
+		Parameter parameter = new Parameter();
+		Map<String, String> baseMap = parameter.setUrlData(file, api);
 		
-		ExcelReader baseExcel = new ExcelReader(filePath, "Base", api);
-		Map<String, String> baseMap = baseExcel.getCaseMap();
-
-		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
-		Map<String, String> paramsMap = paramsExcel.getCaseMap();
-		paramsMap.remove("Case");
-		
+		Map<String, String> paramsMap = parameter.setParams(file, caseName);
 		if(paramsMap.containsKey("token")){	
 			paramsMap.put("token", token);
 		}
+
+		Map<String, String> expectedMap = parameter.setExpectedMap(file, caseName);
 		
-		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
-		Map<String, String> expectedMap = expectedExcel.getCaseMap();
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
-		saveResponseBody(response);
-		equalResponse(response.getBody().asString(), expectedMap.get("Path"));
+		expectedJson = expectedMap.get("Path");
+		equalResponse(saveResponseBody(response), expectedJson);
 	}
 
-	
+	public void setParams(String api,String filePath,String caseName) {
+		
+		Parameter parameter = new Parameter();
+		Map<String, String> baseMap = parameter.setUrlData(filePath, api);
+		
+		Map<String, String> paramsMap = parameter.setParams(filePath, caseName);
+		if(paramsMap.containsKey("token")){	
+			paramsMap.put("token", token);
+		}
+
+		Map<String, String> expectedMap = parameter.setExpectedMap(filePath, caseName);
+		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, paramsMap);
+		
+		equalResponse(saveResponseBody(response), expectedMap.get("Path"));
+	}
 	
 	@Step
 	public void equalResponse(String response, String path) {
@@ -158,7 +183,13 @@ public class BaseTest {
 	public String saveResponseBody(Response response) {
 		String body = response.getBody().asString();
 		Allure.addAttachment("Response.body", body);
-	    return body;
+		
+		while(body.charAt(0)!='{'){
+			body = body.substring(1, body.length());
+		}
+		
+		responseStr = body;
+		return responseStr;
 	}
 	
 	@AfterTest

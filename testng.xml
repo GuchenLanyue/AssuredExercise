@@ -5,13 +5,12 @@
 	<parameter name="sourcesDir" value="/src/test/resources" />
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
-	<!--  
+	
 	<test name="AllApi">
 		<classes>
 			<class name="com.exercise.rest_assured.AssuredTest" />
 		</classes>
 	</test> 
-	-->
 	
 	<test name="education" preserve-order="true">
 		<groups>
@@ -31,4 +30,5 @@
 			</class>
 		</classes>
 	</test>
-</suite> <!-- Suite -->
+
+</suite><!-- Suite -->
