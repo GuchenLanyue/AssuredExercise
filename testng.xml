@@ -51,9 +51,28 @@
 		<classes>
 			<class name="com.exercise.rest_assured.TrainTest">
 				<methods>
-					<include name="addTrainTest" />
-					<include name="editTrainTest" />
-					<include name="delTrainTest" />
+					<exclude name="addTrainTest" />
+					<exclude name="editTrainTest" />
+					<exclude name="delTrainTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="JobTest" preserve-order="true">
+		<groups>
+			<define name="Job">
+				<include name="addJob" />
+				<include name="editJob" />
+				<include name="delJob" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.JobTest">
+				<methods>
+					<include name="addJob" />
+					<exclude name="editJob" />
+					<exclude name="delJob" />
 				</methods>
 			</class>
 		</classes>
