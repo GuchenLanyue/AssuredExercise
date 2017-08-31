@@ -62,7 +62,7 @@ public class JsonUtils {
 				
 				if (mapEntry.getValue()!=null) 
 					expected = mapEntry.getValue().toString();
-				
+
 				Assert.assertEquals(actual, expected,"文件\""+file+"\"["+key+"]:的预期值为："+expected+"，实际值为："+actual);
 			}
 		}

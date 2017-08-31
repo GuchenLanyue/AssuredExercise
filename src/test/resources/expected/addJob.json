@@ -1,0 +1,24 @@
+{
+  "case": "",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "id": "11",
+        "fid": "12",
+        "name": "hkhh",
+        "industry": null,
+        "scale": null,
+        "department": "",
+        "start_time": "2017-08-31T18:01:56+08:00",
+        "end_time": "2017-08-31T18:01:56+08:00",
+        "position": 19,
+        "positions": 235,
+        "position_des": "hkhjk",
+        "leve": null,
+        "des": "",
+        "is_deleted": "0"
+      }
+    }
+  ]
+}
