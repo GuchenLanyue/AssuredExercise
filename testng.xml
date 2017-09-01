@@ -62,17 +62,17 @@
 	<test name="JobTest" preserve-order="true">
 		<groups>
 			<define name="Job">
-				<include name="addJob" />
-				<include name="editJob" />
-				<include name="delJob" />
+				<include name="addJobTest" />
+				<include name="editJobTest" />
+				<include name="delJobTest" />
 			</define>
 		</groups>
 		<classes>
 			<class name="com.exercise.rest_assured.JobTest">
 				<methods>
-					<include name="addJob" />
-					<exclude name="editJob" />
-					<exclude name="delJob" />
+					<include name="addJobTest" />
+					<include name="editJobTest" />
+					<include name="delJobTest" />
 				</methods>
 			</class>
 		</classes>

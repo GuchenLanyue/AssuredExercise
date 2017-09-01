@@ -8,8 +8,6 @@ import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.JsonUtils;
 import com.exercise.rest_assured.utils.TextData;
 
-import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import io.restassured.path.json.JsonPath;
@@ -100,10 +98,10 @@ public class BaseTest {
 		String filePath = casePath + "ProcessTest.xlsx";
 		String sheetName = "CaseList";
 		ExcelReader excel = new ExcelReader();
-		List<Map<String, String>> caseList = excel.mapList(1,filePath, sheetName);
+		List<Map<String, Object>> caseList = excel.mapList(1,filePath, sheetName);
 		List<Object[]> test_IDs = new ArrayList<Object[]>();
 
-		for (Map<String, String> baseData:caseList) {
+		for (Map<String, Object> baseData:caseList) {
 			test_IDs.add(new Object[]{baseData});
 		}
 		
@@ -116,48 +114,48 @@ public class BaseTest {
 		String filePath = getSrcDir()+"/case/"+method.getName()+".xlsx";
 		String sheetName = "Params";
 		ExcelReader excel = new ExcelReader();
-		List<Map<String, String>> caseList = excel.mapList(1,filePath, sheetName);
+		List<Map<String, Object>> caseList = excel.mapList(1,filePath, sheetName);
 		
 		List<Object[]> test_IDs = new ArrayList<Object[]>();
-		for (Map<String, String> params:caseList) {
+		for (Map<String, Object> params:caseList) {
 			test_IDs.add(new Object[]{params});
 		}
 		
 		return test_IDs.iterator();
 	}
 	
-	public void setParams(String api,Map<String, String> paramsMap) {
+	public void setParams(String api,Map<String, Object> paramsMap) {
 	
-		String caseName = paramsMap.get("Case");
+		String caseName = paramsMap.get("Case").toString();
 		String file = getSrcDir()+"/case/"+method.getName()+".xlsx";
 		Parameter parameter = new Parameter();
-		Map<String, String> baseMap = parameter.setUrlData(file, api);
+		Map<String, Object> baseMap = parameter.setUrlData(file, api);
 		
 
-		Map<String, String> expectedMap = parameter.setExpectedMap(file, caseName);
+		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
 		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
-		expectedJson = expectedMap.get("Path");
+		expectedJson = expectedMap.get("Path").toString();
 		equalResponse(saveResponseBody(response), expectedJson);
 	}
 
 	public void setParams(String api,String filePath,String caseName) {
 		
 		Parameter parameter = new Parameter();
-		Map<String, String> baseMap = parameter.setUrlData(filePath, api);
+		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
 		
-		Map<String, String> paramsMap = parameter.setParams(filePath, caseName);
+		Map<String, Object> paramsMap = parameter.setParams(filePath, caseName);
 		if(paramsMap.containsKey("token")){	
 			paramsMap.put("token", token);
 		}
 
-		Map<String, String> expectedMap = parameter.setExpectedMap(filePath, caseName);
+		Map<String, Object>expectedMap  = parameter.setExpectedMap(filePath, caseName);
 		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		
-		equalResponse(saveResponseBody(response), expectedMap.get("Path"));
+		equalResponse(saveResponseBody(response), expectedMap.get("Path").toString());
 	}
 	
 	@Step
@@ -176,10 +174,10 @@ public class BaseTest {
 		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
 	
-	@Attachment(value = "Response.Body",type = "String")
+//	@Attachment(value = "Response.Body",type = "String")
 	public String saveResponseBody(Response response) {
 		String body = response.getBody().asString();
-		Allure.addAttachment("Response.body", body);
+//		Allure.addAttachment("Response.body", body);
 		
 		while(body.charAt(0)!='{'){
 			body = body.substring(1, body.length());

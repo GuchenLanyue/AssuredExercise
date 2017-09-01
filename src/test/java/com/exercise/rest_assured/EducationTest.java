@@ -16,7 +16,7 @@ import io.restassured.path.json.JsonPath;
 public class EducationTest extends BaseTest{
 
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
-	public void addEducationTest(Map<String,String> params){
+	public void addEducationTest(Map<String,Object> params){
 		params.put("token", getToken());
 		setParams("education", params);
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
@@ -28,7 +28,7 @@ public class EducationTest extends BaseTest{
 	
 	@Test(dataProvider = "SingleCase",description="编辑教育背景信息")
 	@Description("修改教育背景信息")
-	public void editEducationTest(Map<String,String> params){
+	public void editEducationTest(Map<String,Object> params){
 		
 		Education education = new Education();
 		List<String> ids = education.getEducations(getToken());

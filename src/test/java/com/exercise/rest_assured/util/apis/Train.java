@@ -45,12 +45,12 @@ public class Train {
 	@Description("获取培训信息")
 	public String getTrain(String token,String id,String srcDir){
 		
-		Map<String, String> baseMap = new HashMap<>();
+		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getTrain.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "gettrain");
 		
-		Map<String, String> paramsMap = new HashMap<>();
+		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
 		paramsMap.put("id", id);
 		

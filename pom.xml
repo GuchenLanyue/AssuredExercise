@@ -126,6 +126,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+	<!--  
 	<reporting>
 		<excludeDefaults>true</excludeDefaults>
 		<plugins>
@@ -136,4 +137,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	-->
 </project>

@@ -7,10 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
+
 import com.exercise.rest_assured.util.HttpMethods;
 import com.exercise.rest_assured.util.Parameter;
 import com.exercise.rest_assured.utils.TextData;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
@@ -23,9 +26,9 @@ public class Education {
 	
 	@Step
 	@Description("添加教育背景信息")
-	public void addEducation(Map<String, String> params,String srcDir){
+	public void addEducation(Map<String, Object> params,String srcDir){
 		
-		Map<String, String> baseMap = new HashMap<>();
+		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\addEducationTest.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "education");
@@ -44,8 +47,8 @@ public class Education {
 	
 	@Step
 	@Description("修改教育背景信息")
-	public Response editEducation(Map<String, String> params,String srcDir){
-		Map<String, String> baseMap = new HashMap<>();
+	public Response editEducation(Map<String, Object> params,String srcDir){
+		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\editEducationTest.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "education");
@@ -59,7 +62,7 @@ public class Education {
 	@Step
 	@Description("删除教育背景信息")
 	public void delEducation(String token, String id) {
-		given()
+		Response response = given()
 //			.proxy("http://127.0.0.1:8888")
 			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.param("token", token)
@@ -67,19 +70,28 @@ public class Education {
 		.when()
 			.post("http://nchr.release.microfastup.com/nchr/personresume/deleducation")
 		.then()
-			.statusCode(200);
+//			.statusCode(200)
+		.extract()
+			.response();
+		
+		if (response.getStatusCode()!=200) {
+			// TODO: handle exception
+			String body = response.getBody().asString();
+			Allure.addAttachment("/personresume/deleducation.Response.body:", body);
+			Assert.fail("/personresume/deleducation 请求失败！");
+		}
 	}
 	
 	@Step
 	@Description("获取教育背景信息")
 	public String getEducation(String token,String id,String srcDir){
 		
-		Map<String, String> baseMap = new HashMap<>();
+		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getEducation.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "geteducation");
 		
-		Map<String, String> paramsMap = new HashMap<>();
+		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
 		paramsMap.put("id", id);
 		
@@ -103,6 +115,14 @@ public class Education {
 				.statusCode(200)
 			.extract()
 				.response();
+		
+		if (response.getStatusCode()!=200) {
+			// TODO: handle exception
+			String body = response.getBody().asString();
+			Allure.addAttachment("/personresume/geteducations.Response.body:", body);
+			Assert.fail("/personresume/geteducations 请求失败！");
+		}
+		
 		String json = response.asString();
 		
 		while (json.charAt(0)!='{') {

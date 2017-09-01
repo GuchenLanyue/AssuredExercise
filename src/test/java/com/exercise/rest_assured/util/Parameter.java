@@ -14,18 +14,18 @@ public class Parameter {
 	
 	@Step
 	@Description("从excel中读取url数据")
-	public Map<String, String> setUrlData(String filePath,String api){
+	public Map<String, Object> setUrlData(String filePath,String api){
 		ExcelReader baseExcel = new ExcelReader(filePath, "Base", api);
-		Map<String, String> baseMap = baseExcel.getCaseMap();
+		Map<String, Object> baseMap = baseExcel.getCaseMap();
 		
 		return baseMap;
 	}
 	
 	@Step
 	@Description("从excel中读取params数据")
-	public Map<String, String> setParams(String filePath,String caseName){
+	public Map<String, Object> setParams(String filePath,String caseName){
 		ExcelReader paramsExcel = new ExcelReader(filePath, "Params", caseName);
-		Map<String, String> paramsMap = paramsExcel.getCaseMap();
+		Map<String, Object> paramsMap = paramsExcel.getCaseMap();
 		paramsMap.remove("Case");
 		
 		return paramsMap;
@@ -33,9 +33,9 @@ public class Parameter {
 	
 	@Step
 	@Description("从excel中读取expected数据")
-	public Map<String, String> setExpectedMap(String filePath,String caseName){
+	public Map<String, Object> setExpectedMap(String filePath,String caseName){
 		ExcelReader expectedExcel = new ExcelReader(filePath, "Expected", caseName);
-		Map<String, String> expectedMap = expectedExcel.getCaseMap();
+		Map<String, Object> expectedMap = expectedExcel.getCaseMap();
 		
 		return expectedMap;
 	}

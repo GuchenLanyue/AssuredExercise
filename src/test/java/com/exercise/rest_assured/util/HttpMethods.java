@@ -8,12 +8,13 @@ import org.testng.Assert;
 
 import com.exercise.rest_assured.util.BaseTest.RequestMethod;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
 public class HttpMethods {
 	@Step
-	public Response request(Map<String, String> baseMap,Map<String, String> paramsMap) {
+	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		Response response = null;
 		RequestMethod method = null;
 		
@@ -28,36 +29,43 @@ public class HttpMethods {
 		switch (method) {
 		case POST:
 			response = given()
-				.proxy("127.0.0.1", 8888)
-//				.log().all()
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.params(paramsMap)
-			.when()
-				.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
-			.then()
-//				.log().body()
-				.statusCode(200)
-			.extract()
-				.response();
-
+					.proxy("127.0.0.1", 8888)
+//						.log().all()
+					.contentType("application/x-www-form-urlencoded;charset=UTF-8")
+					.params(paramsMap)
+				.when()
+					.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+				.then()
+//					.log().body()
+//					.statusCode(200)
+				.extract()
+					.response();
+			
 			break;
-		case GET:
+		case GET:	
 			response = given()
-//				.proxy("127.0.0.1", 8888)
-//				.log().params()
-				.contentType(baseMap.get("contentType"))
-				.params(paramsMap)
-			.when()
-				.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
-			.then()
-//				.log().body()
-				.statusCode(200)
-			.extract()
-				.response();
-
+//						.proxy("127.0.0.1", 8888)
+//						.log().params()
+					.contentType(baseMap.get("contentType").toString())
+					.params(paramsMap)
+				.when()
+					.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+				.then()
+//					.log().body()
+//					.statusCode(200)
+				.extract()
+					.response();
+			
 			break;
 		default:
 			break;
+		}
+		
+		if (response.getStatusCode()!=200) {
+			// TODO: handle exception
+			String body = response.getBody().asString();
+			Allure.addAttachment(baseMap.get("path")+".Response.body:", body);
+			Assert.fail(baseMap.get("path")+"请求失败！");
 		}
 		
 		return response;

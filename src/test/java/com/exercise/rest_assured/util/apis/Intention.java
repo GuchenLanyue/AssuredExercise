@@ -3,6 +3,7 @@ package com.exercise.rest_assured.util.apis;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,31 +20,38 @@ import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-public class Job {
+public class Intention {
 	
-	private int positions = 1;
-	private int position = 1;
+	private String industry;
 	
-	public Job() {
+	public Intention() {
 		// TODO Auto-generated constructor stub
-		setPositionData();
+		setIndustry();
 	}
 	
-	public void addJob(Map<String, String> params){
+	public void addProject(Map<String, String> params){
 		
 	}
 	
 	
-	public String getposition(){
+	public String getindustry(){
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getposition")
+				.post("http://nchr.release.microfastup.com/nchr/basics/getindustry")
 			.then()
-				.statusCode(200)
+//				.statusCode(200)
 			.extract()
 				.response();
+		
+		if (response.getStatusCode()!=200) {
+			// TODO: handle exception
+			String body = response.getBody().asString();
+			Allure.addAttachment("/basics/getindustry.Response.body:", body);
+			Assert.fail("/basics/getindustry 请求失败！");
+		}
+		
 		String json = response.asString();
 		
 		while (json.charAt(0)!='{') {
@@ -54,14 +62,14 @@ public class Job {
 	}
 	
 	@Step
-	public List<String> getJobs(String token){
+	public List<String> getIntentions(String token){
 		
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/getjobs")
+				.post("http://nchr.release.microfastup.com/nchr/personresume/getintentions")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -70,8 +78,8 @@ public class Job {
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
 			String body = response.getBody().asString();
-			Allure.addAttachment("/personresume/getjobs.Response.body:", body);
-			Assert.fail("/personresume/getjobs 请求失败！");
+			Allure.addAttachment("/personresume/getintentions.Response.body:", body);
+			Assert.fail("/personresume/getintentions 请求失败！");
 		}
 		
 		String json = response.asString();
@@ -85,29 +93,27 @@ public class Job {
 		return jobIDs;
 	}
 	
-	public void setPositionData(){
-		JsonPath json = new JsonPath(getposition());
-		List<String> positionList = json.getList("value.value");
-		Random random = new Random();
+	public void setIndustry(){
+		JsonPath json = new JsonPath(getindustry());
+		Map<String, Object> industrys = json.get("value");
+		List<String> keys = new ArrayList<>();
+		for(String key:industrys.keySet()){
+			keys.add(key);
+		}
 		
-		int index = random.nextInt(positionList.size());
-        position = Integer.valueOf(positionList.get(index).toString()).intValue();
-        
-        String path = "value["+index+"].children";
-        List<Map<String, String>> positionsList = json.getList(path);
-        index = random.nextInt(positionsList.size());
-        Map<String, String> children = positionsList.get(index);
-        positions = Integer.valueOf(children.get("value")).intValue();
+		Random random = new Random();
+		int index = random.nextInt(keys.size());
+        industry = keys.get(index);
 	}
 
 	@Step
-	@Description("获取工作经验")
-	public String getJob(String token,String id,String srcDir){
+	@Description("获取项目经验")
+	public String getIntention(String token,String id,String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\getJob.xlsx";
+		String file = srcDir + "\\case\\getIntention.xlsx";
 		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "getjob");
+		baseMap = parameter.setUrlData(file, "getintention");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
@@ -122,14 +128,14 @@ public class Job {
 	
 	@Step
 	@Description("删除工作经验")
-	public void delJob(String token, String id) {
+	public void delIntention(String token, String id) {
 		Response response = given()
 //			.proxy("http://127.0.0.1:8888")
 			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.param("token", token)
 			.param("id", id)
 		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/deljob")
+			.post("http://nchr.release.microfastup.com/nchr/personresume/delintention")
 		.then()
 //			.statusCode(200)
 		.extract()
@@ -138,16 +144,8 @@ public class Job {
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
 			String body = response.getBody().asString();
-			Allure.addAttachment("/personresume/deljob.Response.body:", body);
-			Assert.fail("/personresume/deljob 请求失败！");
+			Allure.addAttachment("/personresume/delintention.Response.body:", body);
+			Assert.fail("/personresume/delintention 请求失败！");
 		}
-	}
-	
-	public int getPositions() {
-		return positions;
-	}
-
-	public int getPosition() {
-		return position;
 	}
 }

@@ -16,7 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.Assert;
 
 public class ExcelReader {
-	private HashMap<String, String> map = null;
+	private HashMap<String, Object> map = null;
 	
 	public ExcelReader() {
 		// TODO Auto-generated constructor stub
@@ -32,7 +32,7 @@ public class ExcelReader {
 		map = mapFromSheet(path, sheetName, caseName);
 	}
 	
-	public HashMap<String, String> getCaseMap(){
+	public HashMap<String, Object> getCaseMap(){
 		return map;
 	}
 	
@@ -65,13 +65,13 @@ public class ExcelReader {
 	 * @param caseName 用例名
 	 * @return HashMap<key,value> key:首行cell的值，value:指定行cell的值
 	 * */
-	public HashMap<String, String> mapFromSheet(String fileName, String sheetName, String caseName){
+	public HashMap<String, Object> mapFromSheet(String fileName, String sheetName, String caseName){
 		
 		Workbook workbook = null;
 		Sheet sheet = null;
 		int rowNum = 0;
 		
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			workbook = setWorkbook(fileName);
 		} catch (IOException e) {
@@ -119,12 +119,12 @@ public class ExcelReader {
 	 * @param caseName 用例名
 	 * @return HashMap<key,value> key:首行cell的值，value:指定行cell的值
 	 * */
-	public HashMap<String, String> rowMap(String fileName, String sheetName, int rowNum){
+	public HashMap<String, Object> rowMap(String fileName, String sheetName, int rowNum){
 		
 		Workbook workbook = null;
 		Sheet sheet = null;
 		
-		HashMap<String, String> map = new HashMap<String, String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			workbook = setWorkbook(fileName);
 		} catch (IOException e) {
@@ -156,11 +156,11 @@ public class ExcelReader {
 		return caseData;
 	}
 	
-	public List<Map<String, String>> mapList(int firstRow,String filePath,String sheetName){
+	public List<Map<String, Object>> mapList(int firstRow,String filePath,String sheetName){
 		Workbook wb = null;
 		Sheet sheet = null;
 		int rows = 0;
-		List<Map<String, String>> caseList= new ArrayList<Map<String,String>>();
+		List<Map<String, Object>> caseList= new ArrayList<Map<String,Object>>();
 		
 		try {
 			wb = setWorkbook(filePath);

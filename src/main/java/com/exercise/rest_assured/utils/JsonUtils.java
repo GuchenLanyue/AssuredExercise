@@ -1,6 +1,7 @@
 package com.exercise.rest_assured.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
@@ -30,7 +31,11 @@ public class JsonUtils {
 	
 	@Step
 	public void equalsJson(String file, JsonPath responseJson){
+		File input = new File(file);
+		Assert.assertTrue(input.exists(),"文件"+file+"不存在");
+		
 		JsonPath expectedJson = jsonReader(file);
+		
 		List<JsonPath> expectedList = expectedJson.getList("expected");
 		BufferedReader br = null;
 		
