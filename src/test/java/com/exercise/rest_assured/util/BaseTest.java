@@ -61,7 +61,8 @@ public class BaseTest {
 	
 	@BeforeTest
 	public void BeforeTest(ITestContext context) {
-		System.out.println("开始测试");
+		System.out.println(context.getName()+" Start!");
+//		long starttime = System.currentTimeMillis();
 		srcDir = setSrcDir(context);
 		Login login = new Login();
 		User user = new User();
@@ -137,7 +138,7 @@ public class BaseTest {
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		expectedJson = expectedMap.get("Path").toString();
-		equalResponse(saveResponseBody(response), expectedJson);
+		checkResponse(saveResponseBody(response), expectedJson);
 	}
 
 	public void setParams(String api,String filePath,String caseName) {
@@ -155,11 +156,11 @@ public class BaseTest {
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		
-		equalResponse(saveResponseBody(response), expectedMap.get("Path").toString());
+		checkResponse(saveResponseBody(response), expectedMap.get("Path").toString());
 	}
 	
-	@Step
-	public void equalResponse(String response, String path) {
+	@Step("checkResponse() 校验response")
+	public void checkResponse(String response, String path) {
 		
 		//部分接口返回的response首字母不是“{”，不符合json格式，在这里处理一下
 		while (response.charAt(0) != '{') {
@@ -188,7 +189,7 @@ public class BaseTest {
 	}
 	
 	@AfterTest
-	public void AfterTest() {
-		System.out.println("测试完毕");
+	public void AfterTest(ITestContext context) {
+		System.out.println(context.getName()+" End!");
 	}
 }

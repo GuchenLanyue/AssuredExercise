@@ -23,7 +23,7 @@ public class EducationTest extends BaseTest{
 		String id = json.getString("id");
 		Education education = new Education();
 		String actualJson = education.getEducation(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="编辑教育背景信息")
@@ -47,7 +47,7 @@ public class EducationTest extends BaseTest{
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		id = json.getString("id");
 		String actualJson = education.getEducation(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(description = "删除教育背景信息")

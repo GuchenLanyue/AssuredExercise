@@ -6,7 +6,6 @@ import static io.restassured.path.json.JsonPath.from;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.testng.Assert;
 
@@ -16,41 +15,19 @@ import com.exercise.rest_assured.util.Parameter;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Job {
 	
-	private int positions = 1;
-	private int position = 1;
+	private BaseInfo baseInfo = new BaseInfo();
 	
 	public Job() {
 		// TODO Auto-generated constructor stub
-		setPositionData();
+		baseInfo.setPositionData();
 	}
 	
 	public void addJob(Map<String, String> params){
 		
-	}
-	
-	
-	public String getposition(){
-		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getposition")
-			.then()
-				.statusCode(200)
-			.extract()
-				.response();
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-		
-		return json;
 	}
 	
 	@Step
@@ -83,21 +60,6 @@ public class Job {
 		List<String> jobIDs = from(json).getList("value.id");
 		
 		return jobIDs;
-	}
-	
-	public void setPositionData(){
-		JsonPath json = new JsonPath(getposition());
-		List<String> positionList = json.getList("value.value");
-		Random random = new Random();
-		
-		int index = random.nextInt(positionList.size());
-        position = Integer.valueOf(positionList.get(index).toString()).intValue();
-        
-        String path = "value["+index+"].children";
-        List<Map<String, String>> positionsList = json.getList(path);
-        index = random.nextInt(positionsList.size());
-        Map<String, String> children = positionsList.get(index);
-        positions = Integer.valueOf(children.get("value")).intValue();
 	}
 
 	@Step
@@ -144,10 +106,11 @@ public class Job {
 	}
 	
 	public int getPositions() {
-		return positions;
+		return baseInfo.getPositions();
 	}
 
 	public int getPosition() {
-		return position;
+		return baseInfo.getPosition();
 	}
+	
 }

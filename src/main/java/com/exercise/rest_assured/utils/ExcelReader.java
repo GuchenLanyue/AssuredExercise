@@ -15,6 +15,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.Assert;
 
+import io.qameta.allure.Allure;
+
 public class ExcelReader {
 	private HashMap<String, Object> map = null;
 	
@@ -48,10 +50,26 @@ public class ExcelReader {
 			throw new IllegalArgumentException("参数错误!!!") ;
 		}
 		if(filePath.trim().toLowerCase().endsWith("xls")) {
-			wb = new HSSFWorkbook(new FileInputStream(filePath));
+			FileInputStream xlsxFile = null;
+			try {
+				xlsxFile = new FileInputStream(filePath);
+			} catch (Exception e) {
+				// TODO: handle exception
+				Allure.addAttachment("创建excel对象发生错误：", e.toString());
+				e.printStackTrace();
+			}
+			wb = new HSSFWorkbook(xlsxFile);
 			return wb ;
 		} else if(filePath.trim().toLowerCase().endsWith("xlsx")) {
-			wb = new XSSFWorkbook(new FileInputStream(filePath));
+			FileInputStream xlsxFile = null;
+			try {
+				xlsxFile = new FileInputStream(filePath);
+			} catch (Exception e) {
+				// TODO: handle exception
+				Allure.addAttachment("创建excel对象发生错误：", e.toString());
+				e.printStackTrace();
+			}
+			wb = new XSSFWorkbook(xlsxFile);
 			return wb ;
 		} else {
 			throw new IllegalArgumentException("不支持除：xls/xlsx以外的文件格式!!! "+filePath) ;
@@ -94,7 +112,7 @@ public class ExcelReader {
 			}
 		}
 		
-		Assert.assertTrue(rowNum!=0, "没有在"+fileName+"中找到Case："+caseName+"!");
+		Assert.assertTrue(rowNum!=0, "没有在"+fileName+"/"+sheetName+"中找到Case："+caseName+"!");
 		
 		for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
 			if (sheet.getRow(0).getCell(i).toString()==null) {

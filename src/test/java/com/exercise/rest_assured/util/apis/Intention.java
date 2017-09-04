@@ -3,11 +3,9 @@ package com.exercise.rest_assured.util.apis;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.testng.Assert;
 
@@ -21,51 +19,26 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Intention {
-	
-	private String industry;
+	private BaseInfo baseInfo = new BaseInfo();
+	private String id = null;
 	
 	public Intention() {
 		// TODO Auto-generated constructor stub
-		setIndustry();
+		//设置行业
+		baseInfo.setIndustry();
+		//设置职位
+		baseInfo.setPositionData();
+		//设置地区
+		baseInfo.setArea();
+		//设置期望薪资
+		baseInfo.setSalary();
 	}
 	
-	public void addProject(Map<String, String> params){
-		
-	}
-	
-	
-	public String getindustry(){
-		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getindustry")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
-		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getindustry.Response.body:", body);
-			Assert.fail("/basics/getindustry 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-		
-		return json;
-	}
-	
-	@Step
+	@Step("getIntentions() 获取求职意向列表")
 	public List<String> getIntentions(String token){
 		
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()
@@ -88,27 +61,14 @@ public class Intention {
 			json = json.substring(1, json.length());
 		}
 		
-		List<String> jobIDs = from(json).getList("value.id");
+		List<String> intentionIDs = from(json).getList("value.id");
 		
-		return jobIDs;
-	}
-	
-	public void setIndustry(){
-		JsonPath json = new JsonPath(getindustry());
-		Map<String, Object> industrys = json.get("value");
-		List<String> keys = new ArrayList<>();
-		for(String key:industrys.keySet()){
-			keys.add(key);
-		}
-		
-		Random random = new Random();
-		int index = random.nextInt(keys.size());
-        industry = keys.get(index);
+		return intentionIDs;
 	}
 
 	@Step
-	@Description("获取项目经验")
-	public String getIntention(String token,String id,String srcDir){
+	@Description("获取求职意向")
+	public String getIntention(String token, String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getIntention.xlsx";
@@ -127,10 +87,10 @@ public class Intention {
 	}
 	
 	@Step
-	@Description("删除工作经验")
+	@Description("删除求职意向")
 	public void delIntention(String token, String id) {
 		Response response = given()
-//			.proxy("http://127.0.0.1:8888")
+			.proxy("http://127.0.0.1:8888")
 			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.param("token", token)
 			.param("id", id)
@@ -147,5 +107,76 @@ public class Intention {
 			Allure.addAttachment("/personresume/delintention.Response.body:", body);
 			Assert.fail("/personresume/delintention 请求失败！");
 		}
+	}
+	
+	@Step("checkIntention() 校验求职意向")
+	public void checkIntention(String jsonStr){
+		JsonPath json = new JsonPath(jsonStr).setRoot("value");
+		int position = Integer.valueOf(json.getString("position")).intValue();
+		int positions = Integer.valueOf(json.getString("positions")).intValue();
+		String industry =json.getString("industry");
+		String salary = json.getString("salary");
+		int provice = Integer.valueOf(json.getString("provice")).intValue();
+		int city = Integer.valueOf(json.getString("city")).intValue();
+		int district = Integer.valueOf(json.getString("district")).intValue();
+		id = json.getString("id");
+		
+		Assert.assertTrue(getPosition()==position,"position expected:"+getPosition()+"/"+position);
+		Assert.assertTrue(getPositions()==positions,"positions expected:"+getPositions()+"/"+positions);
+		Assert.assertTrue(getIndustry().equals(industry),"industry expected:"+getIndustry()+"/"+industry);
+		Assert.assertTrue(getSalary().equals(salary),"salary expected:"+getSalary()+"/"+salary);
+		Assert.assertTrue(getProvince()==provice,"provice expected:"+getProvince()+"/"+provice);
+		Assert.assertTrue(getCity()==city,"city expected:"+getCity()+"/"+city);
+		Assert.assertTrue(getDistrict()==district,"district expected:"+getDistrict()+"/"+district);
+	}
+	
+	public void setID(String token){
+		List<String> ids = getIntentions(token);
+
+		if (ids.size() > 0) {
+			id = ids.get(0);
+		} else {
+			Assert.fail("当前没有添加任何求职意向，无法编辑");
+		}
+	}
+	
+	@Description("获取行业")
+	public String getIndustry() {
+
+		return baseInfo.getIndustry();
+	}
+	
+	public int getPositions() {
+		
+		return baseInfo.getPositions();
+	}
+	
+	public int getPosition() {
+		
+		return baseInfo.getPosition();
+	}
+	
+	public int getProvince() {
+		
+		return baseInfo.getProvice();
+	}
+
+	public int getCity() {
+		
+		return baseInfo.getCity();
+	}
+
+	public int getDistrict() {
+		
+		return baseInfo.getDistrict();
+	}
+	
+	public String getSalary(){
+		
+		return baseInfo.getSalary();
+	}
+	
+	public String getID(){
+		return id;
 	}
 }

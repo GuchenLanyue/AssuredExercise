@@ -33,7 +33,7 @@ public class JobTest extends BaseTest{
 		
 		String id = json.getString("id");
 		String actualJson = job.getJob(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(dataProvider="SingleCase",description="修改工作经验")
@@ -56,7 +56,7 @@ public class JobTest extends BaseTest{
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		id = json.getString("id");
 		String actualJson = job.getJob(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(description = "删除工作经验")

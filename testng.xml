@@ -70,9 +70,28 @@
 		<classes>
 			<class name="com.exercise.rest_assured.JobTest">
 				<methods>
-					<include name="addJobTest" />
-					<include name="editJobTest" />
-					<include name="delJobTest" />
+					<exclude name="addJobTest" />
+					<exclude name="editJobTest" />
+					<exclude name="delJobTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="IntentionTest" preserve-order="true">
+		<groups>
+			<define name="Intention">
+				<include name="addIntentionTest" />
+				<include name="editIntentionTest" />
+				<include name="delIntentionTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.IntentionTest">
+				<methods>
+					<include name="addIntentionTest" />
+					<include name="editIntentionTest" />
+					<include name="delIntentionTest" />
 				</methods>
 			</class>
 		</classes>

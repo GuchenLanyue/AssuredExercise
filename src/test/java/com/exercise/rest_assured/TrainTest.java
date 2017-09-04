@@ -23,7 +23,7 @@ public class TrainTest extends BaseTest{
 		String id = json.getString("id");
 		Train train = new Train();
 		String actualJson = train.getTrain(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="修改培训信息")
@@ -42,7 +42,7 @@ public class TrainTest extends BaseTest{
 		setParams("train", params);
 		
 		String actualJson = train.getTrain(getToken(), id, getSrcDir());
-		equalResponse(actualJson, getExpectedJson());
+		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(description="删除培训信息")

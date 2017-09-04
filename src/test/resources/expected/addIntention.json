@@ -1,0 +1,11 @@
+{
+  "case": "addIntention",
+  "expected": [
+    {
+      "root": "",
+      "values": {
+        "msg": "success"
+      }
+    }
+  ]
+}
