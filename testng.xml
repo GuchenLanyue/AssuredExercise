@@ -6,21 +6,6 @@
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
 
-	<test name="AllApi" preserve-order="true">
-		<groups>
-			<define name="Process">
-				<include name="ProcessTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.AssuredTest">
-				<methods>
-					<exclude name="ProcessTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
 	<test name="education" preserve-order="true">
 		<groups>
 			<define name="EditEducation">
@@ -32,9 +17,9 @@
 		<classes>
 			<class name="com.exercise.rest_assured.EducationTest">
 				<methods>
-					<exclude name="addEducationTest" />
-					<exclude name="editEducationTest" />
-					<exclude name="delEducationTest" />
+					<include name="addEducationTest" />
+					<include name="editEducationTest" />
+					<include name="delEducationTest" />
 				</methods>
 			</class>
 		</classes>
@@ -51,9 +36,9 @@
 		<classes>
 			<class name="com.exercise.rest_assured.TrainTest">
 				<methods>
-					<exclude name="addTrainTest" />
-					<exclude name="editTrainTest" />
-					<exclude name="delTrainTest" />
+					<include name="addTrainTest" />
+					<include name="editTrainTest" />
+					<include name="delTrainTest" />
 				</methods>
 			</class>
 		</classes>
@@ -70,9 +55,9 @@
 		<classes>
 			<class name="com.exercise.rest_assured.JobTest">
 				<methods>
-					<exclude name="addJobTest" />
-					<exclude name="editJobTest" />
-					<exclude name="delJobTest" />
+					<include name="addJobTest" />
+					<include name="editJobTest" />
+					<include name="delJobTest" />
 				</methods>
 			</class>
 		</classes>
@@ -92,6 +77,36 @@
 					<include name="addIntentionTest" />
 					<include name="editIntentionTest" />
 					<include name="delIntentionTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="EvaluationTest" preserve-order="true">
+		<groups>
+			<define name="Evaluation">
+				<include name="evaluationTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.EvaluationTest">
+				<methods>
+					<include name="evaluationTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Process" preserve-order="true">
+		<groups>
+			<define name="Process">
+				<include name="processTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.ProcessTest">
+				<methods>
+					<include name="processTest" />
 				</methods>
 			</class>
 		</classes>

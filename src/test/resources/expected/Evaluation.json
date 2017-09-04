@@ -1,0 +1,11 @@
+{
+  "case": "add",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "evaluation": "青青草原最年轻，最智慧，最英俊的狼大王~"
+      }
+    }
+  ]
+}
