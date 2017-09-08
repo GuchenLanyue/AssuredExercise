@@ -15,9 +15,9 @@ import io.restassured.path.json.JsonPath;
 public class TrainTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建培训信息")
 	@Description("创建培训信息")
-	public void addTrainTest(Map<String,Object> params){
+	public void add_Train_Test(Map<String,Object> params){
 		params.put("token", getToken());
-		setParams("train", params);
+		setRequest("train", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		String id = json.getString("id");
@@ -28,7 +28,7 @@ public class TrainTest extends BaseTest{
 	
 	@Test(dataProvider = "SingleCase",description="修改培训信息")
 	@Description("修改培训信息")
-	public void editTrainTest(Map<String,Object> params){
+	public void edit_Train_Test(Map<String,Object> params){
 		Train train = new Train();
 		List<String> ids = train.getTrains(getToken());
 		String id = null;
@@ -39,7 +39,7 @@ public class TrainTest extends BaseTest{
 		}
 		params.put("id", id);
 		params.put("token", getToken());
-		setParams("train", params);
+		setRequest("train", params);
 		
 		String actualJson = train.getTrain(getToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());

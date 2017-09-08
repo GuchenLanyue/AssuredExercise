@@ -21,17 +21,21 @@ import io.restassured.response.Response;
 public class Intention {
 	private BaseInfo baseInfo = new BaseInfo();
 	private String id = null;
+	private int[] positionData = setPosition();
+	private int[] area = null;
 	
 	public Intention() {
 		// TODO Auto-generated constructor stub
 		//设置行业
 		baseInfo.setIndustry();
 		//设置职位
-		baseInfo.setPositionData();
+		baseInfo.setPosition();
 		//设置地区
 		baseInfo.setArea();
 		//设置期望薪资
 		baseInfo.setSalary();
+		
+		area = setArea();
 	}
 	
 	@Step("getIntentions() 获取求职意向列表")
@@ -146,29 +150,39 @@ public class Intention {
 		return baseInfo.getIndustry();
 	}
 	
-	public int getPositions() {
+	public int[] setPosition() {
 		
-		return baseInfo.getPositions();
+		return baseInfo.getPositionData();
+	}
+	
+	public int[] setArea() {
+		
+		return baseInfo.getArea();
 	}
 	
 	public int getPosition() {
 		
-		return baseInfo.getPosition();
+		return positionData[0];
+	}
+	
+	public int getPositions() {
+		
+		return positionData[1];
 	}
 	
 	public int getProvince() {
 		
-		return baseInfo.getProvice();
+		return area[0];
 	}
-
+	
 	public int getCity() {
 		
-		return baseInfo.getCity();
+		return area[1];
 	}
-
+	
 	public int getDistrict() {
 		
-		return baseInfo.getDistrict();
+		return area[2];
 	}
 	
 	public String getSalary(){

@@ -17,12 +17,12 @@ public class JobTest extends BaseTest{
 	
 	@Test(dataProvider="SingleCase",description="增加工作经验")
 	@Issue("080")
-	public void addJobTest(Map<String, Object> params){
+	public void add_Job_Test(Map<String, Object> params){
 		Job job = new Job();
 		params.put("position", job.getPosition());
 		params.put("positions", job.getPositions());
 		params.put("token", getToken());
-		setParams("job", params);
+		setRequest("job", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		int position = Integer.valueOf(json.getString("position")).intValue();
@@ -37,7 +37,7 @@ public class JobTest extends BaseTest{
 	}
 	
 	@Test(dataProvider="SingleCase",description="修改工作经验")
-	public void editJobTest(Map<String, Object> params){
+	public void edit_Job_Test(Map<String, Object> params){
 		Job job = new Job();
 		List<String> ids = job.getJobs(getToken());
 		
@@ -51,7 +51,7 @@ public class JobTest extends BaseTest{
 		params.put("token", getToken());
 		params.put("id", id);
 		
-		setParams("job", params);
+		setRequest("job", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		id = json.getString("id");

@@ -19,6 +19,6 @@ public class ProcessTest extends BaseTest {
 		String api = baseData.get("API").toString();
 		String filePath = getSrcDir()+"/case/"+baseData.get("FilePath");
 		String caseName = baseData.get("Case").toString();
-		setParams(api,filePath, caseName);
+		setRequest(api,filePath, caseName);
 	}
 }

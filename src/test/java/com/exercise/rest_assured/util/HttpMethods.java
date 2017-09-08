@@ -29,9 +29,13 @@ public class HttpMethods {
 		switch (method) {
 		case POST:
 			response = given()
-					.proxy("127.0.0.1", 8888)
+//					.proxy("127.0.0.1", 8888)
 //						.log().all()
-					.contentType("application/x-www-form-urlencoded;charset=UTF-8")
+					.header("Accept", "application/json")
+					.header("Accept-Encoding", "gzip, deflate")
+					.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+					.header("Cache-Control", "no-cache")
+					.contentType("application/x-www-form-urlencoded;UTF-8")
 					.params(paramsMap)
 				.when()
 					.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))

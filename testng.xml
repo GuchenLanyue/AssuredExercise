@@ -5,108 +5,19 @@
 	<parameter name="sourcesDir" value="/src/test/resources" />
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
-
-	<test name="education" preserve-order="true">
-		<groups>
-			<define name="EditEducation">
-				<include name="addEducationTest" />
-				<include name="editEducationTest" />
-				<include name="delEducationTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.EducationTest">
-				<methods>
-					<include name="addEducationTest" />
-					<include name="editEducationTest" />
-					<include name="delEducationTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
-	<test name="TrainTest" preserve-order="true">
-		<groups>
-			<define name="Train">
-				<include name="addTrainTest" />
-				<include name="editTrainTest" />
-				<include name="delTrainTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.TrainTest">
-				<methods>
-					<include name="addTrainTest" />
-					<include name="editTrainTest" />
-					<include name="delTrainTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-
-	<test name="JobTest" preserve-order="true">
-		<groups>
-			<define name="Job">
-				<include name="addJobTest" />
-				<include name="editJobTest" />
-				<include name="delJobTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.JobTest">
-				<methods>
-					<include name="addJobTest" />
-					<include name="editJobTest" />
-					<include name="delJobTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
 	
-	<test name="IntentionTest" preserve-order="true">
+	<test name="Basic" preserve-order="true">
 		<groups>
-			<define name="Intention">
-				<include name="addIntentionTest" />
-				<include name="editIntentionTest" />
-				<include name="delIntentionTest" />
+			<define name="Basic">
+			    <include name="add_Basic_Test" />
+				<include name="edit_Basic_Test" />
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.IntentionTest">
+			<class name="com.exercise.rest_assured.BasicTest">
 				<methods>
-					<include name="addIntentionTest" />
-					<include name="editIntentionTest" />
-					<include name="delIntentionTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
-	<test name="EvaluationTest" preserve-order="true">
-		<groups>
-			<define name="Evaluation">
-				<include name="evaluationTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.EvaluationTest">
-				<methods>
-					<include name="evaluationTest" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
-	<test name="Process" preserve-order="true">
-		<groups>
-			<define name="Process">
-				<include name="processTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.ProcessTest">
-				<methods>
-					<include name="processTest" />
+				    <exclude name="add_Basic_Test" />
+					<include name="edit_Basic_Test" />
 				</methods>
 			</class>
 		</classes>

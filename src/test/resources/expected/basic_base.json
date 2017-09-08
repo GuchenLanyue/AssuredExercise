@@ -1,0 +1,17 @@
+{
+  "case": "Basic",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "灰太狼大王",
+        "head_img": "/attach/image/object/201708/16/20170816113200_36042.jpg",
+        "signature": "别看爷只是一只狼，狼儿的聪明难以想象~",
+        "tel": "0105321123",
+        "phone": "18612819427",
+        "email": "sam.hou@microfastup.com",
+        "qq": "2728740240",
+      }
+    }
+  ]
+}

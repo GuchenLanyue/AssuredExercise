@@ -27,7 +27,7 @@ import org.testng.annotations.AfterTest;
 public class BaseTest {
 	private String srcDir = null;
 	private String token = null;
-	private Method method = null;
+	private String method = null;
 	private String responseStr = null;
 	private String expectedJson = null;
 	
@@ -111,12 +111,13 @@ public class BaseTest {
 	
 	@DataProvider(name = "SingleCase")
 	public Iterator<Object[]> singleCase(Method testMethod) {
-		method = testMethod;
-		String filePath = getSrcDir()+"/case/"+method.getName()+".xlsx";
+		String methodName = testMethod.getName();
+		String caseStr[] = methodName.split("_");
+		method = caseStr[1];
+		String filePath = getSrcDir()+"/case/"+method+".xlsx";
 		String sheetName = "Params";
 		ExcelReader excel = new ExcelReader();
 		List<Map<String, Object>> caseList = excel.mapList(1,filePath, sheetName);
-		
 		List<Object[]> test_IDs = new ArrayList<Object[]>();
 		for (Map<String, Object> params:caseList) {
 			test_IDs.add(new Object[]{params});
@@ -125,23 +126,22 @@ public class BaseTest {
 		return test_IDs.iterator();
 	}
 	
-	public void setParams(String api,Map<String, Object> paramsMap) {
+	public void setRequest(String api,Map<String, Object> paramsMap) {
 	
 		String caseName = paramsMap.get("Case").toString();
-		String file = getSrcDir()+"/case/"+method.getName()+".xlsx";
+		String file = getSrcDir()+"/case/"+method+".xlsx";
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(file, api);
-		
 
 		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
-		
+		paramsMap.remove("Case");
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		expectedJson = expectedMap.get("Path").toString();
 		checkResponse(saveResponseBody(response), expectedJson);
 	}
 
-	public void setParams(String api,String filePath,String caseName) {
+	public void setRequest(String api,String filePath,String caseName) {
 		
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);

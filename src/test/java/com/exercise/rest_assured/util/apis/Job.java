@@ -20,10 +20,11 @@ import io.restassured.response.Response;
 public class Job {
 	
 	private BaseInfo baseInfo = new BaseInfo();
-	
+	private int[] position =null;
 	public Job() {
 		// TODO Auto-generated constructor stub
-		baseInfo.setPositionData();
+		baseInfo.setPosition();
+		position = setPosition();
 	}
 	
 	public void addJob(Map<String, String> params){
@@ -105,12 +106,17 @@ public class Job {
 		}
 	}
 	
-	public int getPositions() {
-		return baseInfo.getPositions();
-	}
-
-	public int getPosition() {
-		return baseInfo.getPosition();
+	public int[] setPosition() {
+		
+		return baseInfo.getPositionData();
 	}
 	
+	public int getPosition() {
+		return position[0];
+	}
+	
+	public int getPositions() {
+		return position[1];
+	}
+		
 }

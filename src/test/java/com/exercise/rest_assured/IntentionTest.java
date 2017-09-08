@@ -11,7 +11,7 @@ import com.exercise.rest_assured.util.apis.Intention;
 public class IntentionTest extends BaseTest {
 
 	@Test(dataProvider = "SingleCase", description = "增加求职意向")
-	public void addIntentionTest(Map<String, Object> params) {
+	public void add_Intention_Test(Map<String, Object> params) {
 		Intention intention = new Intention();
 		params.put("industry", intention.getIndustry());
 		params.put("position", intention.getPosition());
@@ -22,7 +22,7 @@ public class IntentionTest extends BaseTest {
 		params.put("district", intention.getDistrict());
 		params.put("token", getToken());
 		
-		setParams("intention", params);
+		setRequest("intention", params);
 
 		intention.checkIntention(getBodyStr());
 
@@ -31,7 +31,7 @@ public class IntentionTest extends BaseTest {
 	}
 
 	@Test(dataProvider = "SingleCase", description = "编辑求职意向")
-	public void editIntentionTest(Map<String, Object> params) {
+	public void edit_Intention_Test(Map<String, Object> params) {
 		Intention intention = new Intention();
 		intention.setID(getToken());
 
@@ -45,7 +45,7 @@ public class IntentionTest extends BaseTest {
 		params.put("token", getToken());
 		params.put("id", intention.getID());
 
-		setParams("intention", params);
+		setRequest("intention", params);
 
 		String actualJson = intention.getIntention(getToken(), getSrcDir());
 		intention.checkIntention(actualJson);

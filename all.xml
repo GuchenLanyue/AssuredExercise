@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="tests" thread-count="1">
+	<parameter name="platform" value="GuanWang" />
+	<parameter name="sourcesDir" value="/src/test/resources" />
+	<parameter name="CaseList" value="/case/CaseList.xlsx" />
+	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
+
+	<test name="education" preserve-order="true">
+		<groups>
+			<define name="EditEducation">
+				<include name="add_Education_Test" />
+				<include name="edit_Education_Test" />
+				<include name="delEducationTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.EducationTest">
+				<methods>
+					<include name="add_Education_Test" />
+					<include name="edit_Education_Test" />
+					<include name="delEducationTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="TrainTest" preserve-order="true">
+		<groups>
+			<define name="Train">
+				<include name="add_Train_Test" />
+				<include name="edit_Train_Test" />
+				<include name="delTrainTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.TrainTest">
+				<methods>
+					<include name="add_Train_Test" />
+					<include name="edit_Train_Test" />
+					<include name="delTrainTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+
+	<test name="JobTest" preserve-order="true">
+		<groups>
+			<define name="Job">
+				<include name="add_Job_Test" />
+				<include name="edit_Job_Test" />
+				<include name="delJobTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.JobTest">
+				<methods>
+					<include name="add_Job_Test" />
+					<include name="edit_Job_Test" />
+					<include name="delJobTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="IntentionTest" preserve-order="true">
+		<groups>
+			<define name="Intention">
+				<include name="add_Intention_Test" />
+				<include name="edit_Intention_Test" />
+				<include name="delIntentionTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.IntentionTest">
+				<methods>
+					<include name="add_Intention_Test" />
+					<include name="edit_Intention_Test" />
+					<include name="delIntentionTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="EvaluationTest" preserve-order="true">
+		<groups>
+			<define name="Evaluation">
+				<include name="add_Evaluation_Test" />
+				<include name="edit_Evaluation_Test" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.EvaluationTest">
+				<methods>
+					<include name="add_Evaluation_Test" />
+					<include name="edit_Evaluation_Test" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="Process" preserve-order="true">
+		<groups>
+			<define name="Process">
+				<include name="processTest" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.ProcessTest">
+				<methods>
+					<include name="processTest" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite><!-- Suite -->

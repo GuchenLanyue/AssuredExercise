@@ -16,9 +16,10 @@ import io.restassured.path.json.JsonPath;
 public class EducationTest extends BaseTest{
 
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
-	public void addEducationTest(Map<String,Object> params){
+	public void add_Education_Test(Map<String,Object> params){
 		params.put("token", getToken());
-		setParams("education", params);
+		params.remove("id");
+		setRequest("education", params);
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		String id = json.getString("id");
 		Education education = new Education();
@@ -28,7 +29,7 @@ public class EducationTest extends BaseTest{
 	
 	@Test(dataProvider = "SingleCase",description="编辑教育背景信息")
 	@Description("修改教育背景信息")
-	public void editEducationTest(Map<String,Object> params){
+	public void edit_Education_Test(Map<String,Object> params){
 		
 		Education education = new Education();
 		List<String> ids = education.getEducations(getToken());
@@ -42,7 +43,7 @@ public class EducationTest extends BaseTest{
 		params.put("token", getToken());
 		params.put("id", id);
 		
-		setParams("education", params);
+		setRequest("education", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		id = json.getString("id");
