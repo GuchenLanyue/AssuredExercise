@@ -36,7 +36,7 @@ public class JobTest extends BaseTest{
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
-	@Test(dataProvider="SingleCase",description="修改工作经验")
+	@Test(dataProvider="SingleCase",description="修改工作经验",dependsOnMethods={"add_Job_Test"})
 	public void edit_Job_Test(Map<String, Object> params){
 		Job job = new Job();
 		List<String> ids = job.getJobs(getToken());
@@ -59,7 +59,7 @@ public class JobTest extends BaseTest{
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
-	@Test(description = "删除工作经验")
+	@Test(description = "删除工作经验",dependsOnMethods={"add_Job_Test"})
 	@Description("删除工作经验")
 	public void delJobTest(){
 		Job job = new Job();

@@ -10,20 +10,20 @@ import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.util.apis.Education;
 
 import io.qameta.allure.Description;
-
 import io.restassured.path.json.JsonPath;
 
 public class EducationTest extends BaseTest{
 
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
 	public void add_Education_Test(Map<String,Object> params){
+		Education edu = new Education();
 		params.put("token", getToken());
 		params.remove("id");
-		setRequest("education", params);
+		setRequest("education", edu.setParams(params));
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		String id = json.getString("id");
-		Education education = new Education();
-		String actualJson = education.getEducation(getToken(), id, getSrcDir());
+		edu.checkEducation(json);
+		String actualJson = edu.getEducation(getToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
@@ -31,8 +31,8 @@ public class EducationTest extends BaseTest{
 	@Description("修改教育背景信息")
 	public void edit_Education_Test(Map<String,Object> params){
 		
-		Education education = new Education();
-		List<String> ids = education.getEducations(getToken());
+		Education edu = new Education();
+		List<String> ids = edu.getEducations(getToken());
 		String id = null;
 		if (ids.size()>0) {
 			id = ids.get(0);
@@ -42,12 +42,13 @@ public class EducationTest extends BaseTest{
 		
 		params.put("token", getToken());
 		params.put("id", id);
-		
+		params = edu.setParams(params);
 		setRequest("education", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
+		edu.checkEducation(json);
 		id = json.getString("id");
-		String actualJson = education.getEducation(getToken(), id, getSrcDir());
+		String actualJson = edu.getEducation(getToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	

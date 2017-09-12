@@ -19,30 +19,25 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Intention {
-	private BaseInfo baseInfo = new BaseInfo();
+	
 	private String id = null;
-	private int[] positionData = setPosition();
-	private int[] area = null;
+	private Map<String, Object> intentionParam = new HashMap<>();
+	int[] area = null;
+	private int provice = 1;
+	private int city = 1;
+	private int district = 1;
+	private int position = 1;
+	private int positions = 1;
 	
 	public Intention() {
 		// TODO Auto-generated constructor stub
-		//设置行业
-		baseInfo.setIndustry();
-		//设置职位
-		baseInfo.setPosition();
-		//设置地区
-		baseInfo.setArea();
-		//设置期望薪资
-		baseInfo.setSalary();
-		
-		area = setArea();
 	}
 	
 	@Step("getIntentions() 获取求职意向列表")
 	public List<String> getIntentions(String token){
 		
 		Response response = given()
-				.proxy("http://127.0.0.1:8888")
+//				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()
@@ -94,7 +89,7 @@ public class Intention {
 	@Description("删除求职意向")
 	public void delIntention(String token, String id) {
 		Response response = given()
-			.proxy("http://127.0.0.1:8888")
+//			.proxy("http://127.0.0.1:8888")
 			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.param("token", token)
 			.param("id", id)
@@ -113,27 +108,6 @@ public class Intention {
 		}
 	}
 	
-	@Step("checkIntention() 校验求职意向")
-	public void checkIntention(String jsonStr){
-		JsonPath json = new JsonPath(jsonStr).setRoot("value");
-		int position = Integer.valueOf(json.getString("position")).intValue();
-		int positions = Integer.valueOf(json.getString("positions")).intValue();
-		String industry =json.getString("industry");
-		String salary = json.getString("salary");
-		int provice = Integer.valueOf(json.getString("provice")).intValue();
-		int city = Integer.valueOf(json.getString("city")).intValue();
-		int district = Integer.valueOf(json.getString("district")).intValue();
-		id = json.getString("id");
-		
-		Assert.assertTrue(getPosition()==position,"position expected:"+getPosition()+"/"+position);
-		Assert.assertTrue(getPositions()==positions,"positions expected:"+getPositions()+"/"+positions);
-		Assert.assertTrue(getIndustry().equals(industry),"industry expected:"+getIndustry()+"/"+industry);
-		Assert.assertTrue(getSalary().equals(salary),"salary expected:"+getSalary()+"/"+salary);
-		Assert.assertTrue(getProvince()==provice,"provice expected:"+getProvince()+"/"+provice);
-		Assert.assertTrue(getCity()==city,"city expected:"+getCity()+"/"+city);
-		Assert.assertTrue(getDistrict()==district,"district expected:"+getDistrict()+"/"+district);
-	}
-	
 	public void setID(String token){
 		List<String> ids = getIntentions(token);
 
@@ -144,53 +118,67 @@ public class Intention {
 		}
 	}
 	
-	@Description("获取行业")
-	public String getIndustry() {
-
-		return baseInfo.getIndustry();
+	public Map<String, Object> setParams(Map<String, Object> params){
+		Map<String, Object> param = new HashMap<>();
+		param = params;
+		BaseInfo baseInfo = new BaseInfo();
+		baseInfo.setIndustry();
+		intentionParam.put("industry", baseInfo.getIndustry());
+		setPosition();
+		intentionParam.put("position", position);
+		intentionParam.put("positions", positions);
+		baseInfo.setSalary();
+		intentionParam.put("salary", baseInfo.getSalary());
+		setArea();
+		intentionParam.put("provice", provice);
+		intentionParam.put("city", city);
+		intentionParam.put("district", district);
+		if (area.length==2) {
+			intentionParam.remove("district");
+			param.remove("district");
+		}
+		
+		for(String key:intentionParam.keySet()){
+			param.put(key, intentionParam.get(key));
+		}
+		
+		return param;
 	}
 	
-	public int[] setPosition() {
-		
-		return baseInfo.getPositionData();
-	}
-	
-	public int[] setArea() {
-		
-		return baseInfo.getArea();
-	}
-	
-	public int getPosition() {
-		
-		return positionData[0];
-	}
-	
-	public int getPositions() {
-		
-		return positionData[1];
-	}
-	
-	public int getProvince() {
-		
-		return area[0];
-	}
-	
-	public int getCity() {
-		
-		return area[1];
-	}
-	
-	public int getDistrict() {
-		
-		return area[2];
-	}
-	
-	public String getSalary(){
-		
-		return baseInfo.getSalary();
+	public void setArea(){
+		area = new BaseInfo().getArea();
+		provice = area[0];
+		city = area[1];
+		if(area.length==3){
+			district = area[2];
+		}
 	}
 	
 	public String getID(){
 		return id;
+	}
+	
+	public void setPosition(){
+		int[] positionData = new BaseInfo().getPositionData();
+		position = positionData[0];
+		positions = positionData[1];
+	}
+	
+	@Step("checkIntention() 校验求职意向")
+	public void checkIntention(JsonPath response){
+		for (Map.Entry<String,Object> mapEntry:intentionParam.entrySet()) {
+			String actual = null;
+			String expected = null;
+			if (response.getString(mapEntry.getKey())!=null)
+				actual = response.getString(mapEntry.getKey());
+			
+			if (mapEntry.getValue()!=null) 
+				expected = mapEntry.getValue().toString();
+			else{
+				Assert.fail(mapEntry.getKey()+"的值为 null！");
+			}
+			
+			Assert.assertEquals(actual, expected,"["+mapEntry.getKey()+"]:的预期值为："+expected+"，实际值为："+actual);
+		}
 	}
 }

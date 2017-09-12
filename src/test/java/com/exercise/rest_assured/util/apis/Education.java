@@ -20,8 +20,32 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Education {
+	private Map<String,Object> educationParam = new HashMap<>();
+	
 	public Education() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Step
+	public Map<String,Object> setParams(Map<String,Object> params){
+		Map<String,Object> param = new HashMap<>();
+		BaseInfo baseinfo = new BaseInfo();
+//		String start_time = baseinfo.randomDate("1900-1-1", "2017-9-12");
+		String end_time = baseinfo.randomDate("1900-1-1", "2017-9-12").toString();
+		int magor = baseinfo.getMajor()[0];
+		int magors = baseinfo.getMajor()[1];
+		int education = baseinfo.getEducation();
+		
+		educationParam.put("end_time", end_time);
+		educationParam.put("magor", magor);
+		educationParam.put("magors", magors);
+		educationParam.put("education", education);
+		param = params;
+		for(String key:educationParam.keySet()){
+			param.put(key, educationParam.get(key));
+		}
+		
+		return param;
 	}
 	
 	@Step
@@ -132,5 +156,23 @@ public class Education {
 		List<String> educationIDs = from(json).getList("value.id");
 		
 		return educationIDs;
+	}
+	
+	@Step()
+	public void checkEducation(JsonPath response){
+		for (Map.Entry<String,Object> mapEntry:educationParam.entrySet()) {
+			String actual = null;
+			String expected = null;
+			if (response.getString(mapEntry.getKey())!=null)
+				actual = response.getString(mapEntry.getKey());
+			
+			if (mapEntry.getValue()!=null) 
+				expected = mapEntry.getValue().toString();
+			else{
+				Assert.fail(mapEntry.getKey()+"的值为 null！");
+			}
+			
+			Assert.assertEquals(actual, expected,"["+mapEntry.getKey()+"]:的预期值为："+expected+"，实际值为："+actual);
+		}
 	}
 }

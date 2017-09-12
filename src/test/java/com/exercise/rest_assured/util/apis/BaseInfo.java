@@ -24,6 +24,8 @@ public class BaseInfo {
 	private int education = 1;
 	private int positions = 1;
 	private int position = 1;
+	private int major = 1;
+	private int majors = 1;
 	private int provice = 1;
 	private int city = 1;
 	private int district = 1;
@@ -70,8 +72,8 @@ public class BaseInfo {
 		return json;
 	}
 	
-	@Step("seteducation() 设置企业性质")
-	@Description("设置企业性质")
+	@Step("seteducation() 设置学历")
+	@Description("设置学历")
 	public void seteducation(){
 		JsonPath json = new JsonPath(geteducation());
 		Map<String, Object> list = json.get("value");
@@ -349,9 +351,8 @@ public class BaseInfo {
 		goodatlanguage = keys.get(index);
 	}
 	
-	
-	@Step("getmaritalstatus() 获取擅长外语")
-	@Description("获取擅长外语")
+	@Step("getmaritalstatus() 获取婚姻状况")
+	@Description("获取婚姻状况")
 	public String getmaritalstatus(){
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
@@ -379,8 +380,8 @@ public class BaseInfo {
 		return json;
 	}
 	
-	@Step("setmaritalstatus() 设置擅长外语")
-	@Description("设置擅长外语")
+	@Step("setmaritalstatus() 设置婚姻状况")
+	@Description("设置婚姻状况")
 	public void setmaritalstatus(){
 		JsonPath json = new JsonPath(getmaritalstatus());
 		Map<String, Object> list = json.get("value");
@@ -512,14 +513,54 @@ public class BaseInfo {
 		int index = random.nextInt(positionList.size());
         position = Integer.valueOf(positionList.get(index).toString()).intValue();
         
-        String path = "value["+index+"].children";
-        List<Map<String, String>> positionsList = json.getList(path);
+        String path = "value["+index+"].children.value";
+        List<String> positionsList = json.getList(path);
         index = random.nextInt(positionsList.size());
-        Map<String, String> children = positionsList.get(index);
-        positions = Integer.valueOf(children.get("value")).intValue();
+        positions = Integer.valueOf(positionsList.get(index).toString()).intValue();
         int[] positionData = {position,positions};
         
         return positionData;
+	}
+	
+	@Step
+	@Description("获取专业列表")
+	public String getmajor(){
+		Response response = given()
+				.proxy("http://127.0.0.1:8888")
+				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
+			.when()
+				.post("http://nchr.release.microfastup.com/nchr/basics/getmajor")
+			.then()
+//				.statusCode(200)
+			.extract()
+				.response();
+		String json = response.asString();
+		
+		while (json.charAt(0)!='{') {
+			json = json.substring(1, json.length());
+		}
+		
+		return json;
+	}
+	
+	@Step("setPositionData() 设置专业")
+	@Description("设置专业")
+	public int[] setMajor(){
+		JsonPath json = new JsonPath(getmajor());
+		List<String> majorList = json.getList("value.value");
+		Random random = new Random();
+		
+		int index = random.nextInt(majorList.size());
+        major = Integer.valueOf(majorList.get(index).toString()).intValue();
+        
+        String path = "value["+index+"].children";
+        List<Map<String, Object>> majorsList = json.getList(path);
+        index = random.nextInt(majorsList.size());
+        
+        majors = Integer.valueOf(majorsList.get(index).get("value").toString()).intValue();
+        int[] majorData = {major,majors};
+        
+        return majorData;
 	}
 	
 	@Step
@@ -708,6 +749,14 @@ public class BaseInfo {
         return id;
     }
     
+    @Description("获取性别")
+	public int getSex() {
+		int[] sex = {1,2};
+		Random random = new Random();
+		
+		return sex[random.nextInt(sex.length)];
+	}
+    
 	@Description("获取学历")
 	public int getEducation(){
 		seteducation();
@@ -724,6 +773,14 @@ public class BaseInfo {
 	public String getGoodatlanguage() {
 		setgoodatlanguage();
 		return goodatlanguage;
+	}
+	
+	@Description("获取擅长外语级别")
+	public int getLeve() {
+		int[] leve = {1,2,3,4};
+		Random random = new Random();
+		
+		return leve[random.nextInt(leve.length)];
 	}
 	
 	@Description("获取婚育状况")
@@ -763,6 +820,11 @@ public class BaseInfo {
 	@Description("获取当前设置的职位")
 	public int[] getPositionData() {
 		return setPosition();
+	}
+	
+	@Description("获取当前设置的专业")
+	public int[] getMajor(){
+		return setMajor();
 	}
 	
 	@Description("获取行业")

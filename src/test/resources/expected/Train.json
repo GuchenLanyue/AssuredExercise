@@ -1,0 +1,11 @@
+{
+  "case": "train_base1",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "name": "微迅Edu-123",
+      }
+    }
+  ]
+}

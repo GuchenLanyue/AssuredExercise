@@ -12,7 +12,6 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class HttpMethods {
@@ -32,7 +31,7 @@ public class HttpMethods {
 		switch (method) {
 		case POST:
 			response = given()
-					.proxy("127.0.0.1", 8888)
+//					.proxy("127.0.0.1", 8888)
 //						.log().all()
 					.header("Accept", "application/json")
 					.header("Accept-Encoding", "gzip, deflate")

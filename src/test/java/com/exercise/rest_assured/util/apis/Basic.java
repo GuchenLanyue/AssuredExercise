@@ -2,10 +2,8 @@ package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import org.testng.Assert;
 
@@ -31,7 +29,7 @@ public class Basic {
 	private String lang1 = null;
 	private int leve1 = 1;
 	private String marriage = null;
-	private Date birth = null;
+	private String birth = null;
 	private String id_code = null;
 	private Map<String, Object> basicParams = new HashMap<>();
 	
@@ -41,24 +39,22 @@ public class Basic {
 	
 	public void setValue(){
 		BaseInfo baseinfo = new BaseInfo();
-		Random random = new Random();
-		sex = random.nextInt(2);
+		sex = baseinfo.getSex();
 		education = baseinfo.getEducation();
 		healthy = baseinfo.getHealthy();
 		work_life = baseinfo.getWorklife();
 		lang = baseinfo.getGoodatlanguage();
-		leve = random.nextInt(4);
+		leve = baseinfo.getLeve();
 		baseinfo.setgoodatlanguage();
 		lang1 = baseinfo.getGoodatlanguage();
-		leve1 = random.nextInt(4);
+		leve1 = baseinfo.getLeve();
 		marriage = baseinfo.getMaritalstatus();
-		birth = baseinfo.randomDate("1990-1-1", "2017-9-8");
+		birth = baseinfo.randomDate("1990-1-1", "2017-9-8").toString();
 		id_code = baseinfo.getRandomID();
 	}
 	
 	public Map<String, Object> setParams(Map<String, Object> params){
 		setValue();
-		basicParams = params;
 		basicParams.put("sex", sex);
 		basicParams.put("education", education);
 		
@@ -92,7 +88,13 @@ public class Basic {
 		basicParams.put("birth", birth);
 		basicParams.put("id_code", id_code);
 		
-		return basicParams;
+		Map<String, Object> param = new HashMap<>();
+		param = params;
+		for(String key:basicParams.keySet()){
+			param.put(key, basicParams.get(key));
+		}
+		
+		return param;
 	}
 	
 	public JsonPath getbasic(String token){
@@ -138,8 +140,6 @@ public class Basic {
 	}
 	
 	public void checkBasic(JsonPath response){
-		basicParams.remove("Case");
-		basicParams.remove("token");
 		for (Map.Entry<String,Object> mapEntry:basicParams.entrySet()) {
 			String actual = null;
 			String expected = null;
@@ -149,7 +149,7 @@ public class Basic {
 			if (mapEntry.getValue()!=null) 
 				expected = mapEntry.getValue().toString();
 			else{
-				continue;
+				Assert.fail(mapEntry.getKey()+"的值为 null！");
 			}
 			
 			Assert.assertEquals(actual, expected,"["+mapEntry.getKey()+"]:的预期值为："+expected+"，实际值为："+actual);

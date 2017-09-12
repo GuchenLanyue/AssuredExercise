@@ -6,18 +6,16 @@
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
 	
-	<test name="Basic" preserve-order="true">
+	<test name="冒烟测试" preserve-order="true">
 		<groups>
-			<define name="Basic">
-			    <include name="add_Basic_Test" />
-				<include name="edit_Basic_Test" />
+			<define name="Process">
+				<include name="processTest" />
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.BasicTest">
+			<class name="com.exercise.rest_assured.ProcessTest">
 				<methods>
-				    <exclude name="add_Basic_Test" />
-					<include name="edit_Basic_Test" />
+					<include name="processTest" />
 				</methods>
 			</class>
 		</classes>

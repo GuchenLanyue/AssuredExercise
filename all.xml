@@ -6,7 +6,24 @@
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
 	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
 
-	<test name="education" preserve-order="true">
+	<test name="基本信息" preserve-order="true">
+		<groups>
+			<define name="Basic">
+				<include name="add_Basic_Test" />
+				<include name="edit_Basic_Test" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.BasicTest">
+				<methods>
+					<include name="add_Basic_Test" />
+					<include name="edit_Basic_Test" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="教育背景信息" preserve-order="true">
 		<groups>
 			<define name="EditEducation">
 				<include name="add_Education_Test" />
@@ -25,7 +42,7 @@
 		</classes>
 	</test>
 
-	<test name="TrainTest" preserve-order="true">
+	<test name="培训信息" preserve-order="true">
 		<groups>
 			<define name="Train">
 				<include name="add_Train_Test" />
@@ -44,7 +61,7 @@
 		</classes>
 	</test>
 
-	<test name="JobTest" preserve-order="true">
+	<test name="工作经验" preserve-order="true">
 		<groups>
 			<define name="Job">
 				<include name="add_Job_Test" />
@@ -63,7 +80,7 @@
 		</classes>
 	</test>
 	
-	<test name="IntentionTest" preserve-order="true">
+	<test name="求职意向" preserve-order="true">
 		<groups>
 			<define name="Intention">
 				<include name="add_Intention_Test" />
@@ -82,7 +99,7 @@
 		</classes>
 	</test>
 	
-	<test name="EvaluationTest" preserve-order="true">
+	<test name="自我评价" preserve-order="true">
 		<groups>
 			<define name="Evaluation">
 				<include name="add_Evaluation_Test" />
@@ -94,21 +111,6 @@
 				<methods>
 					<include name="add_Evaluation_Test" />
 					<include name="edit_Evaluation_Test" />
-				</methods>
-			</class>
-		</classes>
-	</test>
-	
-	<test name="Process" preserve-order="true">
-		<groups>
-			<define name="Process">
-				<include name="processTest" />
-			</define>
-		</groups>
-		<classes>
-			<class name="com.exercise.rest_assured.ProcessTest">
-				<methods>
-					<include name="processTest" />
 				</methods>
 			</class>
 		</classes>
