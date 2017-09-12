@@ -526,7 +526,7 @@ public class BaseInfo {
 	@Description("获取专业列表")
 	public String getmajor(){
 		Response response = given()
-				.proxy("http://127.0.0.1:8888")
+//				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getmajor")
