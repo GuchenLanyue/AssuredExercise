@@ -11,7 +11,7 @@ import org.testng.Assert;
 
 import com.exercise.rest_assured.util.HttpMethods;
 import com.exercise.rest_assured.util.Parameter;
-import com.exercise.rest_assured.utils.TextData;
+import com.exercise.rest_assured.utils.FileData;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -32,13 +32,21 @@ public class Education {
 		BaseInfo baseinfo = new BaseInfo();
 //		String start_time = baseinfo.randomDate("1900-1-1", "2017-9-12");
 		String end_time = baseinfo.randomDate("1900-1-1", "2017-9-12").toString();
-		int magor = baseinfo.getMajor()[0];
-		int magors = baseinfo.getMajor()[1];
+
 		int education = baseinfo.getEducation();
 		
 		educationParam.put("end_time", end_time);
-		educationParam.put("magor", magor);
-		educationParam.put("magors", magors);
+		int[] majorData = baseinfo.getMajor();
+		if (majorData.length>1) {
+			int magor = majorData[0];
+			int magors = majorData[1];
+			educationParam.put("magor", magor);
+			educationParam.put("magors", magors);
+		}else{
+			int magor = majorData[0];
+			educationParam.put("magor", magor);
+		}
+
 		educationParam.put("education", education);
 		param = params;
 		for(String key:educationParam.keySet()){
@@ -64,9 +72,9 @@ public class Education {
 		JsonPath json = new JsonPath(body).setRoot("value");
 		String id = json.getString("id");
 		
-		TextData textData = new TextData();
+		FileData textData = new FileData();
 		String path = srcDir+"/case/";
-		textData.writerText(path, "eduID.txt", id);
+		textData.writerText(path+"eduID.txt", id);
 	}
 	
 	@Step
@@ -156,6 +164,10 @@ public class Education {
 		List<String> educationIDs = from(json).getList("value.id");
 		
 		return educationIDs;
+	}
+	
+	public int[] majorData(){
+		return new BaseInfo().getMajor();
 	}
 	
 	@Step()

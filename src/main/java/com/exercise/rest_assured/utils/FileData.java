@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 
-public class TextData {
+public class FileData {
 	
     /**
     * 写文件
@@ -19,17 +20,22 @@ public class TextData {
     * @param content
     *            写入文件的内容
     */
-    public void writerText(String path, String fileName, String content) {
-        File dirFile = new File(path);
+    public void writerText(String fileName, String content) {
+        File f = new File(fileName);
 
-        if (!dirFile.exists()) {
-            dirFile.mkdir();
+        if (!f.exists()) {
+        	try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
 
         try {
             //new FileWriter(path + "t.txt", true)  这里加入true 可以不覆盖原有TXT文件内容 续写
-            BufferedWriter bw1 = new BufferedWriter(new FileWriter(path +
-                        fileName, false));
+        	OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");  
+            BufferedWriter bw1 = new BufferedWriter(write);
             bw1.write(content);
             bw1.flush();
             bw1.close();

@@ -54,8 +54,8 @@ public class HttpMethods {
 			break;
 		case GET:	
 			response = given()
-//						.proxy("127.0.0.1", 8888)
-//						.log().params()
+						.proxy("127.0.0.1", 8888)
+//						.log().all()
 					.contentType(baseMap.get("contentType").toString())
 					.params(paramsMap)
 				.when()

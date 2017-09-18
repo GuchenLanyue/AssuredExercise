@@ -3,7 +3,7 @@ package com.exercise.rest_assured.util.apis;
 import static io.restassured.RestAssured.given;
 
 import com.exercise.rest_assured.util.User;
-import com.exercise.rest_assured.utils.TextData;
+import com.exercise.rest_assured.utils.FileData;
 
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
@@ -40,8 +40,8 @@ public class Login {
 		
 		String token = json.getString("token");
 		
-		TextData textData = new TextData();
+		FileData textData = new FileData();
 		String path =System.getProperty("user.dir")+"\\src\\test\\resources\\case\\";
-		textData.writerText(path, "token.txt", token);
+		textData.writerText(path+"token.txt", token);
 	}
 }

@@ -32,7 +32,7 @@ public class Basic {
 	private String birth = null;
 	private String id_code = null;
 	private Map<String, Object> basicParams = new HashMap<>();
-	
+	private int current = 1;
 	public Basic() {
 		// TODO Auto-generated constructor stub
 	}
@@ -51,6 +51,7 @@ public class Basic {
 		marriage = baseinfo.getMaritalstatus();
 		birth = baseinfo.randomDate("1990-1-1", "2017-9-8").toString();
 		id_code = baseinfo.getRandomID();
+		current = baseinfo.getCurrentstate();
 	}
 	
 	public Map<String, Object> setParams(Map<String, Object> params){
@@ -87,7 +88,7 @@ public class Basic {
 		basicParams.put("leve1", leve1);
 		basicParams.put("birth", birth);
 		basicParams.put("id_code", id_code);
-		
+		basicParams.put("current", current);
 		Map<String, Object> param = new HashMap<>();
 		param = params;
 		for(String key:basicParams.keySet()){
@@ -99,7 +100,7 @@ public class Basic {
 	
 	public JsonPath getbasic(String token){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()

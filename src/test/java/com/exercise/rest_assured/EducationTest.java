@@ -54,7 +54,7 @@ public class EducationTest extends BaseTest{
 	
 	@Test(description = "删除教育背景信息")
 	@Description("删除教育背景信息")
-	public void delEducationTest(){
+	public void del_Education_Test(){
 		Education education = new Education();
 		List<String> list = education.getEducations(getToken());
 		for (int i = 0; i < list.size(); i++) {

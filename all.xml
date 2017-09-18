@@ -36,7 +36,7 @@
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />
-					<include name="delEducationTest" />
+					<include name="del_Education_Test" />
 				</methods>
 			</class>
 		</classes>

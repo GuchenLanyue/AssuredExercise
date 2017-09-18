@@ -17,7 +17,7 @@ public class Evaluation {
 	public String getEvaluation(String token){
 		
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()

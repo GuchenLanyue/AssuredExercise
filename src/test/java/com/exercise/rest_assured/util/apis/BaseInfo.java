@@ -2,6 +2,7 @@ package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Random;
 
 import org.testng.Assert;
+
+import com.exercise.rest_assured.utils.FileData;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -35,7 +38,7 @@ public class BaseInfo {
 	private String joblevel = null;
 	private String healthy = null;
 	private String worklife = null;
-	private String currentstate = null;
+	private int currentstate = 0;
 	private String goodatlanguage = null;
 	private String maritalstatus = null;
 
@@ -45,9 +48,9 @@ public class BaseInfo {
 	
 	@Step("geteducation() 获取学历")
 	@Description("获取学历")
-	public String geteducation(){
+	public String education(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/geteducation")
@@ -69,13 +72,28 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+
+		fileData.writerText(filePath+"education.json", json);
+		
 		return json;
 	}
 	
 	@Step("seteducation() 设置学历")
 	@Description("设置学历")
 	public void seteducation(){
-		JsonPath json = new JsonPath(geteducation());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/education.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(education());
+		}
+		
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -89,9 +107,9 @@ public class BaseInfo {
 	
 	@Step("getenterprisenature() 获取企业性质")
 	@Description("获取企业性质")
-	public String getenterprisenature(){
+	public String enterprisenature(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getenterprisenature")
@@ -113,13 +131,27 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"enterprisenature.json", json);
+		
 		return json;
 	}
 	
 	@Step("setenterprisenature() 设置企业性质")
 	@Description("设置企业性质")
 	public void setenterprisenature(){
-		JsonPath json = new JsonPath(getenterprisenature());
+		
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/enterprisenature.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(enterprisenature());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -133,9 +165,9 @@ public class BaseInfo {
 	
 	@Step("getcompanysize() 获取公司规模")
 	@Description("获取公司规模")
-	public String getcompanysize(){
+	public String companysize(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getcompanysize")
@@ -157,13 +189,27 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"companysize.json", json);
+		
 		return json;
 	}
 	
 	@Step("setcompanysize() 设置公司规模")
 	@Description("设置公司规模")
 	public void setcompanysize(){
-		JsonPath json = new JsonPath(getcompanysize());
+		
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/companysize.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(companysize());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -177,9 +223,9 @@ public class BaseInfo {
 	
 	@Step("getjoblevel() 获取职位级别")
 	@Description("获取职位级别")
-	public String getjoblevel(){
+	public String joblevel(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getjoblevel")
@@ -201,13 +247,27 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"joblevel.json", json);
+		
 		return json;
 	}
 	
 	@Step("setjoblevel() 设置职位级别")
 	@Description("设置职位级别")
 	public void setjoblevel(){
-		JsonPath json = new JsonPath(getjoblevel());
+		
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/joblevel.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(joblevel());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -221,9 +281,9 @@ public class BaseInfo {
 	
 	@Step("gethealthy() 获取健康状况")
 	@Description("获取健康状况")
-	public String gethealthy(){
+	public String healthy(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/gethealthy")
@@ -245,13 +305,26 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"healthy.json", json);
+		
 		return json;
 	}
 	
 	@Step("sethealthy() 设置健康状况")
 	@Description("设置健康状况")
 	public void sethealthy(){
-		JsonPath json = new JsonPath(gethealthy());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/healthy.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(healthy());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -265,9 +338,9 @@ public class BaseInfo {
 	
 	@Step("getworklife() 获取工作年限")
 	@Description("获取工作年限")
-	public String getworklife(){
+	public String worklife(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getworklife")
@@ -289,13 +362,26 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"worklife.json", json);
+		
 		return json;
 	}
 	
 	@Step("setworklife() 设置工作年限")
 	@Description("设置工作年限")
 	public void setworklife(){
-		JsonPath json = new JsonPath(getworklife());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/worklife.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(worklife());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -309,9 +395,9 @@ public class BaseInfo {
 	
 	@Step("getgoodatlanguage() 获取擅长外语")
 	@Description("获取擅长外语")
-	public String getgoodatlanguage(){
+	public String goodatlanguage(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getgoodatlanguage")
@@ -332,6 +418,10 @@ public class BaseInfo {
 		while (json.charAt(0)!='{') {
 			json = json.substring(1, json.length());
 		}
+
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"goodatlanguage.json", json);
 		
 		return json;
 	}
@@ -339,7 +429,16 @@ public class BaseInfo {
 	@Step("setgoodatlanguage() 设置擅长外语")
 	@Description("设置擅长外语")
 	public void setgoodatlanguage(){
-		JsonPath json = new JsonPath(getgoodatlanguage());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/goodatlanguage.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(goodatlanguage());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -353,9 +452,9 @@ public class BaseInfo {
 	
 	@Step("getmaritalstatus() 获取婚姻状况")
 	@Description("获取婚姻状况")
-	public String getmaritalstatus(){
+	public String maritalstatus(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getmaritalstatus")
@@ -377,13 +476,27 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"maritalstatus.json", json);
+		
 		return json;
 	}
 	
 	@Step("setmaritalstatus() 设置婚姻状况")
 	@Description("设置婚姻状况")
 	public void setmaritalstatus(){
-		JsonPath json = new JsonPath(getmaritalstatus());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/maritalstatus.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(maritalstatus());
+		}
+		
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -397,9 +510,9 @@ public class BaseInfo {
 	
 	@Step("getcurrentstate() 获取当前状态")
 	@Description("获取当前状态")
-	public String getcurrentstate(){
+	public String currentstate(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getcurrentstate")
@@ -420,6 +533,10 @@ public class BaseInfo {
 		while (json.charAt(0)!='{') {
 			json = json.substring(1, json.length());
 		}
+
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"currentstate.json", json);
 		
 		return json;
 	}
@@ -427,7 +544,16 @@ public class BaseInfo {
 	@Step("setcurrentstate() 设置当前状态")
 	@Description("设置当前状态")
 	public void setcurrentstate(){
-		JsonPath json = new JsonPath(getenterprisenature());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/currentstate.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(currentstate());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -436,13 +562,14 @@ public class BaseInfo {
 		
 		Random random = new Random();
 		int index = random.nextInt(keys.size());
-		currentstate = keys.get(index);
+		
+		currentstate = Integer.valueOf(keys.get(index)).intValue();
 	}
 	
 	@Description("获取行业列表")
-	public String getindustry(){
+	public String industry(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getindustry")
@@ -463,6 +590,10 @@ public class BaseInfo {
 		while (json.charAt(0)!='{') {
 			json = json.substring(1, json.length());
 		}
+
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"industry.json", json);
 		
 		return json;
 	}
@@ -470,7 +601,16 @@ public class BaseInfo {
 	@Step("setIndustry() 设置行业")
 	@Description("设置行业")
 	public void setIndustry(){
-		JsonPath json = new JsonPath(getindustry());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/industry.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(industry());
+		}
+		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -484,9 +624,9 @@ public class BaseInfo {
 	
 	@Step
 	@Description("获取职位列表")
-	public String getposition(){
+	public String position(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getposition")
@@ -499,6 +639,10 @@ public class BaseInfo {
 		while (json.charAt(0)!='{') {
 			json = json.substring(1, json.length());
 		}
+
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"position.json", json);
 		
 		return json;
 	}
@@ -506,7 +650,16 @@ public class BaseInfo {
 	@Step("setPositionData() 设置职位")
 	@Description("设置职位")
 	public int[] setPosition(){
-		JsonPath json = new JsonPath(getposition());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/position.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(position());
+		}
+		
 		List<String> positionList = json.getList("value.value");
 		Random random = new Random();
 		
@@ -524,9 +677,9 @@ public class BaseInfo {
 	
 	@Step
 	@Description("获取专业列表")
-	public String getmajor(){
+	public String major(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getmajor")
@@ -540,34 +693,51 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"major.json", json);
+		
 		return json;
 	}
 	
 	@Step("setPositionData() 设置专业")
 	@Description("设置专业")
 	public int[] setMajor(){
-		JsonPath json = new JsonPath(getmajor());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/major.json";
+		File majorFile = new File(filePath);
+		long time = System.currentTimeMillis() - majorFile.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(majorFile);
+		}else{
+			json = new JsonPath(major());
+		}
+		
 		List<String> majorList = json.getList("value.value");
 		Random random = new Random();
 		
-		int index = random.nextInt(majorList.size());
-        major = Integer.valueOf(majorList.get(index).toString()).intValue();
+		int majorIndex = random.nextInt(majorList.size());
+        major = Integer.valueOf(majorList.get(majorIndex).toString()).intValue();
         
-        String path = "value["+index+"].children";
+        String path = "value["+majorIndex+"].children";
         List<Map<String, Object>> majorsList = json.getList(path);
-        index = random.nextInt(majorsList.size());
-        
-        majors = Integer.valueOf(majorsList.get(index).get("value").toString()).intValue();
-        int[] majorData = {major,majors};
-        
-        return majorData;
+        int majorsIndex = 0;
+        if (majorsList.size()>0) {
+        	majorsIndex = random.nextInt(majorsList.size());
+            majors = Integer.valueOf(majorsList.get(majorsIndex).get("value").toString()).intValue();
+           
+            return new int[]{major,majors};
+            
+		}else{
+			return new int[]{major};
+		}
 	}
 	
 	@Step
 	@Description("获取期望薪资列表")
-	public String getsalary(){
+	public String salary(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getsalary")
@@ -589,13 +759,26 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"salary.json", json);
+		
 		return json;
 	}
 	
 	@Step("setSalary() 设置期望薪资")
 	@Description("设置期望薪资")
 	public void setSalary(){
-		JsonPath json = new JsonPath(getsalary());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/salary.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(salary());
+		}
+		
 		Map<String, Object> salarys = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:salarys.keySet()){
@@ -609,9 +792,9 @@ public class BaseInfo {
 	
 	
 	@Description("获取地区")
-	public String getarea(){
+	public String area(){
 		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
+				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
 				.post("http://nchr.release.microfastup.com/nchr/basics/getarea")
@@ -624,6 +807,10 @@ public class BaseInfo {
 		while (json.charAt(0)!='{') {
 			json = json.substring(1, json.length());
 		}
+
+		FileData fileData = new FileData();
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
+		fileData.writerText(filePath+"area.json", json);
 		
 		return json;
 	}
@@ -631,7 +818,16 @@ public class BaseInfo {
 	@Step(value = "setArea() 设置地区")
 	@Description("设置地区-随机值")
 	public int[] setArea(){
-		JsonPath json = new JsonPath(getarea());
+		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/area.json";
+		File file = new File(filePath);
+		long time = System.currentTimeMillis() - file.lastModified();
+		JsonPath json = null;
+		if (time<86400000) {
+			json = new JsonPath(file);
+		}else{
+			json = new JsonPath(area());
+		}
+		
 		List<Object> provinceList = json.getList("value.value");
 		Random random = new Random();
 		if (provinceList.size()<1) {
@@ -764,7 +960,7 @@ public class BaseInfo {
 	}
 	
 	@Description("获取当前状况")
-	public String getCurrentstate() {
+	public int getCurrentstate() {
 		setcurrentstate();
 		return currentstate;
 	}

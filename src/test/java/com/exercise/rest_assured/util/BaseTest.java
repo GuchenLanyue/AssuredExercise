@@ -5,14 +5,15 @@ import org.testng.annotations.DataProvider;
 
 import com.exercise.rest_assured.util.apis.Login;
 import com.exercise.rest_assured.utils.ExcelReader;
+import com.exercise.rest_assured.utils.FileData;
 import com.exercise.rest_assured.utils.JsonUtils;
-import com.exercise.rest_assured.utils.TextData;
 
 import io.qameta.allure.Step;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -63,8 +64,7 @@ public class BaseTest {
 	public void BeforeTest(ITestContext context) {
 		System.out.println(context.getName()+" Start!");
 //		long starttime = System.currentTimeMillis();
-		srcDir = setSrcDir(context);
-		Login login = new Login();
+		
 		User user = new User();
 		Platform platform = null;
 		String platformStr = context.getCurrentXmlTest().getParameter("platform");
@@ -80,16 +80,22 @@ public class BaseTest {
 			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
 		}
 		
-		switch (platform) {
-		case GuanWang:
-			login.gwLogin(user);
-			break;
+		srcDir = setSrcDir(context);
+		String tokenPath = srcDir+"/case/token.txt";
+		File tokenFile = new File(tokenPath);
+		if (System.currentTimeMillis()-tokenFile.lastModified()>120000) {
+			Login login = new Login();
+			switch (platform) {
+			case GuanWang:
+				login.gwLogin(user);
+				break;
 
-		default:
-			break;
+			default:
+				break;
+			}
 		}
 		
-		TextData data = new TextData();
+		FileData data = new FileData();
 		token = data.readTxtFile(srcDir+"\\case\\token.txt");
 	}
 	
