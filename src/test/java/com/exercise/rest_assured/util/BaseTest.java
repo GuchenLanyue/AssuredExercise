@@ -87,7 +87,7 @@ public class BaseTest {
 			Login login = new Login();
 			switch (platform) {
 			case GuanWang:
-				login.gwLogin(user);
+				login.singin(user);
 				break;
 
 			default:

@@ -14,15 +14,15 @@ public class Login {
 	/**
 	 * 官网登录
 	 * */
-	public void gwLogin(User user){
+	public void singin(User user){
 		Response response = given()
 //		.proxy("localhost", 8888)
 //		.log().all()
 		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-		.param("username",user.getgwUsername())
-		.param("password",user.getgwPassword())
-		.param("v_code",user.getgwV_code())
-		.param("uuid",user.getgwUuid())
+		.param("username",user.getPUsername())
+		.param("password",user.getPPassword())
+		.param("v_code",user.getPV_code())
+		.param("uuid",user.getPUuid())
 	.when()
 		.post("http://nchr.release.microfastup.com/nchr/person/login")
 	.then()
