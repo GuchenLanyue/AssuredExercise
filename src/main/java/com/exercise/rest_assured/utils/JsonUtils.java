@@ -16,32 +16,12 @@ import io.restassured.path.json.JsonPath;
 
 public class JsonUtils {
 	
-	public JsonPath jsonReader(String jsonFile){
-		JsonPath json = null;
-		
-		try {
-			json = new JsonPath(new FileInputStream(jsonFile));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return json;
-	}
-	
-	@Step
-	public void equalsJson(String file, JsonPath responseJson){
-		File input = new File(file);
-		Assert.assertTrue(input.exists(),"文件"+file+"不存在");
-		
-		JsonPath expectedJson = jsonReader(file);
-		
-		List<JsonPath> expectedList = expectedJson.getList("expected");
-		BufferedReader br = null;
-		
-		for(int i = 0; i < expectedList.size(); i++){
+	public JsonPath jsonReader(String jsonFile){		
+		File file = new File(jsonFile);
+		if (file.exists()) {
+			BufferedReader br = null;
 			try {
-				br=new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
+				br=new BufferedReader(new InputStreamReader(new FileInputStream(jsonFile),"UTF-8"));
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -49,8 +29,22 @@ public class JsonUtils {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			Map<String, Object> map = JsonPath.with(br).get("expected["+i+"].values");
+			return JsonPath.with(br);
 			
+		}else{
+			Assert.fail("文件"+jsonFile+"不存在！");
+			
+			return null;
+		}
+	}
+	
+	@Step
+	public void equalsJson(String file, JsonPath responseJson){
+		JsonPath expectedJson = jsonReader(file);
+		List<JsonPath> expectedList = expectedJson.getList("expected");
+		
+		for(int i = 0; i < expectedList.size(); i++){
+			Map<String, Object> map = expectedJson.get("expected["+i+"].values");
 			String root = expectedJson.get("expected["+i+"].root");
 			responseJson = responseJson.setRoot(root);
 			for(Map.Entry<String,Object> mapEntry:map.entrySet()){
