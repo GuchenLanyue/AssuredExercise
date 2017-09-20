@@ -3,7 +3,7 @@ package com.exercise.rest_assured.util;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 
-import com.exercise.rest_assured.util.apis.Login;
+import com.exercise.rest_assured.util.apis.API_Category;
 import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.FileData;
 import com.exercise.rest_assured.utils.JsonUtils;
@@ -13,7 +13,6 @@ import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-import java.io.File;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterTest;
 
@@ -55,7 +53,9 @@ public class BaseTest {
 	}
 	
 	@Step
-	public String getToken(){
+	public String getPersonToken(){
+		FileData data = new FileData();
+		token = data.readTxtFile(srcDir+"\\case\\personToken.txt");
 		return token;
 	}
 	
@@ -76,38 +76,23 @@ public class BaseTest {
 		System.out.println(context.getName()+" Start!");
 		setSrcDir(context);
 		setBaseURL(context);
-		User user = new User();
-		Platform platform = null;
-		String platformStr = context.getCurrentXmlTest().getParameter("platform");
-		if (platformStr.equals("GuanWang")){
-			platform = Platform.GuanWang;
-		}else if (platformStr.equals("ZhongDuan")) {
-			platform = Platform.ZhongDuan;
-		}else if (platformStr.equals("HouTai")) {
-			platform = Platform.HouTai;
-		}else if (platformStr.equals("WeiZhan")) {
-			platform = Platform.WeiZhan;
-		}else {
-			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
-		}
-		
-		String tokenPath = srcDir+"/case/token.txt";
-		File tokenFile = new File(tokenPath);
-		
-		if (System.currentTimeMillis()-tokenFile.lastModified()>120000) {
-			Login login = new Login();
-			switch (platform) {
-			case GuanWang:
-				login.singin(user);
-				break;
-
-			default:
-				break;
-			}
-		}
-		
-		FileData data = new FileData();
-		token = data.readTxtFile(srcDir+"\\case\\token.txt");
+//		User user = new User();
+//		Platform platform = null;
+//		String platformStr = context.getCurrentXmlTest().getParameter("platform");
+//		if (platformStr.equals("GuanWang")){
+//			platform = Platform.GuanWang;
+//		}else if (platformStr.equals("ZhongDuan")) {
+//			platform = Platform.ZhongDuan;
+//		}else if (platformStr.equals("HouTai")) {
+//			platform = Platform.HouTai;
+//		}else if (platformStr.equals("WeiZhan")) {
+//			platform = Platform.WeiZhan;
+//		}else {
+//			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
+//		}
+//		
+//		String tokenPath = srcDir+"/case/token.txt";
+//		File tokenFile = new File(tokenPath);
 	}
 	
 	@DataProvider(name = "CaseList")
@@ -150,8 +135,15 @@ public class BaseTest {
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(file, api);
 		baseMap.put("baseURL", baseURL);
+		API_Category path = new API_Category();
+		if (paramsMap.containsKey("token")) {
+			paramsMap.put("token", getPersonToken());
+		}
+		path.analysis(baseMap.get("path").toString());
 		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
-		paramsMap.remove("Case");
+		if (paramsMap.containsKey("Case")) {
+			paramsMap.remove("Case");
+		}
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		saveResponseBody(response);

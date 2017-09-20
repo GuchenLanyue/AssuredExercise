@@ -21,7 +21,7 @@ public class JobTest extends BaseTest{
 		Job job = new Job(getBaseURL());
 		params.put("position", job.getPosition());
 		params.put("positions", job.getPositions());
-		params.put("token", getToken());
+		params.put("token", getPersonToken());
 		setRequest("job", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
@@ -32,14 +32,14 @@ public class JobTest extends BaseTest{
 		Assert.assertTrue(job.getPositions()==positions);
 		
 		String id = json.getString("id");
-		String actualJson = job.getJob(getBaseURL(), getToken(), id, getSrcDir());
+		String actualJson = job.getJob(getBaseURL(), getPersonToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(dataProvider="SingleCase",description="修改工作经验",dependsOnMethods={"add_Job_Test"})
 	public void edit_Job_Test(Map<String, Object> params){
 		Job job = new Job(getBaseURL());
-		List<String> ids = job.getJobs(getBaseURL(), getToken());
+		List<String> ids = job.getJobs(getBaseURL(), getPersonToken());
 		
 		String id = null;
 		if (ids.size()>0) {
@@ -48,14 +48,14 @@ public class JobTest extends BaseTest{
 			Assert.fail("当前没有添加任何工作经验，无法编辑");
 		}
 		
-		params.put("token", getToken());
+		params.put("token", getPersonToken());
 		params.put("id", id);
 		
 		setRequest("job", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		id = json.getString("id");
-		String actualJson = job.getJob(getBaseURL(), getToken(), id, getSrcDir());
+		String actualJson = job.getJob(getBaseURL(), getPersonToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
@@ -63,9 +63,9 @@ public class JobTest extends BaseTest{
 	@Description("删除工作经验")
 	public void delJobTest(){
 		Job job = new Job(getBaseURL());
-		List<String> list = job.getJobs(getBaseURL(), getToken());
+		List<String> list = job.getJobs(getBaseURL(), getPersonToken());
 		for (int i = 0; i < list.size(); i++) {
-			job.delJob(getToken(), list.get(i));
+			job.delJob(getPersonToken(), list.get(i));
 		}
 	}
 }

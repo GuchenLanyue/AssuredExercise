@@ -2,9 +2,6 @@ package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 
-import com.exercise.rest_assured.util.User;
-import com.exercise.rest_assured.utils.FileData;
-
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -14,14 +11,15 @@ public class Login {
 	/**
 	 * 官网登录
 	 * */
-	public void singin(User user){
+	public String singin(JsonPath user){
+		
 		Response response = given()
 		.proxy("localhost", 8888)
 //		.log().all()
 		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-		.formParams(user.getPerson().getMap("params"))
+		.formParams(user.getMap("params"))
 	.when()
-		.post(user.getPerson().getString("url"))
+		.post(user.getString("url"))
 	.then()
 //		.log().all()
 		.statusCode(200)
@@ -37,8 +35,6 @@ public class Login {
 		
 		String token = json.getString("token");
 		
-		FileData textData = new FileData();
-		String path =System.getProperty("user.dir")+"\\src\\test\\resources\\case\\";
-		textData.writerText(path+"token.txt", token);
+		return token;
 	}
 }
