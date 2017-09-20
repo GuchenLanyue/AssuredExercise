@@ -21,22 +21,22 @@ import io.restassured.response.Response;
 
 public class Education {
 	private Map<String,Object> educationParam = new HashMap<>();
-	
-	public Education() {
+	private BaseInfo baseInfo = null;
+	public Education(String baseURL) {
 		// TODO Auto-generated constructor stub
+		baseInfo = new BaseInfo(baseURL);
 	}
 	
 	@Step
 	public Map<String,Object> setParams(Map<String,Object> params){
 		Map<String,Object> param = new HashMap<>();
-		BaseInfo baseinfo = new BaseInfo();
-//		String start_time = baseinfo.randomDate("1900-1-1", "2017-9-12");
-		String end_time = baseinfo.randomDate("1900-1-1", "2017-9-12").toString();
+//		String start_time = baseInfo.randomDate("1900-1-1", "2017-9-12");
+		String end_time = baseInfo.randomDate("1900-1-1", "2017-9-12").toString();
 
-		int education = baseinfo.getEducation();
+		int education = baseInfo.getEducation();
 		
 		educationParam.put("end_time", end_time);
-		int[] majorData = baseinfo.getMajor();
+		int[] majorData = baseInfo.getMajor();
 		if (majorData.length>1) {
 			int magor = majorData[0];
 			int magors = majorData[1];
@@ -116,13 +116,13 @@ public class Education {
 	
 	@Step
 	@Description("获取教育背景信息")
-	public String getEducation(String token,String id,String srcDir){
+	public String getEducation(String baseURL,String token,String id,String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getEducation.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "geteducation");
-		
+		baseMap.put("baseURL", baseURL);
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
 		paramsMap.put("id", id);
@@ -136,13 +136,13 @@ public class Education {
 	
 	@Step
 	@Description("获取教育背景信息列表")
-	public List<String> getEducations(String token){
+	public List<String> getEducations(String baseURL,String token){
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token",token)
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/geteducations")
+				.post(baseURL+"/personresume/geteducations")
 			.then()
 				.statusCode(200)
 			.extract()
@@ -166,8 +166,8 @@ public class Education {
 		return educationIDs;
 	}
 	
-	public int[] majorData(){
-		return new BaseInfo().getMajor();
+	public int[] majorData(String baseURL){
+		return new BaseInfo(baseURL).getMajor();
 	}
 	
 	@Step()

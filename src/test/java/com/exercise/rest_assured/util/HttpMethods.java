@@ -15,6 +15,7 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.response.Response;
 
 public class HttpMethods {
+	
 	@Step
 	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		Response response = null;
@@ -27,12 +28,12 @@ public class HttpMethods {
 		} else {
 			Assert.fail("目前只支持POST和GET方法");
 		}
-
+		
 		switch (method) {
 		case POST:
 			response = given()
 //					.proxy("127.0.0.1", 8888)
-//						.log().all()
+//					.log().all()
 					.header("Accept", "application/json")
 					.header("Accept-Encoding", "gzip, deflate")
 					.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
@@ -44,7 +45,7 @@ public class HttpMethods {
 //					.contentType(ContentType.URLENC)
 					.formParams(paramsMap)
 				.when()
-					.post(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+					.post(baseMap.get("baseURL").toString() + baseMap.get("path").toString())
 				.then()
 //					.log().body()
 //					.statusCode(200)

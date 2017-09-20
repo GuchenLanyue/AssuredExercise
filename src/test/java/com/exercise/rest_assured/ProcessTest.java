@@ -20,5 +20,6 @@ public class ProcessTest extends BaseTest {
 		String filePath = getSrcDir()+"/case/"+baseData.get("FilePath");
 		String caseName = baseData.get("Case").toString();
 		setRequest(api,filePath, caseName);
+		checkResponse(getBodyStr(), getExpectedJson());
 	}
 }

@@ -14,14 +14,16 @@ public class EvaluationTest extends BaseTest{
 		params.put("token", getToken());
 		params.remove("id");
 		setRequest("evaluation", params);
+		checkResponse(getBodyStr(), getExpectedJson());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="修改自我评价",dependsOnMethods={"add_Evaluation_Test"})
 	public void edit_Evaluation_Test(Map<String, Object> params){
 		Evaluation evaluation = new Evaluation();
-		String id = evaluation.getEvaluation(getToken());
+		String id = evaluation.getEvaluation(getBaseURL(),getToken());
 		params.put("id", id);
 		params.put("token", getToken());
 		setRequest("evaluation", params);
+		checkResponse(getBodyStr(), getExpectedJson());
 	}
 }

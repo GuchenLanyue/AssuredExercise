@@ -33,25 +33,28 @@ public class Basic {
 	private String id_code = null;
 	private Map<String, Object> basicParams = new HashMap<>();
 	private int current = 1;
-	public Basic() {
+	private BaseInfo baseInfo = null;
+	
+	public Basic(String baseURL) {
 		// TODO Auto-generated constructor stub
+		baseInfo = new BaseInfo(baseURL);
 	}
 	
 	public void setValue(){
-		BaseInfo baseinfo = new BaseInfo();
-		sex = baseinfo.getSex();
-		education = baseinfo.getEducation();
-		healthy = baseinfo.getHealthy();
-		work_life = baseinfo.getWorklife();
-		lang = baseinfo.getGoodatlanguage();
-		leve = baseinfo.getLeve();
-		baseinfo.setgoodatlanguage();
-		lang1 = baseinfo.getGoodatlanguage();
-		leve1 = baseinfo.getLeve();
-		marriage = baseinfo.getMaritalstatus();
-		birth = baseinfo.randomDate("1990-1-1", "2017-9-8").toString();
-		id_code = baseinfo.getRandomID();
-		current = baseinfo.getCurrentstate();
+//		BaseInfo baseInfo = new BaseInfo(baseURL);
+		sex = baseInfo.getSex();
+		education = baseInfo.getEducation();
+		healthy = baseInfo.getHealthy();
+		work_life = baseInfo.getWorklife();
+		lang = baseInfo.getGoodatlanguage();
+		leve = baseInfo.getLeve();
+		baseInfo.setgoodatlanguage();
+		lang1 = baseInfo.getGoodatlanguage();
+		leve1 = baseInfo.getLeve();
+		marriage = baseInfo.getMaritalstatus();
+		birth = baseInfo.randomDate("1990-1-1", "2017-9-8").toString();
+		id_code = baseInfo.getRandomID();
+		current = baseInfo.getCurrentstate();
 	}
 	
 	public Map<String, Object> setParams(Map<String, Object> params){
@@ -131,8 +134,7 @@ public class Basic {
 	}
 	
 	public int[] setArea(){
-		BaseInfo baseinfo = new BaseInfo();
-		area = baseinfo.getArea();
+		area = baseInfo.getArea();
 		return area;
 	}
 	

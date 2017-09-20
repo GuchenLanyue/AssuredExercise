@@ -31,7 +31,8 @@ public class BaseTest {
 	private String method = null;
 	private String responseStr = null;
 	private String expectedJson = null;
-
+	private String baseURL = null;
+	
 	public enum RequestMethod {
 		POST, GET
 	}
@@ -40,16 +41,26 @@ public class BaseTest {
 		GuanWang,ZhongDuan,HouTai,WeiZhan
 	}
 	
-	public String setSrcDir(ITestContext context){
-		return System.getProperty("user.dir")+context.getCurrentXmlTest().getParameter("sourcesDir");
+	public void setSrcDir(ITestContext context){
+		srcDir = System.getProperty("user.dir")+context.getCurrentXmlTest().getParameter("sourcesDir");
 	}
 	
+	public void setBaseURL(ITestContext context){
+		baseURL = context.getCurrentXmlTest().getParameter("BaseURL");
+	}
+	
+	@Step
 	public String getSrcDir(){
 		return srcDir;
 	}
 	
+	@Step
 	public String getToken(){
 		return token;
+	}
+	
+	public String getBaseURL(){
+		return baseURL;
 	}
 	
 	public String getBodyStr(){
@@ -63,8 +74,8 @@ public class BaseTest {
 	@BeforeTest
 	public void BeforeTest(ITestContext context) {
 		System.out.println(context.getName()+" Start!");
-//		long starttime = System.currentTimeMillis();
-		
+		setSrcDir(context);
+		setBaseURL(context);
 		User user = new User();
 		Platform platform = null;
 		String platformStr = context.getCurrentXmlTest().getParameter("platform");
@@ -80,9 +91,9 @@ public class BaseTest {
 			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
 		}
 		
-		srcDir = setSrcDir(context);
 		String tokenPath = srcDir+"/case/token.txt";
 		File tokenFile = new File(tokenPath);
+		
 		if (System.currentTimeMillis()-tokenFile.lastModified()>120000) {
 			Login login = new Login();
 			switch (platform) {
@@ -101,7 +112,6 @@ public class BaseTest {
 	
 	@DataProvider(name = "CaseList")
 	public Iterator<Object[]> caseData(ITestContext context) {
-		srcDir = setSrcDir(context);
 		String casePath = getSrcDir()+"\\case\\";
 		String filePath = casePath + "ProcessTest.xlsx";
 		String sheetName = "CaseList";
@@ -117,8 +127,7 @@ public class BaseTest {
 	}
 	
 	@DataProvider(name = "SingleCase")
-	public Iterator<Object[]> singleCase(Method testMethod,ITestContext context) {
-		srcDir = setSrcDir(context);
+	public Iterator<Object[]> singleCase(Method testMethod) {
 		String methodName = testMethod.getName();
 		String caseStr[] = methodName.split("_");
 		method = caseStr[1];
@@ -134,25 +143,26 @@ public class BaseTest {
 		return test_IDs.iterator();
 	}
 	
+	@Step
 	public void setRequest(String api,Map<String, Object> paramsMap) {
-	
 		String caseName = paramsMap.get("Case").toString();
 		String file = getSrcDir()+"/case/"+method+".xlsx";
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(file, api);
-
+		baseMap.put("baseURL", baseURL);
 		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
 		paramsMap.remove("Case");
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
+		saveResponseBody(response);
 		expectedJson = expectedMap.get("Path").toString();
-		checkResponse(saveResponseBody(response), expectedJson);
 	}
 
+	@Step
 	public void setRequest(String api,String filePath,String caseName) {
-		
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
+		baseMap.put("baseURL", baseURL);
 		
 		Map<String, Object> paramsMap = parameter.setParams(filePath, caseName);
 		if(paramsMap.containsKey("token")){	
@@ -163,8 +173,9 @@ public class BaseTest {
 		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
-		
-		checkResponse(saveResponseBody(response), expectedMap.get("Path").toString());
+		saveResponseBody(response);
+		expectedJson = expectedMap.get("Path").toString();
+//		checkResponse(, expectedMap.get("Path").toString());
 	}
 	
 	@Step("checkResponse() 校验response")

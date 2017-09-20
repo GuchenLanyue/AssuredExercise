@@ -14,14 +14,14 @@ import io.restassured.response.Response;
 public class Evaluation {
 	
 	@Step("getEvaluation() 获取求职意向列表")
-	public String getEvaluation(String token){
+	public String getEvaluation(String baseURL,String token){
 		
 		Response response = given()
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/getevaluation")
+				.post(baseURL+"/personresume/getevaluation")
 			.then()
 //				.statusCode(200)
 			.extract()

@@ -41,9 +41,15 @@ public class BaseInfo {
 	private int currentstate = 0;
 	private String goodatlanguage = null;
 	private String maritalstatus = null;
-
-	public BaseInfo() {
+	private String baseURL = null;
+	
+	public BaseInfo(String url) {
 		// TODO Auto-generated constructor stub
+		setBaseURL(url);
+	}
+	
+	public void setBaseURL(String url){
+		baseURL = url;
 	}
 	
 	@Step("geteducation() 获取学历")
@@ -53,7 +59,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/geteducation")
+				.post(baseURL+"/basics/geteducation")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -112,7 +118,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getenterprisenature")
+				.post(baseURL+"/basics/getenterprisenature")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -170,7 +176,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getcompanysize")
+				.post(baseURL+"/basics/getcompanysize")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -228,7 +234,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getjoblevel")
+				.post(baseURL+"/basics/getjoblevel")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -286,7 +292,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/gethealthy")
+				.post(baseURL+"/basics/gethealthy")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -343,7 +349,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getworklife")
+				.post(baseURL+"/basics/getworklife")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -400,7 +406,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getgoodatlanguage")
+				.post(baseURL+"/basics/getgoodatlanguage")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -457,7 +463,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getmaritalstatus")
+				.post(baseURL+"/basics/getmaritalstatus")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -515,7 +521,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getcurrentstate")
+				.post(baseURL+"/basics/getcurrentstate")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -572,7 +578,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getindustry")
+				.post(baseURL+"/basics/getindustry")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -629,7 +635,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getposition")
+				.post(baseURL+"/basics/getposition")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -682,7 +688,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getmajor")
+				.post(baseURL+"/basics/getmajor")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -740,7 +746,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getsalary")
+				.post(baseURL+"/basics/getsalary")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -797,7 +803,7 @@ public class BaseInfo {
 				//.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/basics/getarea")
+				.post(baseURL+"/basics/getarea")
 			.then()
 //				.statusCode(200)
 			.extract()

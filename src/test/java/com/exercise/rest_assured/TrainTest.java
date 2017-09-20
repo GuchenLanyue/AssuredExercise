@@ -16,23 +16,23 @@ public class TrainTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建培训信息")
 	@Description("创建培训信息")
 	public void add_Train_Test(Map<String,Object> params){
-		Train train = new Train();
+		Train train = new Train(getBaseURL());
 		params.remove("id");
 		params.put("token", getToken());
-		setRequest("train", train.setParam(params));
+		setRequest("train", train.setParam(getBaseURL(), params));
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		train.checkTrain(json);
 		String id = json.getString("id");
-		String actualJson = train.getTrain(getToken(), id, getSrcDir());
+		String actualJson = train.getTrain(getBaseURL(),getToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="修改培训信息",dependsOnMethods={"add_Train_Test"})
 	@Description("修改培训信息")
 	public void edit_Train_Test(Map<String,Object> params){
-		Train train = new Train();
-		List<String> ids = train.getTrains(getToken());
+		Train train = new Train(getBaseURL());
+		List<String> ids = train.getTrains(getBaseURL(),getToken());
 		String id = null;
 		if (ids.size()>0) {
 			id = ids.get(0);
@@ -41,21 +41,21 @@ public class TrainTest extends BaseTest{
 		}
 		params.put("id", id);
 		params.put("token", getToken());
-		params = train.setParam(params);
+		params = train.setParam(getBaseURL(), params);
 		setRequest("train", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		train.checkTrain(json);
 		
-		String actualJson = train.getTrain(getToken(), id, getSrcDir());
+		String actualJson = train.getTrain(getBaseURL(),getToken(), id, getSrcDir());
 		checkResponse(actualJson, getExpectedJson());
 	}
 	
 	@Test(description="删除培训信息",dependsOnMethods={"add_Train_Test"})
 	@Description("删除培训信息")
 	public void delTrainTest(){
-		Train train = new Train();
-		List<String> list = train.getTrains(getToken());
+		Train train = new Train(getBaseURL());
+		List<String> list = train.getTrains(getBaseURL(),getToken());
 		for (int i = 0; i < list.size(); i++) {
 			train.delTrain(getToken(), list.get(i));
 		}

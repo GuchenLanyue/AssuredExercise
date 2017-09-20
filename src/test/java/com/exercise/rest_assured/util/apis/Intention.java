@@ -28,9 +28,10 @@ public class Intention {
 	private int district = 1;
 	private int position = 1;
 	private int positions = 1;
-	
-	public Intention() {
+	private BaseInfo baseInfo = null;
+	public Intention(String baseURL) {
 		// TODO Auto-generated constructor stub
+		baseInfo = new BaseInfo(baseURL);
 	}
 	
 	@Step("getIntentions() 获取求职意向列表")
@@ -118,13 +119,12 @@ public class Intention {
 		}
 	}
 	
-	public Map<String, Object> setParams(Map<String, Object> params){
+	public Map<String, Object> setParams(String baseURL,Map<String, Object> params){
 		Map<String, Object> param = new HashMap<>();
 		param = params;
-		BaseInfo baseInfo = new BaseInfo();
 		baseInfo.setIndustry();
 		intentionParam.put("industry", baseInfo.getIndustry());
-		setPosition();
+		setPosition(baseURL);
 		intentionParam.put("position", position);
 		intentionParam.put("positions", positions);
 		baseInfo.setSalary();
@@ -146,7 +146,7 @@ public class Intention {
 	}
 	
 	public void setArea(){
-		area = new BaseInfo().getArea();
+		area = baseInfo.getArea();
 		provice = area[0];
 		city = area[1];
 		if(area.length==3){
@@ -158,8 +158,8 @@ public class Intention {
 		return id;
 	}
 	
-	public void setPosition(){
-		int[] positionData = new BaseInfo().getPositionData();
+	public void setPosition(String baseURL){
+		int[] positionData = new BaseInfo(baseURL).getPositionData();
 		position = positionData[0];
 		positions = positionData[1];
 	}

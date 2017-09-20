@@ -19,12 +19,14 @@ import io.restassured.response.Response;
 
 public class Job {
 	
-	private BaseInfo baseInfo = new BaseInfo();
+	private BaseInfo baseInfo = null;
 	private int[] position =null;
-	public Job() {
+	public Job(String baseURL) {
 		// TODO Auto-generated constructor stub
+		baseInfo = new BaseInfo(baseURL);
 		baseInfo.setPosition();
 		position = setPosition();
+		baseInfo = new BaseInfo(baseURL);
 	}
 	
 	public void addJob(Map<String, String> params){
@@ -32,14 +34,14 @@ public class Job {
 	}
 	
 	@Step
-	public List<String> getJobs(String token){
+	public List<String> getJobs(String baseURL,String token){
 		
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token", token)
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/getjobs")
+				.post(baseURL+"/personresume/getjobs")
 			.then()
 //				.statusCode(200)
 			.extract()
@@ -65,12 +67,13 @@ public class Job {
 
 	@Step
 	@Description("获取工作经验")
-	public String getJob(String token,String id,String srcDir){
+	public String getJob(String baseURL,String token,String id,String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getJob.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "getjob");
+		baseMap.put("baseURL", baseURL);
 		
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);

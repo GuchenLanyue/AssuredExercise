@@ -21,18 +21,20 @@ import io.restassured.response.Response;
 
 public class Train {
 	private Map<String, Object> trainParam = new HashMap<>();
+	private BaseInfo baseInfo = null;
 	
-	public Train() {
+	public Train(String baseURL) {
 		// TODO Auto-generated constructor stub
+		baseInfo = new BaseInfo(baseURL);
 	}
 	
-	public List<String> getTrains(String token){
+	public List<String> getTrains(String baseURL,String token){
 		Response response = given()
 //				.proxy("http://127.0.0.1:8888")
 				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 				.param("token",token)
 			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/gettrains")
+				.post(baseURL+"/personresume/gettrains")
 			.then()
 				.statusCode(200)
 			.extract()
@@ -50,12 +52,13 @@ public class Train {
 	
 	@Step
 	@Description("获取培训信息")
-	public String getTrain(String token,String id,String srcDir){
+	public String getTrain(String baseURL,String token,String id,String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getTrain.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "gettrain");
+		baseMap.put("baseURL", baseURL);
 		
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
@@ -83,11 +86,11 @@ public class Train {
 	}
 	
 	@Step
-	public Map<String, Object> setParam(Map<String, Object> params){
-		BaseInfo baseinfo = new BaseInfo();
-		int education = baseinfo.getEducation();
-		Date start_time = baseinfo.randomDate("1900-1-1", "2017-9-12");
-		Date end_time = baseinfo.randomDate((new SimpleDateFormat("yyyy-MM-dd")).format(start_time), "2017-9-12");
+	public Map<String, Object> setParam(String baseURL,Map<String, Object> params){
+		
+		int education = baseInfo.getEducation();
+		Date start_time = baseInfo.randomDate("1900-1-1", "2017-9-12");
+		Date end_time = baseInfo.randomDate((new SimpleDateFormat("yyyy-MM-dd")).format(start_time), "2017-9-12");
 		trainParam.put("education", education);
 		trainParam.put("start_time", start_time.toString());
 		trainParam.put("end_time", end_time.toString());
