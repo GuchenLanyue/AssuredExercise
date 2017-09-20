@@ -16,7 +16,7 @@ public class Login {
 	 * */
 	public void singin(User user){
 		Response response = given()
-//		.proxy("localhost", 8888)
+		.proxy("localhost", 8888)
 //		.log().all()
 		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 		.param("username",user.getPUsername())

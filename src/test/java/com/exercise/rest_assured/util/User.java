@@ -1,39 +1,51 @@
 package com.exercise.rest_assured.util;
 
+import java.util.Map;
+
+import com.exercise.rest_assured.utils.JsonUtils;
+
+import io.restassured.path.json.JsonPath;
+
 public class User {
-	private String p_name = "灰太狼";
-	private String p_password = "123456";
-	private String p_v_code = "testing";
-	private String p_uuid = "86f4ae22-d9aa-4644-9f69-520da8ee361d";
+	String path = System.getProperty("user.dir")+"\\src\\test\\resources\\base\\user.json";
+	private Map<String, String> person = null;
+	private Map<String, String> enterprise = null;
 	
-	private String e_name = "大水杯科技";
-	private String e_password = "111111";
-	private String e_v_code = "testing";
-	private String e_uuid = "603397e1-94be-4896-877a-fc869efc9184";
+	public User() {
+		// TODO Auto-generated constructor stub
+		setMap();
+	}
+	
+	public void setMap(){
+		JsonUtils jsonUtils = new JsonUtils();
+		JsonPath json = jsonUtils.jsonReader(path);
+		person =json.getMap("person");
+		enterprise = json.get("enterprise");
+	}
 	
 	public String getPUsername() {
-		return p_name;
+		return person.get("name");
 	}
 	public String getPPassword() {
-		return p_password;
+		return person.get("password");
 	}
 	public String getPV_code() {
-		return p_v_code;
+		return person.get("v_code");
 	}
 	public String getPUuid() {
-		return p_uuid;
+		return person.get("uuid");
 	}
 	
 	public String getEUsername() {
-		return e_name;
+		return enterprise.get("name");
 	}
 	public String getEPassword() {
-		return e_password;
+		return enterprise.get("password");
 	}
 	public String getEV_code() {
-		return e_v_code;
+		return enterprise.get("v_code");
 	}
 	public String getEUuid() {
-		return e_uuid;
+		return enterprise.get("uuid");
 	}
 }

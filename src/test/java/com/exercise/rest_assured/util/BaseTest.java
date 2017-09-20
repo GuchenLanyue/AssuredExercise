@@ -31,7 +31,7 @@ public class BaseTest {
 	private String method = null;
 	private String responseStr = null;
 	private String expectedJson = null;
-	
+
 	public enum RequestMethod {
 		POST, GET
 	}
@@ -101,6 +101,7 @@ public class BaseTest {
 	
 	@DataProvider(name = "CaseList")
 	public Iterator<Object[]> caseData(ITestContext context) {
+		srcDir = setSrcDir(context);
 		String casePath = getSrcDir()+"\\case\\";
 		String filePath = casePath + "ProcessTest.xlsx";
 		String sheetName = "CaseList";
@@ -116,7 +117,8 @@ public class BaseTest {
 	}
 	
 	@DataProvider(name = "SingleCase")
-	public Iterator<Object[]> singleCase(Method testMethod) {
+	public Iterator<Object[]> singleCase(Method testMethod,ITestContext context) {
+		srcDir = setSrcDir(context);
 		String methodName = testMethod.getName();
 		String caseStr[] = methodName.split("_");
 		method = caseStr[1];
