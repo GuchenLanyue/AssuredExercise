@@ -34,7 +34,6 @@ public class API_Category {
 				token = login.singin(user.getPerson());
 				textData.writerText(fPath + "personToken.txt", token);
 			}
-			System.out.println(fPath + "personToken.txt");
 			break;
 		case enterprise:
 			File efile = new File(fPath + "enterpriseToken.txt");

@@ -58,7 +58,7 @@ public class EducationTest extends BaseTest{
 		Education education = new Education(getBaseURL());
 		List<String> list = education.getEducations(getBaseURL(),getPersonToken());
 		for (int i = 0; i < list.size(); i++) {
-			education.delEducation(getPersonToken(), list.get(i));
+			education.delEducation(getBaseURL(), getPersonToken(), list.get(i));
 		}
 	}
 }

@@ -121,10 +121,11 @@ public class BaseTest {
 		Map<String, Object> baseMap = parameter.setUrlData(file, api);
 		baseMap.put("baseURL", baseURL);
 		API_Category path = new API_Category();
+		path.analysis(baseMap.get("path").toString());
 		if (paramsMap.containsKey("token")) {
 			paramsMap.put("token", getPersonToken());
 		}
-		path.analysis(baseMap.get("path").toString());
+		
 		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
 		if (paramsMap.containsKey("Case")) {
 			paramsMap.remove("Case");

@@ -93,14 +93,14 @@ public class Education {
 	
 	@Step
 	@Description("删除教育背景信息")
-	public void delEducation(String token, String id) {
+	public void delEducation(String baseURL,String token, String id) {
 		Response response = given()
 //			.proxy("http://127.0.0.1:8888")
 			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 			.param("token", token)
 			.param("id", id)
 		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/deleducation")
+			.post(baseURL+"/personresume/deleducation")
 		.then()
 //			.statusCode(200)
 		.extract()

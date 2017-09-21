@@ -24,7 +24,6 @@ public class FileData {
         File f = new File(fileName);
         if (!f.exists()) {
         	try {
-        		System.out.println(fileName);
 				f.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
