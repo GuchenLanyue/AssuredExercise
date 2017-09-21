@@ -14,7 +14,7 @@ public class Login {
 	public String singin(JsonPath user){
 		
 		Response response = given()
-		.proxy("localhost", 8888)
+//		.proxy("localhost", 8888)
 //		.log().all()
 		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
 		.formParams(user.getMap("params"))

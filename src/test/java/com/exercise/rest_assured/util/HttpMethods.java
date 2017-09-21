@@ -2,24 +2,29 @@ package com.exercise.rest_assured.util;
 
 import static io.restassured.RestAssured.given;
 
+import io.qameta.allure.Allure;
 import java.util.Map;
 
 import org.testng.Assert;
 
 import com.exercise.rest_assured.util.BaseTest.RequestMethod;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
 import io.restassured.response.Response;
 
 public class HttpMethods {
+	private Map<String, Object> params = null;
 	
 	@Step
 	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
+		params = paramsMap;
+		String requestURL = baseMap.get("baseURL").toString() + baseMap.get("path").toString();
 		Response response = null;
 		RequestMethod method = null;
+		Allure.addAttachment("RequestURL:", requestURL);
+		requestLog();
 		
 		if (baseMap.get("Method").equals("POST")) {
 			method = RequestMethod.POST;
@@ -45,7 +50,7 @@ public class HttpMethods {
 //					.contentType(ContentType.URLENC)
 					.formParams(paramsMap)
 				.when()
-					.post(baseMap.get("baseURL").toString() + baseMap.get("path").toString())
+					.post(requestURL)
 				.then()
 //					.log().body()
 //					.statusCode(200)
@@ -55,12 +60,12 @@ public class HttpMethods {
 			break;
 		case GET:	
 			response = given()
-						.proxy("127.0.0.1", 8888)
+//						.proxy("127.0.0.1", 8888)
 //						.log().all()
 					.contentType(baseMap.get("contentType").toString())
 					.params(paramsMap)
 				.when()
-					.get(baseMap.get("Protocol") + "://" + baseMap.get("Host") + baseMap.get("path"))
+					.get(requestURL)
 				.then()
 //					.log().body()
 //					.statusCode(200)
@@ -90,5 +95,15 @@ public class HttpMethods {
 		}
 		
 		return body;
+	}
+	
+	public void requestLog(){
+		String requestBody = " ";
+		for(String key:params.keySet()){
+			String str = key+"="+params.get(key);
+			requestBody=requestBody+"&"+str;
+		}
+		
+		Allure.addAttachment("RequestBody:", requestBody.substring(requestBody.indexOf('&')+1, requestBody.length()));
 	}
 }

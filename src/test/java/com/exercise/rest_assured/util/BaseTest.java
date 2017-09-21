@@ -8,6 +8,8 @@ import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.FileData;
 import com.exercise.rest_assured.utils.JsonUtils;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
 import io.restassured.path.json.JsonPath;
@@ -76,23 +78,6 @@ public class BaseTest {
 		System.out.println(context.getName()+" Start!");
 		setSrcDir(context);
 		setBaseURL(context);
-//		User user = new User();
-//		Platform platform = null;
-//		String platformStr = context.getCurrentXmlTest().getParameter("platform");
-//		if (platformStr.equals("GuanWang")){
-//			platform = Platform.GuanWang;
-//		}else if (platformStr.equals("ZhongDuan")) {
-//			platform = Platform.ZhongDuan;
-//		}else if (platformStr.equals("HouTai")) {
-//			platform = Platform.HouTai;
-//		}else if (platformStr.equals("WeiZhan")) {
-//			platform = Platform.WeiZhan;
-//		}else {
-//			Assert.fail("平台设置错误："+platformStr+"，请在testng.xml中重新设置。");
-//		}
-//		
-//		String tokenPath = srcDir+"/case/token.txt";
-//		File tokenFile = new File(tokenPath);
 	}
 	
 	@DataProvider(name = "CaseList")
@@ -186,10 +171,10 @@ public class BaseTest {
 		jsonUtil.equalsJson(jsonFile, jsonPath);
 	}
 	
-//	@Attachment(value = "Response.Body",type = "String")
+	@Attachment(value = "Response.Body",type = "String")
 	public String saveResponseBody(Response response) {
 		String body = response.getBody().asString();
-//		Allure.addAttachment("Response.body", body);
+		Allure.addAttachment("Response.body", body);
 		
 		while(body.charAt(0)!='{'){
 			body = body.substring(1, body.length());
