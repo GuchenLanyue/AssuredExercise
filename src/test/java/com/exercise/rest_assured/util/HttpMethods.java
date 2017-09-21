@@ -39,6 +39,8 @@ public class HttpMethods {
 			response = given()
 //					.proxy("127.0.0.1", 8888)
 //					.log().all()
+					.log().uri()
+					.log().params()
 					.header("Accept", "application/json")
 					.header("Accept-Encoding", "gzip, deflate")
 					.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
@@ -52,8 +54,8 @@ public class HttpMethods {
 				.when()
 					.post(requestURL)
 				.then()
-//					.log().body()
-//					.statusCode(200)
+					.log().body()
+					.statusCode(200)
 				.extract()
 					.response();
 			

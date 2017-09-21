@@ -5,7 +5,6 @@ import org.testng.annotations.DataProvider;
 
 import com.exercise.rest_assured.util.apis.API_Category;
 import com.exercise.rest_assured.utils.ExcelReader;
-import com.exercise.rest_assured.utils.FileData;
 import com.exercise.rest_assured.utils.JsonUtils;
 
 import io.qameta.allure.Allure;
@@ -32,6 +31,7 @@ public class BaseTest {
 	private String responseStr = null;
 	private String expectedJson = null;
 	private String baseURL = null;
+	private String caseName = null;
 	
 	public enum RequestMethod {
 		POST, GET
@@ -55,9 +55,7 @@ public class BaseTest {
 	}
 	
 	@Step
-	public String getPersonToken(){
-		FileData data = new FileData();
-		token = data.readTxtFile(srcDir+"\\case\\personToken.txt");
+	public String getToken(){
 		return token;
 	}
 	
@@ -99,8 +97,8 @@ public class BaseTest {
 	@DataProvider(name = "SingleCase")
 	public Iterator<Object[]> singleCase(Method testMethod) {
 		String methodName = testMethod.getName();
-		String caseStr[] = methodName.split("_");
-		method = caseStr[1];
+		String[] caseStr = methodName.split("_");
+		method = caseStr[caseStr.length-2];
 		String filePath = getSrcDir()+"/case/"+method+".xlsx";
 		String sheetName = "Params";
 		ExcelReader excel = new ExcelReader();
@@ -115,25 +113,23 @@ public class BaseTest {
 	
 	@Step
 	public void setRequest(String api,Map<String, Object> paramsMap) {
-		String caseName = paramsMap.get("Case").toString();
 		String file = getSrcDir()+"/case/"+method+".xlsx";
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(file, api);
 		baseMap.put("baseURL", baseURL);
 		API_Category path = new API_Category();
-		path.analysis(baseMap.get("path").toString());
+		token = path.analysis(baseMap.get("path").toString());
 		if (paramsMap.containsKey("token")) {
-			paramsMap.put("token", getPersonToken());
+			paramsMap.put("token", token);
 		}
 		
-		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
 		if (paramsMap.containsKey("Case")) {
+			caseName = paramsMap.get("Case").toString();
 			paramsMap.remove("Case");
 		}
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		saveResponseBody(response);
-		expectedJson = expectedMap.get("Path").toString();
 	}
 
 	@Step
@@ -141,12 +137,18 @@ public class BaseTest {
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
 		baseMap.put("baseURL", baseURL);
-		
+		this.caseName = caseName;
 		Map<String, Object> paramsMap = parameter.setParams(filePath, caseName);
-		if(paramsMap.containsKey("token")){	
+		API_Category path = new API_Category();
+		token = path.analysis(baseMap.get("path").toString());
+		if (paramsMap.containsKey("token")) {
 			paramsMap.put("token", token);
 		}
-
+		
+		if (paramsMap.containsKey("Case")) {
+			paramsMap.remove("Case");
+		}
+		
 		Map<String, Object>expectedMap  = parameter.setExpectedMap(filePath, caseName);
 		
 		HttpMethods http = new HttpMethods();
@@ -157,7 +159,12 @@ public class BaseTest {
 	}
 	
 	@Step("checkResponse() 校验response")
-	public void checkResponse(String response, String path) {
+	public void checkResponse() {
+		String file = getSrcDir()+"/case/"+method+".xlsx";
+		Parameter parameter = new Parameter();
+		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
+		expectedJson = expectedMap.get("Path").toString();
+		String response = getBodyStr();
 		
 		//部分接口返回的response首字母不是“{”，不符合json格式，在这里处理一下
 		while (response.charAt(0) != '{') {
@@ -166,7 +173,7 @@ public class BaseTest {
 
 		JsonPath jsonPath = new JsonPath(response);
 
-		String jsonFile = getSrcDir() + path;
+		String jsonFile = getSrcDir() + expectedJson;
 		JsonUtils jsonUtil = new JsonUtils();
 		
 		jsonUtil.equalsJson(jsonFile, jsonPath);

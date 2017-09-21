@@ -1,5 +1,6 @@
 package com.exercise.rest_assured.utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -175,6 +176,12 @@ public class ExcelReader {
 	}
 	
 	public List<Map<String, Object>> mapList(int firstRow,String filePath,String sheetName){
+		
+		File f = new File(filePath);
+		if (!f.exists()) {
+			Assert.fail("文件："+filePath+"不存在！");
+		}
+		
 		Workbook wb = null;
 		Sheet sheet = null;
 		int rows = 0;

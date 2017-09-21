@@ -15,7 +15,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.EducationTest">
+			<class name="com.exercise.rest_assured.enterprise.UpdBaseinfoTest">
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />

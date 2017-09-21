@@ -1,4 +1,4 @@
-package com.exercise.rest_assured;
+package com.exercise.rest_assured.person;
 
 import java.util.Map;
 
@@ -20,6 +20,6 @@ public class ProcessTest extends BaseTest {
 		String filePath = getSrcDir()+"/case/"+baseData.get("FilePath");
 		String caseName = baseData.get("Case").toString();
 		setRequest(api,filePath, caseName);
-		checkResponse(getBodyStr(), getExpectedJson());
+		checkResponse();
 	}
 }

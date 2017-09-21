@@ -14,7 +14,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.BasicTest">
+			<class name="com.exercise.rest_assured.person.BasicTest">
 				<methods>
 					<include name="add_Basic_Test" />
 					<include name="edit_Basic_Test" />
@@ -32,7 +32,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.EducationTest">
+			<class name="com.exercise.rest_assured.person.EducationTest">
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />
@@ -51,7 +51,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.TrainTest">
+			<class name="com.exercise.rest_assured.person.TrainTest">
 				<methods>
 					<include name="add_Train_Test" />
 					<include name="edit_Train_Test" />
@@ -70,7 +70,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.JobTest">
+			<class name="com.exercise.rest_assured.person.JobTest">
 				<methods>
 					<include name="add_Job_Test" />
 					<include name="edit_Job_Test" />
@@ -89,7 +89,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.IntentionTest">
+			<class name="com.exercise.rest_assured.person.IntentionTest">
 				<methods>
 					<include name="add_Intention_Test" />
 					<include name="edit_Intention_Test" />
@@ -107,7 +107,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.EvaluationTest">
+			<class name="com.exercise.rest_assured.person.EvaluationTest">
 				<methods>
 					<include name="add_Evaluation_Test" />
 					<include name="edit_Evaluation_Test" />
