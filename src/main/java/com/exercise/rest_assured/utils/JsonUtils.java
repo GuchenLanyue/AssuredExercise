@@ -39,8 +39,8 @@ public class JsonUtils {
 	}
 	
 	@Step
-	public void equalsJson(String file, JsonPath responseJson){
-		JsonPath expectedJson = jsonReader(file);
+	public void equalsJson(String filePath, JsonPath responseJson){
+		JsonPath expectedJson = jsonReader(filePath);
 		List<JsonPath> expectedList = expectedJson.getList("expected");
 		
 		for(int i = 0; i < expectedList.size(); i++){
@@ -62,7 +62,43 @@ public class JsonUtils {
 				if (mapEntry.getValue()!=null) 
 					expected = mapEntry.getValue().toString();
 
-				Assert.assertEquals(actual, expected,"文件\""+file+"\"["+key+"]:的预期值为："+expected+"，实际值为："+actual);
+				Assert.assertEquals(actual, expected,"文件\""+filePath+"\"["+key+"]:的预期值为："+expected+"，实际值为："+actual);
+			}
+		}
+	}
+	
+	@Step
+	public void equalsJson(Map<String, Object> params, String filePath, JsonPath responseJson){
+		File f = new File(filePath);
+		if (!f.exists()) {
+			Assert.fail("没有找到文件："+filePath);
+		}
+		JsonPath expectedJson = jsonReader(filePath);
+		List<JsonPath> expectedList = expectedJson.getList("expected");
+		
+		for(int i = 0; i < expectedList.size(); i++){
+			Map<String, Object> map = expectedJson.get("expected["+i+"].values");
+			String root = expectedJson.get("expected["+i+"].root");
+			responseJson = responseJson.setRoot(root);
+			for(Map.Entry<String,Object> mapEntry:map.entrySet()){
+				String key = mapEntry.getKey();
+				
+				if (mapEntry.getKey().equals("root")) {
+					continue;
+				}
+
+				String actual = null;
+				String expected = null;
+				if (responseJson.get(key)!=null)
+					actual = responseJson.get(key).toString();
+				
+				if (params.containsKey(key)) {
+					expected = params.get(key).toString();
+				}else if (mapEntry.getValue()!=null) {
+					expected = mapEntry.getValue().toString();
+				}
+					
+				Assert.assertEquals(actual, expected,"文件\""+filePath+"\"["+key+"]:的预期值为："+expected+"，实际值为："+actual);
 			}
 		}
 	}

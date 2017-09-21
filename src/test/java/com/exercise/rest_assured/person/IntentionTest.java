@@ -8,8 +8,6 @@ import org.testng.annotations.Test;
 import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.util.apis.person.Intention;
 
-import io.restassured.path.json.JsonPath;
-
 public class IntentionTest extends BaseTest {
 
 	@Test(dataProvider = "SingleCase", description = "增加求职意向")
@@ -18,9 +16,7 @@ public class IntentionTest extends BaseTest {
 		params.remove("id");
 		params.put("token", getToken());
 		setRequest("intention", intention.setParams(getBaseURL(), params));
-		checkResponse();
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		intention.checkIntention(json);
+		checkResponse(intention.getParams());
 	}
 
 	@Test(dataProvider = "SingleCase", description = "编辑求职意向",dependsOnMethods={"add_Intention_Test"})
@@ -30,9 +26,7 @@ public class IntentionTest extends BaseTest {
 		params.put("token", getToken());
 		params.put("id", intention.getID());
 		setRequest("intention", intention.setParams(getBaseURL(), params));
-		checkResponse();
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		intention.checkIntention(json);
+		checkResponse(intention.getParams());
 	}
 
 	@Test(description = "删除求职意向",dependsOnMethods={"add_Intention_Test"})

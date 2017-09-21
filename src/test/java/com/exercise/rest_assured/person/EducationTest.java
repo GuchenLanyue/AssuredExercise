@@ -19,10 +19,11 @@ public class EducationTest extends BaseTest{
 		Education edu = new Education(getBaseURL());
 		params.put("token", getToken());
 		params.remove("id");
+		
 		setRequest("education", edu.setParams(params));
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		edu.checkEducation(json);
-		checkResponse();
+		checkResponse(edu.getParams());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="编辑教育背景信息")
@@ -43,10 +44,7 @@ public class EducationTest extends BaseTest{
 		params = edu.setParams(params);
 		setRequest("education", params);
 		
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		edu.checkEducation(json);
-		id = json.getString("id");
-		checkResponse();
+		checkResponse(edu.getParams());
 	}
 	
 	@Test(description = "删除教育背景信息")

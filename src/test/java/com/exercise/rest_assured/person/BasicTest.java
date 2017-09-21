@@ -7,8 +7,6 @@ import org.testng.annotations.Test;
 import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.util.apis.person.Basic;
 
-import io.restassured.path.json.JsonPath;
-
 public class BasicTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="创建基本信息")
 	public void add_Basic_Test(Map<String, Object> params){
@@ -16,8 +14,7 @@ public class BasicTest extends BaseTest{
 		Map<String, Object> basicParams = basic.setParams(params);
 		basicParams.put("token", getToken());
 		setRequest("basic", basicParams);
-		checkResponse();
-		basic.checkBasic(new JsonPath(getBodyStr()).setRoot("value"));
+		checkResponse(basic.getParams());
 	}
 	
 	@Test(dataProvider="SingleCase",description="修改基本信息")
@@ -29,8 +26,6 @@ public class BasicTest extends BaseTest{
 		basicParams.put("token", getToken());
 		basicParams.put("id", basic.getID());
 		setRequest("basic", basicParams);
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		checkResponse();
-		basic.checkBasic(json);
+		checkResponse(basic.getParams());
 	}
 }

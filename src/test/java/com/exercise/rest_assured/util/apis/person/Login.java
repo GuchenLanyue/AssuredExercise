@@ -31,10 +31,6 @@ public class Login {
 			body = body.substring(1, body.length());
 		};
 		
-		JsonPath json = new JsonPath(body).setRoot("value");
-		
-		String token = json.getString("token");
-		
-		return token;
+		return body;
 	}
 }

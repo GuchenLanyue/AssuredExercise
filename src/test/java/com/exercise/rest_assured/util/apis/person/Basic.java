@@ -142,6 +142,10 @@ public class Basic {
 		return id;
 	}
 	
+	public Map<String, Object> getParams(){
+		return basicParams;
+	}
+	
 	public void checkBasic(JsonPath response){
 		for (Map.Entry<String,Object> mapEntry:basicParams.entrySet()) {
 			String actual = null;

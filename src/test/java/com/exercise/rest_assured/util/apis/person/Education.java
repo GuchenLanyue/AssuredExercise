@@ -27,6 +27,10 @@ public class Education {
 		baseInfo = new BaseInfo(baseURL);
 	}
 	
+	public Map<String,Object> getParams(){
+		return educationParam;
+	}
+	
 	@Step
 	public Map<String,Object> setParams(Map<String,Object> params){
 		Map<String,Object> param = new HashMap<>();

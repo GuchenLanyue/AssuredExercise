@@ -1,0 +1,25 @@
+{
+  "case": "edit",
+  "expected": [
+    {
+      "root": "value.enterprise_info",
+      "values": {
+        "id": "4",
+        "username": "大水杯科技",
+        "logo": "/attach/image/object/201708/28/20170828142541_58910.png",
+        "contacts": "灰太狼大王",
+        "contact_number": "18612819427",
+        "address": "xinhua",
+        "nature": "6",
+        "industry": "4",
+        "url": "http",
+        "settled": "0",
+        "id_img": "/attach/image/object/201708/16/20170816143920_97515.jpg",
+        "license_img": "/attach/image/object/201708/16/20170816143922_49033.jpg",
+        "remarks": "",
+        "status": "2",
+        "create_time": "1502865588"
+      }
+    }
+  ]
+}

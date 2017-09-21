@@ -15,11 +15,11 @@ public class ProcessTest extends BaseTest {
 	@Issue("043")
     @Issue("044")
     @Issue("045")
-	public void processTest(Map<String, Object> baseData) {
+	public void process_Test(Map<String, Object> baseData) {
 		String api = baseData.get("API").toString();
 		String filePath = getSrcDir()+"/case/"+baseData.get("FilePath");
 		String caseName = baseData.get("Case").toString();
-		setRequest(api,filePath, caseName);
+		setRequest(api,filePath,caseName);
 		checkResponse();
 	}
 }

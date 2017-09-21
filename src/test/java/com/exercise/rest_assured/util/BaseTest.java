@@ -32,6 +32,7 @@ public class BaseTest {
 	private String expectedJson = null;
 	private String baseURL = null;
 	private String caseName = null;
+	private String filePath = null;
 	
 	public enum RequestMethod {
 		POST, GET
@@ -47,6 +48,10 @@ public class BaseTest {
 	
 	public void setBaseURL(ITestContext context){
 		baseURL = context.getCurrentXmlTest().getParameter("BaseURL");
+	}
+	
+	public String getFilePath(){
+		return filePath;
 	}
 	
 	@Step
@@ -79,9 +84,12 @@ public class BaseTest {
 	}
 	
 	@DataProvider(name = "CaseList")
-	public Iterator<Object[]> caseData(ITestContext context) {
-		String casePath = getSrcDir()+"\\case\\";
-		String filePath = casePath + "ProcessTest.xlsx";
+	public Iterator<Object[]> caseData(ITestContext context,Method testMethod) {
+		String methodName = testMethod.getName();
+		String[] caseStr = methodName.split("_");
+		method = caseStr[caseStr.length-2];
+		filePath = getSrcDir()+"/case/"+method+".xlsx";
+		
 		String sheetName = "CaseList";
 		ExcelReader excel = new ExcelReader();
 		List<Map<String, Object>> caseList = excel.mapList(1,filePath, sheetName);
@@ -99,7 +107,7 @@ public class BaseTest {
 		String methodName = testMethod.getName();
 		String[] caseStr = methodName.split("_");
 		method = caseStr[caseStr.length-2];
-		String filePath = getSrcDir()+"/case/"+method+".xlsx";
+		filePath = getSrcDir()+"/case/"+method+".xlsx";
 		String sheetName = "Params";
 		ExcelReader excel = new ExcelReader();
 		List<Map<String, Object>> caseList = excel.mapList(1,filePath, sheetName);
@@ -113,9 +121,8 @@ public class BaseTest {
 	
 	@Step
 	public void setRequest(String api,Map<String, Object> paramsMap) {
-		String file = getSrcDir()+"/case/"+method+".xlsx";
 		Parameter parameter = new Parameter();
-		Map<String, Object> baseMap = parameter.setUrlData(file, api);
+		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
 		baseMap.put("baseURL", baseURL);
 		API_Category path = new API_Category();
 		token = path.analysis(baseMap.get("path").toString());
@@ -127,13 +134,17 @@ public class BaseTest {
 			caseName = paramsMap.get("Case").toString();
 			paramsMap.remove("Case");
 		}
+		Map<String, Object> expectedMap = parameter.setExpectedMap(filePath, caseName);
+		expectedJson = expectedMap.get("Path").toString();
+		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
 		saveResponseBody(response);
 	}
 
 	@Step
-	public void setRequest(String api,String filePath,String caseName) {
+	public void setRequest(String api,String filePath, String caseName) {
+		this.filePath = filePath;
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
 		baseMap.put("baseURL", baseURL);
@@ -155,15 +166,10 @@ public class BaseTest {
 		Response response = http.request(baseMap, paramsMap);
 		saveResponseBody(response);
 		expectedJson = expectedMap.get("Path").toString();
-//		checkResponse(, expectedMap.get("Path").toString());
 	}
 	
 	@Step("checkResponse() 校验response")
 	public void checkResponse() {
-		String file = getSrcDir()+"/case/"+method+".xlsx";
-		Parameter parameter = new Parameter();
-		Map<String, Object> expectedMap = parameter.setExpectedMap(file, caseName);
-		expectedJson = expectedMap.get("Path").toString();
 		String response = getBodyStr();
 		
 		//部分接口返回的response首字母不是“{”，不符合json格式，在这里处理一下
@@ -177,6 +183,23 @@ public class BaseTest {
 		JsonUtils jsonUtil = new JsonUtils();
 		
 		jsonUtil.equalsJson(jsonFile, jsonPath);
+	}
+	
+	@Step("checkResponse() 校验response")
+	public void checkResponse(Map<String, Object> params) {
+		String response = getBodyStr();
+		
+		//部分接口返回的response首字母不是“{”，不符合json格式，在这里处理一下
+		while (response.charAt(0) != '{') {
+			response = response.substring(1, response.length());
+		};
+
+		JsonPath jsonPath = new JsonPath(response);
+
+		String jsonFile = getSrcDir() + expectedJson;
+		JsonUtils jsonUtil = new JsonUtils();
+		
+		jsonUtil.equalsJson(params, jsonFile, jsonPath);
 	}
 	
 	@Attachment(value = "Response.Body",type = "String")

@@ -10,7 +10,6 @@ import com.exercise.rest_assured.util.BaseTest;
 import com.exercise.rest_assured.util.apis.person.Train;
 
 import io.qameta.allure.Description;
-import io.restassured.path.json.JsonPath;
 
 public class TrainTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建培训信息")
@@ -21,9 +20,7 @@ public class TrainTest extends BaseTest{
 		params.put("token", getToken());
 		setRequest("train", train.setParam(getBaseURL(), params));
 		
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		train.checkTrain(json);
-		checkResponse();
+		checkResponse(train.getParams());
 	}
 	
 	@Test(dataProvider = "SingleCase",description="修改培训信息",dependsOnMethods={"add_Train_Test"})
@@ -42,10 +39,7 @@ public class TrainTest extends BaseTest{
 		params = train.setParam(getBaseURL(), params);
 		setRequest("train", params);
 		
-		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
-		train.checkTrain(json);
-		
-		checkResponse();
+		checkResponse(train.getParams());
 	}
 	
 	@Test(description="删除培训信息",dependsOnMethods={"add_Train_Test"})

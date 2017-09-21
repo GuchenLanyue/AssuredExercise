@@ -91,6 +91,11 @@ public class ExcelReader {
 		int rowNum = 0;
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		File f = new File(fileName);
+		if (!f.exists()) {
+			Assert.fail("文件不存在："+fileName);
+		}
+		
 		try {
 			workbook = setWorkbook(fileName);
 		} catch (IOException e) {
@@ -113,7 +118,7 @@ public class ExcelReader {
 			}
 		}
 		
-		Assert.assertTrue(rowNum!=0, "没有在"+fileName+"/"+sheetName+"中找到Case："+caseName+"!");
+		Assert.assertTrue(rowNum!=0, "没有在"+fileName+"/"+sheetName+"中找到Case:"+caseName+"!");
 		
 		for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
 			if (sheet.getRow(0).getCell(i).toString()==null) {

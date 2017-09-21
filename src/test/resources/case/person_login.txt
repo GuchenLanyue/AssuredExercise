@@ -1,0 +1,1 @@
+{"status":1,"msg":"success","value":{"user_id":"6","type":1,"token":"e9620193d776e243cb1238c6f51b6699","user_info":{"id":"6","username":"\u7070\u592a\u72fc","sex":"1","contact_number":"18612819427","email":"sam.hou@microfastup.com","status":"1","create_time":"1502854029"}}}

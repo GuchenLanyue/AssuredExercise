@@ -104,6 +104,10 @@ public class Train {
 		return param;
 	}
 	
+	public Map<String, Object> getParams(){
+		return trainParam;
+	}
+	
 	@Step()
 	public void checkTrain(JsonPath response){
 		for (Map.Entry<String,Object> mapEntry:trainParam.entrySet()) {

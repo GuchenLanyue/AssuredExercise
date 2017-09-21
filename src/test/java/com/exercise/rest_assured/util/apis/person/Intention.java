@@ -164,6 +164,10 @@ public class Intention {
 		positions = positionData[1];
 	}
 	
+	public Map<String, Object> getParams(){
+		return intentionParam;
+	}
+	
 	@Step("checkIntention() 校验求职意向")
 	public void checkIntention(JsonPath response){
 		for (Map.Entry<String,Object> mapEntry:intentionParam.entrySet()) {
