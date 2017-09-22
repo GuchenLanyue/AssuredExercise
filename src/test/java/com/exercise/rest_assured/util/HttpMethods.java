@@ -3,6 +3,8 @@ package com.exercise.rest_assured.util;
 import static io.restassured.RestAssured.given;
 
 import io.qameta.allure.Allure;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import org.testng.Assert;
@@ -36,35 +38,69 @@ public class HttpMethods {
 		
 		switch (method) {
 		case POST:
-			response = given()
-//					.proxy("127.0.0.1", 8888)
-//					.log().all()
-					.log().uri()
-					.log().params()
-					.header("Accept", "application/json")
-					.header("Accept-Encoding", "gzip, deflate")
-					.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
-					.header("Cache-Control", "no-cache")
-					.config(RestAssured.config()
-							  .encoderConfig(EncoderConfig.encoderConfig()
-									    .defaultContentCharset("UTF-8")
-									    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
-//					.contentType(ContentType.URLENC)
-					.formParams(paramsMap)
-				.when()
-					.post(requestURL)
-				.then()
-					.log().body()
-					.statusCode(200)
-				.extract()
-					.response();
-			
+			if (!baseMap.containsKey("QueryString")) {
+				response = given()
+	//					.proxy("127.0.0.1", 8888)
+	//					.log().all()
+						.log().uri()
+						.log().params()
+						.header("Accept", "application/json")
+						.header("Accept-Encoding", "gzip, deflate")
+						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+						.header("Cache-Control", "no-cache")
+						.config(RestAssured.config()
+								  .encoderConfig(EncoderConfig.encoderConfig()
+										    .defaultContentCharset("UTF-8")
+										    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+						.formParams(paramsMap)
+					.when()
+						.post(requestURL)
+					.then()
+						.log().body()
+						.statusCode(200)
+					.extract()
+						.response();
+			}else{
+				String queryString = baseMap.get("QueryString").toString();
+				String[] qParam = queryString.split("&");
+				Map<String, Object> queryMap = new HashMap<>();
+				for(String param:qParam){
+					String[] qparams= param.split("=");
+					queryMap.put(qparams[0], qparams[1]);
+				}
+				
+				response = given()
+	//					.proxy("127.0.0.1", 8888)
+	//					.log().all()
+						.log().uri()
+						.log().params()
+						.header("Accept", "application/json")
+						.header("Accept-Encoding", "gzip, deflate")
+						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+						.header("Cache-Control", "no-cache")
+						.config(RestAssured.config()
+								  .encoderConfig(EncoderConfig.encoderConfig()
+										    .defaultContentCharset("UTF-8")
+										    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+						.formParams(paramsMap)
+						.queryParams(queryMap)
+					.when()
+						.post(requestURL)
+					.then()
+						.log().body()
+						.statusCode(200)
+					.extract()
+						.response();
+			}
 			break;
 		case GET:	
 			response = given()
 //						.proxy("127.0.0.1", 8888)
 //						.log().all()
-					.contentType(baseMap.get("contentType").toString())
+					.config(RestAssured.config()
+							  .encoderConfig(EncoderConfig.encoderConfig()
+									    .defaultContentCharset("UTF-8")
+									    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 					.params(paramsMap)
 				.when()
 					.get(requestURL)

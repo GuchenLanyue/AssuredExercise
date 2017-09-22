@@ -13,7 +13,7 @@ import java.util.Random;
 
 import org.testng.Assert;
 
-import com.exercise.rest_assured.utils.FileData;
+import com.exercise.rest_assured.utils.TxtData;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -78,7 +78,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 
 		fileData.writerText(filePath+"education.json", json);
@@ -137,7 +137,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"enterprisenature.json", json);
 		
@@ -195,7 +195,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"companysize.json", json);
 		
@@ -253,7 +253,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"joblevel.json", json);
 		
@@ -311,7 +311,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"healthy.json", json);
 		
@@ -368,7 +368,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"worklife.json", json);
 		
@@ -425,7 +425,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"goodatlanguage.json", json);
 		
@@ -482,7 +482,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"maritalstatus.json", json);
 		
@@ -540,7 +540,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"currentstate.json", json);
 		
@@ -597,7 +597,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"industry.json", json);
 		
@@ -646,7 +646,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"position.json", json);
 		
@@ -699,7 +699,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"major.json", json);
 		
@@ -765,7 +765,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 		
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"salary.json", json);
 		
@@ -814,7 +814,7 @@ public class BaseInfo {
 			json = json.substring(1, json.length());
 		}
 
-		FileData fileData = new FileData();
+		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 		fileData.writerText(filePath+"area.json", json);
 		

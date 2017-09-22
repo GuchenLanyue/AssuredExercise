@@ -1,0 +1,26 @@
+{
+  "case": "addJob",
+  "expected": [
+    {
+      "root": "value",
+      "values": {
+        "title": "测试发布职位接口",
+        "enterprise": "大水杯科技",
+        "position_nature": "3",
+        "category": "11",
+        "categorys": "155",
+        "number": "23",
+        "education": "3",
+        "experience": "1",
+        "salary": "12",
+        "content": "测试发布职位接口\n测试发布职位接口",
+        "provice": "24",
+        "city": "304",
+        "country": "0",
+        "address": "15楼A座1501",
+        "des": null,
+        "status": "1",
+      }
+    }
+  ]
+}

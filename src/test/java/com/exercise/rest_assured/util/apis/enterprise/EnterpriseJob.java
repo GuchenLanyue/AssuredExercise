@@ -1,15 +1,26 @@
 package com.exercise.rest_assured.util.apis.enterprise;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.exercise.rest_assured.util.HttpMethods;
+import com.exercise.rest_assured.util.apis.API_Category;
 import com.exercise.rest_assured.util.apis.person.BaseInfo;
+import com.exercise.rest_assured.utils.JsonUtils;
 
 import io.qameta.allure.Step;
+import io.restassured.path.json.JsonPath;
 
 public class EnterpriseJob {
 	private Map<String,Object> jobParams = new HashMap<>();
+	private String url = null;
+	
+	public EnterpriseJob(String baseURL) {
+		// TODO Auto-generated constructor stub
+		url = baseURL;
+	}
 	
 	@Step
 	public Map<String,Object> setParams(String url,Map<String,Object> params){
@@ -29,9 +40,10 @@ public class EnterpriseJob {
 		int[] area = info.setArea();
 		jobParams.put("provice", area[0]);
 		jobParams.put("city", area[1]);
-		if (area.length==3) {
-			jobParams.put("country", "");
+		if (area.length<3) {
 			param.remove("country");
+		}else{
+			jobParams.put("country", area[2]);
 		}
 		jobParams.put("number", new Random().nextInt(100)+1);
 		jobParams.put("position_nature", new Random().nextInt(3)+1);
@@ -45,5 +57,54 @@ public class EnterpriseJob {
 	
 	public Map<String, Object> getParams(){
 		return jobParams;
+	}
+	
+	public List<String> getUserJobList(int status){
+		Map<String, Object> params = new HashMap<>();
+		String path = "/job/getuserjoblist";
+		API_Category apiPath = new API_Category();
+		String token = apiPath.analysis(path);
+		params.put("status", status);
+		params.put("token", token);
+		params.put("page", 1);
+		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", path);
+		HttpMethods http = new HttpMethods();
+		
+		String body = http.getBody(http.request(baseMap, params));
+		
+		JsonPath json = JsonPath.with(body).setRoot("value");
+		List<String> ids = json.getList("list.id");
+		
+		return ids;
+	}
+	
+	public JsonPath getUserJobShow(int id){
+		Map<String, Object> params = new HashMap<>();
+		String path = "/job/getuserjobshow";
+		API_Category apiPath = new API_Category();
+		String token = apiPath.analysis(path);
+		params.put("token", token);
+		params.put("id", id);
+		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", path);
+		HttpMethods http = new HttpMethods();
+		
+		String body = http.getBody(http.request(baseMap, params));
+		
+		JsonPath json = JsonPath.with(body).setRoot("value");
+		
+		return json;
+	}
+	
+	public void checkInfo(String path,JsonPath responseJson){
+		JsonUtils jutil = new JsonUtils();
+		jutil.equalsJson(jobParams, path, responseJson);
 	}
 }

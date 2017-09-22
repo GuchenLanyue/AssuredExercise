@@ -1,4 +1,4 @@
-package com.exercise.rest_assured.util.apis.person;
+package com.exercise.rest_assured.util.apis;
 
 import static io.restassured.RestAssured.given;
 

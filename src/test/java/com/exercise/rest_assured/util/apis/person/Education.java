@@ -11,7 +11,7 @@ import org.testng.Assert;
 
 import com.exercise.rest_assured.util.HttpMethods;
 import com.exercise.rest_assured.util.Parameter;
-import com.exercise.rest_assured.utils.FileData;
+import com.exercise.rest_assured.utils.TxtData;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -76,7 +76,7 @@ public class Education {
 		JsonPath json = new JsonPath(body).setRoot("value");
 		String id = json.getString("id");
 		
-		FileData textData = new FileData();
+		TxtData textData = new TxtData();
 		String path = srcDir+"/case/";
 		textData.writerText(path+"eduID.txt", id);
 	}
