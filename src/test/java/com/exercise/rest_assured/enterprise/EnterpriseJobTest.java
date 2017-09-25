@@ -40,14 +40,20 @@ public class EnterpriseJobTest extends BaseTest {
 	public void up_EnterpriseJob_Test(Map<String, Object> params){
 		EnterpriseJob job = new EnterpriseJob(getBaseURL());
 		Map<String, Object> param = new HashMap<>();
-		param.put("id", "");
-		setRequest("upjob", job.setParams(param));
+		param = params;
+		for(String id:job.getUserJobList(4)){
+			param.put("id", id);
+			param.put("token", "");
+			param.put("content", "重新发布职位");
+			param.put("title", "编辑职位功能测试");
+			param.put("address", "新华科技大厦A座15楼1501");
+			setRequest("upjob", job.setParams(param));
+		}
 	}
 	
 	@Test
 	public void up_EnterpriseJobStatus_Test(){
 		EnterpriseJob job = new EnterpriseJob(getBaseURL());
-		job.upStatus(job.getUserJobList(4), "1");
 		
 		//后台审核
 		Login login = new Login();
@@ -58,7 +64,7 @@ public class EnterpriseJobTest extends BaseTest {
 			
 			paramMap.put("jobID", id);
 			paramMap.put("title", job.getUserJobShow(Integer.valueOf(id).intValue()).getString("title"));
-			paramMap.put("des", "不通过");
+			paramMap.put("des", "通过");
 			paramMap.put("status", "2");
 			examine.job(login.getCookie(), paramMap);
 		}

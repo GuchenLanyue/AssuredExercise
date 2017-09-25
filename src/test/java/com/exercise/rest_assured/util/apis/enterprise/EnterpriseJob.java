@@ -22,10 +22,6 @@ public class EnterpriseJob {
 		url = baseURL;
 	}
 	
-	public void setBaseParams(){
-		
-	}
-	
 	@Step
 	public Map<String,Object> setParams(Map<String,Object> params){
 		Map<String,Object> param = new HashMap<>();
