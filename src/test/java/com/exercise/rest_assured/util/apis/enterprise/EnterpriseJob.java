@@ -22,8 +22,12 @@ public class EnterpriseJob {
 		url = baseURL;
 	}
 	
+	public void setBaseParams(){
+		
+	}
+	
 	@Step
-	public Map<String,Object> setParams(String url,Map<String,Object> params){
+	public Map<String,Object> setParams(Map<String,Object> params){
 		Map<String,Object> param = new HashMap<>();
 		param = params;
 		BaseInfo info = new BaseInfo(url);
@@ -101,6 +105,34 @@ public class EnterpriseJob {
 		JsonPath json = JsonPath.with(body).setRoot("value");
 		
 		return json;
+	}
+	
+	public void upStatus(List<String> list,String status){
+		String ids = null;
+		if(list.size()==0){
+			return;
+		}
+		
+		for(String id:list){
+			ids += (id+",");
+		}
+		ids = ids.substring(4, ids.length()-1);
+		
+		Map<String, Object> params = new HashMap<>();
+		String path = "/job/upstatus";
+		API_Category apiPath = new API_Category();
+		String token = apiPath.analysis(path);
+		params.put("token", token);
+		params.put("ids", ids);
+		params.put("status", status);
+		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", path);
+		HttpMethods http = new HttpMethods();
+		
+		http.getBody(http.request(baseMap, params));
 	}
 	
 	public void checkInfo(String path,JsonPath responseJson){
