@@ -15,11 +15,10 @@
 			</define>
 		</groups>
 		<classes>
-		    <!--  
-		    <class name="com.exercise.rest_assured.enterprise.EnterpriseJobTest">
-			-->
-			
+		    <!--  	
 			 <class name="com.exercise.rest_assured.Exercise">
+			-->
+			<class name="com.exercise.rest_assured.enterprise.EnterpriseJobTest">
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />
