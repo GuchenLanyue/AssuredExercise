@@ -1,12 +1,11 @@
 package com.exercise.rest_assured.apis.admin;
 
-import static io.restassured.RestAssured.given;
+import io.restassured.RestAssured;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.http.ContentType;
@@ -31,7 +30,7 @@ public class Examine {
 		
 		String requestURL = "http://nchr.release.microfastup.com/";
 		
-		given()
+		RestAssured.given()
 //			.proxy("127.0.0.1", 8888)
 			.cookies(cookieMap)
 			.config(RestAssured.config()

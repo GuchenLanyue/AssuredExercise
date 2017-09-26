@@ -2,7 +2,6 @@ package com.exercise.rest_assured.apis;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.exercise.rest_assured.util.User;

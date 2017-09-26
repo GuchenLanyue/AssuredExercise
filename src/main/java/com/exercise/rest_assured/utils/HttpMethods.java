@@ -125,11 +125,109 @@ public class HttpMethods {
 			break;
 		}
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment(baseMap.get("path")+".Response.body:", body);
-			Assert.fail(baseMap.get("path")+"请求失败！");
+		return response;
+	}
+	
+	@Step
+	public Response request(Map<String,Object> cookieMap, Map<String, Object> baseMap,Map<String, Object> paramsMap) {
+		params = paramsMap;
+		
+		API_Category path = new API_Category();
+		path.analysis(baseMap.get("path").toString());
+		
+		if (params.containsKey("token")) {
+			String token = path.getToke();
+			params.put("token", token);
+		}
+		
+		String requestURL = baseMap.get("baseURL").toString() + baseMap.get("path").toString();
+		Response response = null;
+		RequestMethod method = null;
+		Allure.addAttachment("RequestURL:", requestURL);
+		requestLog();
+		
+		if (baseMap.get("Method").equals("POST")) {
+			method = RequestMethod.POST;
+		} else if (baseMap.get("Method").equals("GET")) {
+			method = RequestMethod.GET;
+		} else {
+			Assert.fail("目前只支持POST和GET方法");
+		}
+		
+		switch (method) {
+		case POST:
+			if (!baseMap.containsKey("QueryString")) {
+				response = given()
+						.cookies(cookieMap)
+						.header("Accept", "application/json")
+						.header("Accept-Encoding", "gzip, deflate")
+						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+						.header("Cache-Control", "no-cache")
+						.config(RestAssured.config()
+								  .encoderConfig(EncoderConfig.encoderConfig()
+										    .defaultContentCharset("UTF-8")
+										    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+						.formParams(paramsMap)
+					.when()
+						.post(requestURL)
+					.then()
+//						.log().body()
+						.statusCode(200)
+					.extract()
+						.response();
+			}else{
+				String queryString = baseMap.get("QueryString").toString();
+				String[] qParam = queryString.split("&");
+				Map<String, Object> queryMap = new HashMap<>();
+				for(String param:qParam){
+					String[] qparams= param.split("=");
+					queryMap.put(qparams[0], qparams[1]);
+				}
+				
+				response = given()
+	//					.proxy("127.0.0.1", 8888)
+	//					.log().all()
+						.log().uri()
+						.log().params()
+						.header("Accept", "application/json")
+						.header("Accept-Encoding", "gzip, deflate")
+						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+						.header("Cache-Control", "no-cache")
+						.config(RestAssured.config()
+								  .encoderConfig(EncoderConfig.encoderConfig()
+										    .defaultContentCharset("UTF-8")
+										    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+						.formParams(paramsMap)
+						.queryParams(queryMap)
+					.when()
+						.post(requestURL)
+					.then()
+						.log().body()
+						.statusCode(200)
+					.extract()
+						.response();
+			}
+			break;
+		case GET:	
+			response = given()
+//						.proxy("127.0.0.1", 8888)
+//						.log().all()
+					.config(RestAssured.config()
+							  .encoderConfig(EncoderConfig.encoderConfig()
+									    .defaultContentCharset("UTF-8")
+									    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+					.params(paramsMap)
+				.when()
+					.get(requestURL)
+				.then()
+//					.log().body()
+//					.statusCode(200)
+				.extract()
+					.response();
+			
+			break;
+		default:
+			break;
 		}
 		
 		return response;

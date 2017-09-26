@@ -9,7 +9,6 @@ import br.eti.kinoshita.testlinkjavaapi.constants.ExecutionType;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCase;
 import br.eti.kinoshita.testlinkjavaapi.model.TestCaseStep;
 import br.eti.kinoshita.testlinkjavaapi.model.TestPlan;
-import br.eti.kinoshita.testlinkjavaapi.model.TestSuite;
 import br.eti.kinoshita.testlinkjavaapi.util.TestLinkAPIException;
 
 
