@@ -59,6 +59,7 @@ public class EnterpriseJob {
 		return jobParams;
 	}
 	
+	@Step
 	public List<String> getUserJobList(int status){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
@@ -82,6 +83,7 @@ public class EnterpriseJob {
 		return ids;
 	}
 	
+	@Step
 	public JsonPath getUserJobShow(int id){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
@@ -103,6 +105,7 @@ public class EnterpriseJob {
 		return json;
 	}
 	
+	@Step
 	public void upStatus(List<String> list,String status){
 		String ids = null;
 		if(list.size()==0){
@@ -131,6 +134,7 @@ public class EnterpriseJob {
 		http.getBody(http.request(baseMap, params));
 	}
 	
+	@Step
 	public void checkInfo(String path,JsonPath responseJson){
 		JsonUtils jutil = new JsonUtils();
 		jutil.equalsJson(jobParams, path, responseJson);

@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -12,6 +13,7 @@ import io.restassured.http.ContentType;
 
 public class Examine {
 	
+	@Step("审核职位")
 	public void job(Map<String, Object> cookieMap,Map<String, Object> paramMap){
 		Map<String, Object> queryMap = new HashMap<>();
 		String jobID = paramMap.get("jobID").toString();
