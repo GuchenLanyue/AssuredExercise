@@ -7,7 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.apis.person.Education;
-import com.exercise.rest_assured.testcase.BaseTest;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
 
 import io.qameta.allure.Description;
 import io.restassured.path.json.JsonPath;

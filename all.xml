@@ -14,7 +14,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.BasicTest">
+			<class name="com.exercise.rest_assured.testcase.person.BasicTest">
 				<methods>
 					<include name="add_Basic_Test" />
 					<include name="edit_Basic_Test" />
@@ -32,7 +32,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.EducationTest">
+			<class name="com.exercise.rest_assured.testcase.person.EducationTest">
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />
@@ -51,7 +51,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.TrainTest">
+			<class name="com.exercise.rest_assured.testcase.person.TrainTest">
 				<methods>
 					<include name="add_Train_Test" />
 					<include name="edit_Train_Test" />
@@ -70,7 +70,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.JobTest">
+			<class name="com.exercise.rest_assured.testcase.person.JobTest">
 				<methods>
 					<include name="add_Job_Test" />
 					<include name="edit_Job_Test" />
@@ -89,7 +89,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.IntentionTest">
+			<class name="com.exercise.rest_assured.testcase.person.IntentionTest">
 				<methods>
 					<include name="add_Intention_Test" />
 					<include name="edit_Intention_Test" />
@@ -107,7 +107,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.EvaluationTest">
+			<class name="com.exercise.rest_assured.testcase.person.EvaluationTest">
 				<methods>
 					<include name="add_Evaluation_Test" />
 					<include name="edit_Evaluation_Test" />
@@ -115,4 +115,54 @@
 			</class>
 		</classes>
 	</test>
+	
+	<test name="投递简历" preserve-order="true">
+		<groups>
+			<define name="Addresume">
+				<include name="add_Resume_Test" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.testcase.person.AddresumeTest">
+				<methods>
+					<include name="add_Resume_Test" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="企业用户发布新职位" preserve-order="true">
+		<groups>
+			<define name="EnterpriseJob">
+				<include name="add_EnterpriseJob_Test" />
+				<include name="up_EnterpriseJob_Test" />
+				<include name="up_EnterpriseJobStatus_Test"/>
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.testcase.enterprise.EnterpriseJobTest">
+				<methods>
+					<include name="add_EnterpriseJob_Test" />
+					<include name="up_EnterpriseJob_Test" />
+					<include name="up_EnterpriseJobStatus_Test"/>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
+	<test name="更新企业基本信息" preserve-order="true">
+		<groups>
+			<define name="UpdBaseinfoTest">
+				<include name="updbaseinfo_Test" />
+			</define>
+		</groups>
+		<classes>
+			<class name="com.exercise.rest_assured.testcase.enterprise.UpdBaseinfoTest">
+				<methods>
+					<include name="updbaseinfo_Test" />
+				</methods>
+			</class>
+		</classes>
+	</test>
+	
 </suite><!-- Suite -->

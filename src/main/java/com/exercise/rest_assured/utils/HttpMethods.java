@@ -10,7 +10,7 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.exercise.rest_assured.apis.API_Category;
-import com.exercise.rest_assured.testcase.BaseTest.RequestMethod;
+import com.exercise.rest_assured.utils.testutils.BaseTest.RequestMethod;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;

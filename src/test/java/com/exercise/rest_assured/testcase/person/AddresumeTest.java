@@ -11,8 +11,8 @@ import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.admin.Examine;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
 import com.exercise.rest_assured.apis.person.Delivery;
-import com.exercise.rest_assured.testcase.BaseTest;
-import com.exercise.rest_assured.util.User;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
+import com.exercise.rest_assured.utils.testutils.User;
 
 import io.restassured.path.json.JsonPath;
 

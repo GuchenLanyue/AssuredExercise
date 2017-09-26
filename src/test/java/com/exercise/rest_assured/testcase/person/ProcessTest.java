@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
-import com.exercise.rest_assured.testcase.BaseTest;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;

@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.exercise.rest_assured.util.User;
 import com.exercise.rest_assured.utils.TxtData;
+import com.exercise.rest_assured.utils.testutils.User;
 
 import io.restassured.path.json.JsonPath;
 

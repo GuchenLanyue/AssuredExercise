@@ -1,4 +1,4 @@
-package com.exercise.rest_assured.util;
+package com.exercise.rest_assured.utils.testutils;
 
 import com.exercise.rest_assured.utils.JsonUtils;
 

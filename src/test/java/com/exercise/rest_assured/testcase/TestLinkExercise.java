@@ -1,4 +1,4 @@
-package com.exercise.rest_assured;
+package com.exercise.rest_assured.testcase;
 import java.net.MalformedURLException;
 import java.net.URL;
 

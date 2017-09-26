@@ -1,9 +1,8 @@
-package com.exercise.rest_assured.testcase;
+package com.exercise.rest_assured.utils.testutils;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 
-import com.exercise.rest_assured.util.Parameter;
 import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.JsonUtils;

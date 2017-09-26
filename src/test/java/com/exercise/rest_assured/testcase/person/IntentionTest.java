@@ -6,7 +6,7 @@ import java.util.Map;
 import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.apis.person.Intention;
-import com.exercise.rest_assured.testcase.BaseTest;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
 
 public class IntentionTest extends BaseTest {
 

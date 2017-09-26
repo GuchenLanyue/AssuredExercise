@@ -5,7 +5,7 @@ import java.util.Map;
 import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.apis.person.Basic;
-import com.exercise.rest_assured.testcase.BaseTest;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
 
 public class BasicTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="创建基本信息")

@@ -8,9 +8,9 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.exercise.rest_assured.util.Parameter;
 import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.TxtData;
+import com.exercise.rest_assured.utils.testutils.Parameter;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;

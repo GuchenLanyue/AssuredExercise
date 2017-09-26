@@ -6,8 +6,8 @@ import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseBaseinfo;
-import com.exercise.rest_assured.testcase.BaseTest;
-import com.exercise.rest_assured.util.User;
+import com.exercise.rest_assured.utils.testutils.BaseTest;
+import com.exercise.rest_assured.utils.testutils.User;
 
 import io.restassured.path.json.JsonPath;
 

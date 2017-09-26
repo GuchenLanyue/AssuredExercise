@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.exercise.rest_assured.util.Parameter;
 import com.exercise.rest_assured.utils.HttpMethods;
+import com.exercise.rest_assured.utils.testutils.Parameter;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
