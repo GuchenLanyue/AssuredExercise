@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.admin.Examine;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
+import com.exercise.rest_assured.apis.person.Basic;
 import com.exercise.rest_assured.apis.person.Delivery;
 import com.exercise.rest_assured.utils.testutils.BaseTest;
 import com.exercise.rest_assured.utils.testutils.User;
@@ -47,5 +49,18 @@ public class AddresumeTest extends BaseTest{
 		
 		Delivery delivery = new Delivery(getBaseURL());
 		setRequest("addresume", delivery.setParams(job_id, params));
+		String body = job.getUserResume(job_id);
+
+		int list_nums = JsonPath.with(body).setRoot("value").getInt("list_nums");
+		if(list_nums>0){
+			List<String> resumes = JsonPath.with(body).setRoot("value").getList("list.id");
+			Basic basic = new Basic(getBaseURL());
+			basic.getbasic();
+			String id = String.valueOf(basic.getID());
+			if(!resumes.contains(id)){
+				Assert.fail("投递简历失败，在job_id:"+job_id+"中没有找到简历id："+basic.getID());
+			}
+		}
+		
 	}
 }

@@ -167,6 +167,24 @@ public class EnterpriseJob {
 	}
 	
 	@Step
+	public String getUserResume(String job_id){
+		Map<String, Object> params = new HashMap<>();
+		String path = "/job/getuserresume";
+		API_Category apiPath = new API_Category();
+		apiPath.analysis(path);
+		String token = apiPath.getToke();
+		params.put("token", token);
+		params.put("job_id", job_id);
+		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", path);
+		HttpMethods http = new HttpMethods();
+		
+		return http.getBody(http.request(baseMap, params));
+	}
+	@Step
 	public void checkInfo(String path,JsonPath responseJson){
 		JsonUtils jutil = new JsonUtils();
 		jutil.equalsJson(jobParams, path, responseJson);
