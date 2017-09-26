@@ -17,7 +17,7 @@ public class TrainTest extends BaseTest{
 	public void add_Train_Test(Map<String,Object> params){
 		Train train = new Train(getBaseURL());
 		params.remove("id");
-		params.put("token", getToken());
+		params.put("token", "");
 		setRequest("train", train.setParam(getBaseURL(), params));
 		
 		checkResponse(train.getParams());
@@ -27,7 +27,7 @@ public class TrainTest extends BaseTest{
 	@Description("修改培训信息")
 	public void edit_Train_Test(Map<String,Object> params){
 		Train train = new Train(getBaseURL());
-		List<String> ids = train.getTrains(getBaseURL(),getToken());
+		List<String> ids = train.getTrains();
 		String id = null;
 		if (ids.size()>0) {
 			id = ids.get(0);
@@ -35,7 +35,7 @@ public class TrainTest extends BaseTest{
 			Assert.fail("当前没有任何培训信息，无法编辑");
 		}
 		params.put("id", id);
-		params.put("token", getToken());
+		params.put("token", "");
 		params = train.setParam(getBaseURL(), params);
 		setRequest("train", params);
 		
@@ -44,11 +44,11 @@ public class TrainTest extends BaseTest{
 	
 	@Test(description="删除培训信息",dependsOnMethods={"add_Train_Test"})
 	@Description("删除培训信息")
-	public void delTrainTest(){
+	public void del_Train_Test(){
 		Train train = new Train(getBaseURL());
-		List<String> list = train.getTrains(getBaseURL(),getToken());
+		List<String> list = train.getTrains();
 		for (int i = 0; i < list.size(); i++) {
-			train.delTrain(getToken(), list.get(i));
+			train.delTrain(list.get(i));
 		}
 	}
 }

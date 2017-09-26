@@ -1,10 +1,11 @@
 package com.exercise.rest_assured.util.apis.person;
 
-import static io.restassured.RestAssured.given;
-
+import java.util.HashMap;
 import java.util.Map;
 
 import org.testng.Assert;
+
+import com.exercise.rest_assured.util.HttpMethods;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -12,20 +13,25 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Evaluation {
+	private String url = null;
 	
-	@Step("getEvaluation() 获取求职意向列表")
-	public String getEvaluation(String baseURL,String token){
+	public Evaluation(String baseURL) {
+		// TODO Auto-generated constructor stub
+		url = baseURL;
 		
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.param("token", token)
-			.when()
-				.post(baseURL+"/personresume/getevaluation")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	}
+	@Step("getEvaluation() 获取求职意向列表")
+	public String getEvaluation(){
+
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/getevaluation");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, paramsMap);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
@@ -36,12 +42,10 @@ public class Evaluation {
 		
 		String body = response.asString();
 		
-		while (body.charAt(0)!='{') {
-			body = body.substring(1, body.length());
-		}
+		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 		
 		JsonPath json = new JsonPath(body);
-		Map<String, Object> value = json.get("value");
+		Map<String, Object> value = json.getMap("value");
 		if (value.containsKey("id")) {
 			return value.get("id").toString();
 		}else{

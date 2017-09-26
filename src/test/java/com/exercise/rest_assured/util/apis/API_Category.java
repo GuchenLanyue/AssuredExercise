@@ -1,6 +1,8 @@
 package com.exercise.rest_assured.util.apis;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.exercise.rest_assured.util.User;
@@ -10,16 +12,19 @@ import io.restassured.path.json.JsonPath;
 
 public class API_Category {
 
+	private String token = null;
+	private Map<String, Object> cookieMap = new HashMap<>();
+	
 	public enum category {
-		person, personresume, enterprise, job, site, admin
+		person, personresume, enterprise, job, site, admin, delivery
 	}
 
-	public String analysis(String path) {
+	public void analysis(String path) {
 		category role = null;
 		String[] strs = null;
 		if (path != null) {
 			strs = path.split("/");
-			if (strs[1].equals("person")) {
+			if (strs[1].equals("person")|strs[1].equals("delivery")) {
 				role = category.person;
 			} else if (strs[1].equals("personresume")) {
 				role = category.personresume;
@@ -38,7 +43,7 @@ public class API_Category {
 		User user = new User();
 		TxtData textData = new TxtData();
 		String fPath = System.getProperty("user.dir") + "\\src\\test\\resources\\case\\";
-		String token = null;
+
 		switch (role) {
 		case person:
 		case personresume:
@@ -72,28 +77,38 @@ public class API_Category {
 			break;
 		case admin:
 		case site:
-			File afile = new File(fPath + "adminToken.txt");
+			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
 				login.singin(user.getAdmin());
-				Map<String, Object> cookieMap = login.getCookie();
+				cookieMap = login.getCookie();
 
 				String cookie = null;
 				for (String key : cookieMap.keySet()) {
 					cookie += (key + "=" + cookieMap.get(key));
-					cookie += "\r\n";
+					cookie += ";";
 				}
 
-				textData.writerText(fPath + "adminToken.txt", cookie.substring(4, cookie.length()));
+				textData.writerText(fPath + "adminCookie.txt", cookie.substring(4, cookie.length()));
 			} else {
 				TxtData data = new TxtData();
-				token = data.readTxtFile(fPath + "adminToken.txt");
+				String cookieStr = data.readTxtFile(fPath + "adminCookie.txt");
+				for(String cookie:cookieStr.split(";")){
+					String[] cookieList=cookie.split("=");
+						cookieMap.put(cookieList[0], cookieList[1]);
+				}
 			}
-
+			
 			break;
 		default:
 			break;
 		}
-
+	}
+	
+	public String getToke(){
 		return token;
+	}
+	
+	public Map<String, Object> getCookie(){
+		return cookieMap;
 	}
 }

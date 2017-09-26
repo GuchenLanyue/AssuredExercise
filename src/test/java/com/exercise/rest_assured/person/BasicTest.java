@@ -12,7 +12,7 @@ public class BasicTest extends BaseTest{
 	public void add_Basic_Test(Map<String, Object> params){
 		Basic basic = new Basic(getBaseURL());
 		Map<String, Object> basicParams = basic.setParams(params);
-		basicParams.put("token", getToken());
+		basicParams.put("token", "");
 		setRequest("basic", basicParams);
 		checkResponse(basic.getParams());
 	}
@@ -20,10 +20,9 @@ public class BasicTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="修改基本信息")
 	public void edit_Basic_Test(Map<String, Object> params){
 		Basic basic = new Basic(getBaseURL());
-		basic.getbasic(getToken());
+		basic.getbasic();
 		Map<String, Object> basicParams = null;
 		basicParams = basic.setParams(params);
-		basicParams.put("token", getToken());
 		basicParams.put("id", basic.getID());
 		setRequest("basic", basicParams);
 		checkResponse(basic.getParams());

@@ -17,7 +17,7 @@ public class EducationTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
 	public void add_Education_Test(Map<String,Object> params){
 		Education edu = new Education(getBaseURL());
-		params.put("token", getToken());
+		params.put("token", "");
 		params.remove("id");
 		
 		setRequest("education", edu.setParams(params));
@@ -31,7 +31,7 @@ public class EducationTest extends BaseTest{
 	public void edit_Education_Test(Map<String,Object> params){
 		
 		Education edu = new Education(getBaseURL());
-		List<String> ids = edu.getEducations(getBaseURL(),getToken());
+		List<String> ids = edu.getEducations();
 		String id = null;
 		if (ids.size()>0) {
 			id = ids.get(0);
@@ -39,7 +39,7 @@ public class EducationTest extends BaseTest{
 			Assert.fail("当前没有添加任何教育背景，无法编辑");
 		}
 		
-		params.put("token", getToken());
+		params.put("token", "");
 		params.put("id", id);
 		params = edu.setParams(params);
 		setRequest("education", params);
@@ -51,9 +51,9 @@ public class EducationTest extends BaseTest{
 	@Description("删除教育背景信息")
 	public void del_Education_Test(){
 		Education education = new Education(getBaseURL());
-		List<String> list = education.getEducations(getBaseURL(),getToken());
+		List<String> list = education.getEducations();
 		for (int i = 0; i < list.size(); i++) {
-			education.delEducation(getBaseURL(), getToken(), list.get(i));
+			education.delEducation(getBaseURL(), list.get(i));
 		}
 	}
 }

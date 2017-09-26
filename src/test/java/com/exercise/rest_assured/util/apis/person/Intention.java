@@ -1,6 +1,5 @@
 package com.exercise.rest_assured.util.apis.person;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import org.testng.Assert;
 import com.exercise.rest_assured.util.HttpMethods;
 import com.exercise.rest_assured.util.Parameter;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
@@ -29,37 +27,30 @@ public class Intention {
 	private int position = 1;
 	private int positions = 1;
 	private BaseInfo baseInfo = null;
+	private String url = null;
+	
 	public Intention(String baseURL) {
 		// TODO Auto-generated constructor stub
-		baseInfo = new BaseInfo(baseURL);
+		url = baseURL;
+		baseInfo = new BaseInfo(url);
 	}
 	
 	@Step("getIntentions() 获取求职意向列表")
-	public List<String> getIntentions(String token){
+	public List<String> getIntentions(){
 		
-		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.param("token", token)
-			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/getintentions")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/getintentions");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/personresume/getintentions.Response.body:", body);
-			Assert.fail("/personresume/getintentions 请求失败！");
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, paramsMap);
 		
 		String json = response.asString();
 		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		json = json.substring(json.indexOf("{"), json.lastIndexOf("}")+1);
 		
 		List<String> intentionIDs = from(json).getList("value.id");
 		
@@ -88,29 +79,20 @@ public class Intention {
 	
 	@Step
 	@Description("删除求职意向")
-	public void delIntention(String token, String id) {
-		Response response = given()
-//			.proxy("http://127.0.0.1:8888")
-			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.param("token", token)
-			.param("id", id)
-		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/delintention")
-		.then()
-//			.statusCode(200)
-		.extract()
-			.response();
-		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/personresume/delintention.Response.body:", body);
-			Assert.fail("/personresume/delintention 请求失败！");
-		}
+	public void delIntention(String id) {		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/delintention");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		paramsMap.put("id", id);
+		HttpMethods http = new HttpMethods();
+		http.request(baseMap, paramsMap);
 	}
 	
-	public void setID(String token){
-		List<String> ids = getIntentions(token);
+	public void setID(){
+		List<String> ids = getIntentions();
 
 		if (ids.size() > 0) {
 			id = ids.get(0);
@@ -119,6 +101,7 @@ public class Intention {
 		}
 	}
 	
+	@Step
 	public Map<String, Object> setParams(String baseURL,Map<String, Object> params){
 		Map<String, Object> param = new HashMap<>();
 		param = params;

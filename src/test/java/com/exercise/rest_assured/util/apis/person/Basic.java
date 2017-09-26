@@ -1,11 +1,11 @@
 package com.exercise.rest_assured.util.apis.person;
 
-import static io.restassured.RestAssured.given;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.testng.Assert;
+
+import com.exercise.rest_assured.util.HttpMethods;
 
 import io.qameta.allure.Allure;
 import io.restassured.path.json.JsonPath;
@@ -34,9 +34,11 @@ public class Basic {
 	private Map<String, Object> basicParams = new HashMap<>();
 	private int current = 1;
 	private BaseInfo baseInfo = null;
+	private String url = null;
 	
 	public Basic(String baseURL) {
 		// TODO Auto-generated constructor stub
+		url = baseURL;
 		baseInfo = new BaseInfo(baseURL);
 	}
 	
@@ -101,17 +103,17 @@ public class Basic {
 		return param;
 	}
 	
-	public JsonPath getbasic(String token){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.param("token", token)
-			.when()
-				.post("http://nchr.release.microfastup.com/nchr/personresume/getbasic")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public JsonPath getbasic(){
+		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/getbasic");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		HttpMethods http = new HttpMethods();
+		
+		Response response = http.request(baseMap, paramsMap);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception

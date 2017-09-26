@@ -1,5 +1,6 @@
 package com.exercise.rest_assured.util.apis.enterprise;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,29 @@ public class EnterpriseJob {
 	public EnterpriseJob(String baseURL) {
 		// TODO Auto-generated constructor stub
 		url = baseURL;
+	}
+	
+	public String addJob(){
+		String path = "/job/addjob";
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", path);
+		
+		API_Category apiPath = new API_Category();
+		apiPath.analysis(path);
+		String token = apiPath.getToke();
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("title", "添加新职位");
+		param.put("address", "新华科技大厦A座15楼1501");
+		param.put("content", "测试新增职位接口");
+		param.put("token", token);
+
+		HttpMethods http = new HttpMethods();
+		String body = http.getBody(http.request(baseMap, setParams(param)));
+		
+		return body;
 	}
 	
 	@Step
@@ -60,11 +84,14 @@ public class EnterpriseJob {
 	}
 	
 	@Step
+	/**
+	 * status 状态(1审核中2发布中3已下线4未通过)*/
 	public List<String> getUserJobList(int status){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
 		API_Category apiPath = new API_Category();
-		String token = apiPath.analysis(path);
+		apiPath.analysis(path);
+		String token = apiPath.getToke();
 		params.put("status", status);
 		params.put("token", token);
 		params.put("page", 1);
@@ -78,7 +105,10 @@ public class EnterpriseJob {
 		String body = http.getBody(http.request(baseMap, params));
 		
 		JsonPath json = JsonPath.with(body).setRoot("value");
-		List<String> ids = json.getList("list.id");
+		List<String> ids = new ArrayList<>();
+		if (json.getInt("list_nums")!=0) {
+			ids = json.getList("list.id");
+		}
 		
 		return ids;
 	}
@@ -88,7 +118,8 @@ public class EnterpriseJob {
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
 		API_Category apiPath = new API_Category();
-		String token = apiPath.analysis(path);
+		apiPath.analysis(path);
+		String token = apiPath.getToke();
 		params.put("token", token);
 		params.put("id", id);
 		
@@ -120,7 +151,8 @@ public class EnterpriseJob {
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/upstatus";
 		API_Category apiPath = new API_Category();
-		String token = apiPath.analysis(path);
+		apiPath.analysis(path);
+		String token = apiPath.getToke();
 		params.put("token", token);
 		params.put("ids", ids);
 		params.put("status", status);

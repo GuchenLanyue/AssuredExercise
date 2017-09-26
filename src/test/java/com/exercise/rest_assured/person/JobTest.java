@@ -21,7 +21,7 @@ public class JobTest extends BaseTest{
 		Job job = new Job(getBaseURL());
 		params.put("position", job.getPosition());
 		params.put("positions", job.getPositions());
-		params.put("token", getToken());
+		params.put("token", "");
 		setRequest("job", params);
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
@@ -37,7 +37,7 @@ public class JobTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="修改工作经验",dependsOnMethods={"add_Job_Test"})
 	public void edit_Job_Test(Map<String, Object> params){
 		Job job = new Job(getBaseURL());
-		List<String> ids = job.getJobs(getBaseURL(), getToken());
+		List<String> ids = job.getJobs();
 		
 		String id = null;
 		if (ids.size()>0) {
@@ -46,7 +46,7 @@ public class JobTest extends BaseTest{
 			Assert.fail("当前没有添加任何工作经验，无法编辑");
 		}
 		
-		params.put("token", getToken());
+		params.put("token", "");
 		params.put("id", id);
 		
 		setRequest("job", params);
@@ -58,11 +58,11 @@ public class JobTest extends BaseTest{
 	
 	@Test(description = "删除工作经验",dependsOnMethods={"add_Job_Test"})
 	@Description("删除工作经验")
-	public void delJobTest(){
+	public void del_Job_Test(){
 		Job job = new Job(getBaseURL());
-		List<String> list = job.getJobs(getBaseURL(), getToken());
+		List<String> list = job.getJobs();
 		for (int i = 0; i < list.size(); i++) {
-			job.delJob(getToken(), list.get(i));
+			job.delJob(list.get(i));
 		}
 	}
 }

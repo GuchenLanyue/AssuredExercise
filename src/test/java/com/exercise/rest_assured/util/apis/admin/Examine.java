@@ -18,7 +18,13 @@ public class Examine {
 		Map<String, Object> queryMap = new HashMap<>();
 		String jobID = paramMap.get("jobID").toString();
 		String title = paramMap.get("title").toString();
-		String des = paramMap.get("des").toString();
+		String des = null;
+		if(paramMap.get("des")!=null){
+			des = paramMap.get("des").toString();
+		}else{
+			des = "通过";
+		}
+		
 		String status = paramMap.get("status").toString();
 		queryMap.put("r", "job/examine/update");
 		queryMap.put("id", jobID);

@@ -1,6 +1,5 @@
 package com.exercise.rest_assured.util.apis.person;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 
 import java.util.HashMap;
@@ -22,8 +21,10 @@ import io.restassured.response.Response;
 public class Education {
 	private Map<String,Object> educationParam = new HashMap<>();
 	private BaseInfo baseInfo = null;
+	private String url = null;
 	public Education(String baseURL) {
 		// TODO Auto-generated constructor stub
+		url = baseURL;
 		baseInfo = new BaseInfo(baseURL);
 	}
 	
@@ -97,18 +98,18 @@ public class Education {
 	
 	@Step
 	@Description("删除教育背景信息")
-	public void delEducation(String baseURL,String token, String id) {
-		Response response = given()
-//			.proxy("http://127.0.0.1:8888")
-			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.param("token", token)
-			.param("id", id)
-		.when()
-			.post(baseURL+"/personresume/deleducation")
-		.then()
-//			.statusCode(200)
-		.extract()
-			.response();
+	public void delEducation(String baseURL, String id) {		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/deleducation");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		paramsMap.put("id", id);
+		
+		HttpMethods http = new HttpMethods();
+		
+		Response response = http.request(baseMap, paramsMap);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
@@ -140,17 +141,16 @@ public class Education {
 	
 	@Step
 	@Description("获取教育背景信息列表")
-	public List<String> getEducations(String baseURL,String token){
-		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.param("token",token)
-			.when()
-				.post(baseURL+"/personresume/geteducations")
-			.then()
-				.statusCode(200)
-			.extract()
-				.response();
+	public List<String> getEducations(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/geteducations");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		HttpMethods http = new HttpMethods();
+		
+		Response response = http.request(baseMap, paramsMap);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception

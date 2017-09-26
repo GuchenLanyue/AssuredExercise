@@ -28,7 +28,7 @@
 			<define name="EditEducation">
 				<include name="add_Education_Test" />
 				<include name="edit_Education_Test" />
-				<include name="delEducationTest" />
+				<include name="del_Education_Test" />
 			</define>
 		</groups>
 		<classes>
@@ -47,7 +47,7 @@
 			<define name="Train">
 				<include name="add_Train_Test" />
 				<include name="edit_Train_Test" />
-				<include name="delTrainTest" />
+				<include name="del_Train_Test" />
 			</define>
 		</groups>
 		<classes>
@@ -55,7 +55,7 @@
 				<methods>
 					<include name="add_Train_Test" />
 					<include name="edit_Train_Test" />
-					<include name="delTrainTest" />
+					<include name="del_Train_Test" />
 				</methods>
 			</class>
 		</classes>
@@ -66,7 +66,7 @@
 			<define name="Job">
 				<include name="add_Job_Test" />
 				<include name="edit_Job_Test" />
-				<include name="delJobTest" />
+				<include name="del_Job_Test" />
 			</define>
 		</groups>
 		<classes>
@@ -74,7 +74,7 @@
 				<methods>
 					<include name="add_Job_Test" />
 					<include name="edit_Job_Test" />
-					<include name="delJobTest" />
+					<include name="del_Job_Test" />
 				</methods>
 			</class>
 		</classes>
@@ -85,7 +85,7 @@
 			<define name="Intention">
 				<include name="add_Intention_Test" />
 				<include name="edit_Intention_Test" />
-				<include name="delIntentionTest" />
+				<include name="del_Intention_Test" />
 			</define>
 		</groups>
 		<classes>
@@ -93,7 +93,7 @@
 				<methods>
 					<include name="add_Intention_Test" />
 					<include name="edit_Intention_Test" />
-					<include name="delIntentionTest" />
+					<include name="del_Intention_Test" />
 				</methods>
 			</class>
 		</classes>

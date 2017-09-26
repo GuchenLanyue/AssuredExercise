@@ -10,6 +10,7 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.exercise.rest_assured.util.BaseTest.RequestMethod;
+import com.exercise.rest_assured.util.apis.API_Category;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -22,6 +23,15 @@ public class HttpMethods {
 	@Step
 	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		params = paramsMap;
+		
+		API_Category path = new API_Category();
+		path.analysis(baseMap.get("path").toString());
+		
+		if (params.containsKey("token")) {
+			String token = path.getToke();
+			params.put("token", token);
+		}
+		
 		String requestURL = baseMap.get("baseURL").toString() + baseMap.get("path").toString();
 		Response response = null;
 		RequestMethod method = null;
@@ -40,7 +50,7 @@ public class HttpMethods {
 		case POST:
 			if (!baseMap.containsKey("QueryString")) {
 				response = given()
-	//					.proxy("127.0.0.1", 8888)
+//						.proxy("127.0.0.1", 8888)
 	//					.log().all()
 //						.log().uri()
 //						.log().params()
@@ -127,12 +137,7 @@ public class HttpMethods {
 	
 	public String getBody(Response response){
 		String body = response.asString();
-		
-		while(body.charAt(0)!='{'){
-			body = body.substring(1, body.length());
-		}
-		
-		return body;
+		return body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 	}
 	
 	public void requestLog(){

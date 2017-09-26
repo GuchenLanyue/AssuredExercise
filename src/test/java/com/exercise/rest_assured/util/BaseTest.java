@@ -3,7 +3,6 @@ package com.exercise.rest_assured.util;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 
-import com.exercise.rest_assured.util.apis.API_Category;
 import com.exercise.rest_assured.utils.ExcelReader;
 import com.exercise.rest_assured.utils.JsonUtils;
 
@@ -26,7 +25,6 @@ import org.testng.annotations.AfterTest;
 
 public class BaseTest {
 	private String srcDir = null;
-	private String token = null;
 	private String method = null;
 	private String responseStr = null;
 	private String expectedJson = null;
@@ -57,11 +55,6 @@ public class BaseTest {
 	@Step
 	public String getSrcDir(){
 		return srcDir;
-	}
-	
-	@Step
-	public String getToken(){
-		return token;
 	}
 	
 	public String getBaseURL(){
@@ -124,18 +117,16 @@ public class BaseTest {
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
 		baseMap.put("baseURL", baseURL);
-		API_Category path = new API_Category();
-		token = path.analysis(baseMap.get("path").toString());
-		if (paramsMap.containsKey("token")) {
-			paramsMap.put("token", token);
-		}
 		
 		if (paramsMap.containsKey("Case")) {
 			caseName = paramsMap.get("Case").toString();
 			paramsMap.remove("Case");
 		}
+		
 		Map<String, Object> expectedMap = parameter.setExpectedMap(filePath, caseName);
-		expectedJson = expectedMap.get("Path").toString();
+		if(expectedMap.get("Path")!=null){
+			expectedJson = expectedMap.get("Path").toString();
+		}
 		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, paramsMap);
@@ -150,11 +141,6 @@ public class BaseTest {
 		baseMap.put("baseURL", baseURL);
 		this.caseName = caseName;
 		Map<String, Object> paramsMap = parameter.setParams(filePath, caseName);
-		API_Category path = new API_Category();
-		token = path.analysis(baseMap.get("path").toString());
-		if (paramsMap.containsKey("token")) {
-			paramsMap.put("token", token);
-		}
 		
 		if (paramsMap.containsKey("Case")) {
 			paramsMap.remove("Case");

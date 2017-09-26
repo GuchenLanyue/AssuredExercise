@@ -1,6 +1,5 @@
 package com.exercise.rest_assured.util.apis.person;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
 
 import java.text.SimpleDateFormat;
@@ -22,28 +21,27 @@ import io.restassured.response.Response;
 public class Train {
 	private Map<String, Object> trainParam = new HashMap<>();
 	private BaseInfo baseInfo = null;
+	private String url = null;
 	
 	public Train(String baseURL) {
 		// TODO Auto-generated constructor stub
-		baseInfo = new BaseInfo(baseURL);
+		url = baseURL;
+		baseInfo = new BaseInfo(url);
 	}
 	
-	public List<String> getTrains(String baseURL,String token){
-		Response response = given()
-//				.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-				.param("token",token)
-			.when()
-				.post(baseURL+"/personresume/gettrains")
-			.then()
-				.statusCode(200)
-			.extract()
-				.response();
-		String json = response.asString();
+	public List<String> getTrains(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/gettrains");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, paramsMap);
 		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		String json = response.getBody().asString();
+		json = json.substring(json.indexOf("{"), json.lastIndexOf("}")+1);
 		
 		List<String> trainIDs = from(json).getList("value.id");
 		
@@ -73,16 +71,16 @@ public class Train {
 	
 	@Step
 	@Description("删除培训信息")
-	public void delTrain(String token, String id) {
-		given()
-//			.proxy("http://127.0.0.1:8888")
-			.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.param("token", token)
-			.param("id", id)
-		.when()
-			.post("http://nchr.release.microfastup.com/nchr/personresume/deltrain")
-		.then()
-			.statusCode(200);
+	public void delTrain(String id) {
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/deltrain");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		paramsMap.put("id", id);
+		HttpMethods http = new HttpMethods();
+		http.request(baseMap, paramsMap);
 	}
 	
 	@Step
