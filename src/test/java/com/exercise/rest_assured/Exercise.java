@@ -8,8 +8,8 @@ import java.util.Map;
 import org.apache.http.util.TextUtils;
 import org.testng.annotations.Test;
 
+import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.util.User;
-import com.exercise.rest_assured.util.apis.Login;
 import com.exercise.rest_assured.utils.TxtData;
 
 import io.restassured.RestAssured;
