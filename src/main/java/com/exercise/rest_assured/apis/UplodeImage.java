@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 
 public class UplodeImage {
 	
-	@Step
+	@Step("上传图片")
 	public String upload(String baseURL,File file){
 		if(!file.exists()){
 			Assert.fail("File not found:"+file.getAbsolutePath());

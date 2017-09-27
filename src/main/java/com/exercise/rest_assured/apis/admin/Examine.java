@@ -5,7 +5,7 @@ import io.restassured.RestAssured;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.exercise.rest_assured.apis.API_Category;
+import com.exercise.rest_assured.apis.Login;
 
 import io.qameta.allure.Step;
 import io.restassured.builder.MultiPartSpecBuilder;
@@ -16,8 +16,7 @@ public class Examine {
 	
 	@Step("审核职位")
 	public void job(Map<String, Object> paramMap){
-		API_Category api = new API_Category();
-		api.analysis(null);
+		Login login = new Login(null);
 		
 		Map<String, Object> queryMap = new HashMap<>();
 		String jobID = paramMap.get("jobID").toString();
@@ -37,7 +36,7 @@ public class Examine {
 		
 		RestAssured.given()
 //			.proxy("127.0.0.1", 8888)
-			.cookies(api.getCookie())
+			.cookies(login.getCookie())
 			.config(RestAssured.config()
 					  .encoderConfig(EncoderConfig.encoderConfig()
 							    .defaultContentCharset("UTF-8")

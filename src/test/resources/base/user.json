@@ -6,7 +6,8 @@
       "password": "123456",
       "v_code": "testing",
       "uuid": "86f4ae22-d9aa-4644-9f69-520da8ee361d"
-    }
+    },
+    "statusCode": 200
   },
   "enterprise": {
     "url": "http://nchr.release.microfastup.com/nchr/enterprise/login",
@@ -15,7 +16,8 @@
       "password": "111111",
       "v_code": "testing",
       "uuid": "603397e1-94be-4896-877a-fc869efc9184"
-    }
+    },
+    "statusCode": 200
   },
   "admin": {
     "url": "http://nchr.release.microfastup.com/site/login",
@@ -23,6 +25,7 @@
       "UserLogin[username]": "admin",
       "UserLogin[password]": "111111",
       "yt0": ""
-    }
+    },
+    "statusCode": 302
   }
 }

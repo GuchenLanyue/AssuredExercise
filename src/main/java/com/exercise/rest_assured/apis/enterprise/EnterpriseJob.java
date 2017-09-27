@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import com.exercise.rest_assured.apis.API_Category;
 import com.exercise.rest_assured.apis.person.BaseInfo;
 import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.JsonUtils;
@@ -23,6 +22,7 @@ public class EnterpriseJob {
 		url = baseURL;
 	}
 	
+	@Step("新增职位")
 	public String addJob(){
 		String path = "/job/addjob";
 		Map<String, Object> baseMap = new HashMap<>();
@@ -30,15 +30,11 @@ public class EnterpriseJob {
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		
-		API_Category apiPath = new API_Category();
-		apiPath.analysis(path);
-		String token = apiPath.getToke();
-		
 		Map<String, Object> param = new HashMap<>();
 		param.put("title", "添加新职位");
 		param.put("address", "新华科技大厦A座15楼1501");
 		param.put("content", "测试新增职位接口");
-		param.put("token", token);
+		param.put("token", "");
 
 		HttpMethods http = new HttpMethods();
 		String body = http.getBody(http.request(baseMap, setParams(param)));
@@ -83,17 +79,14 @@ public class EnterpriseJob {
 		return jobParams;
 	}
 	
-	@Step
+	@Step("获取用户职位列表")
 	/**
 	 * status 状态(1审核中2发布中3已下线4未通过)*/
 	public List<String> getUserJobList(int status){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
-		API_Category apiPath = new API_Category();
-		apiPath.analysis(path);
-		String token = apiPath.getToke();
 		params.put("status", status);
-		params.put("token", token);
+		params.put("token", "");
 		params.put("page", 1);
 		
 		Map<String, Object> baseMap = new HashMap<>();
@@ -113,14 +106,11 @@ public class EnterpriseJob {
 		return ids;
 	}
 	
-	@Step
+	@Step("获取职位详情")
 	public JsonPath getUserJobShow(int id){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
-		API_Category apiPath = new API_Category();
-		apiPath.analysis(path);
-		String token = apiPath.getToke();
-		params.put("token", token);
+		params.put("token", "");
 		params.put("id", id);
 		
 		Map<String, Object> baseMap = new HashMap<>();
@@ -136,7 +126,7 @@ public class EnterpriseJob {
 		return json;
 	}
 	
-	@Step
+	@Step("更新职位状态")
 	public void upStatus(List<String> list,String status){
 		String ids = null;
 		if(list.size()==0){
@@ -150,10 +140,7 @@ public class EnterpriseJob {
 		
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/upstatus";
-		API_Category apiPath = new API_Category();
-		apiPath.analysis(path);
-		String token = apiPath.getToke();
-		params.put("token", token);
+		params.put("token", "");
 		params.put("ids", ids);
 		params.put("status", status);
 		
@@ -166,14 +153,11 @@ public class EnterpriseJob {
 		http.getBody(http.request(baseMap, params));
 	}
 	
-	@Step
+	@Step("获取用户投递的简历")
 	public String getUserResume(String job_id){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserresume";
-		API_Category apiPath = new API_Category();
-		apiPath.analysis(path);
-		String token = apiPath.getToke();
-		params.put("token", token);
+		params.put("token", "");
 		params.put("job_id", job_id);
 		
 		Map<String, Object> baseMap = new HashMap<>();
@@ -184,6 +168,7 @@ public class EnterpriseJob {
 		
 		return http.getBody(http.request(baseMap, params));
 	}
+	
 	@Step
 	public void checkInfo(String path,JsonPath responseJson){
 		JsonUtils jutil = new JsonUtils();

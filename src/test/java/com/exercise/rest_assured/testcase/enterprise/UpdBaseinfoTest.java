@@ -20,7 +20,8 @@ public class UpdBaseinfoTest extends BaseTest {
 		setRequest("updbaseinfo", eBaseinfo.setParams(params));
 		User user = new User();
 		Login login = new Login();
-		
-		eBaseinfo.checkInfo(getSrcDir()+getExpectedJson(), new JsonPath(login.singin(user.getEnterprise())));
+		login.singin(user.getEnterprise());
+		JsonPath responseJson = new JsonPath(login.getBody());
+		eBaseinfo.checkInfo(getSrcDir()+getExpectedJson(), responseJson);
 	}
 }

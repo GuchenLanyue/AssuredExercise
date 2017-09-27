@@ -7,6 +7,7 @@ import java.util.Map;
 import com.exercise.rest_assured.utils.TxtData;
 import com.exercise.rest_assured.utils.testutils.User;
 
+import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 
 public class API_Category {
@@ -14,30 +15,35 @@ public class API_Category {
 	private String token = null;
 	private Map<String, Object> cookieMap = new HashMap<>();
 	
-	public enum category {
+	public enum Category {
 		person, personresume, enterprise, job, site, admin, delivery
 	}
 
-	public void analysis(String path) {
-		category role = null;
+	public Category analysis(String path) {
+		Category role = null;
 		String[] strs = null;
 		if (path != null) {
 			strs = path.split("/");
 			if (strs[1].equals("person")|strs[1].equals("delivery")) {
-				role = category.person;
+				role = Category.person;
 			} else if (strs[1].equals("personresume")) {
-				role = category.personresume;
+				role = Category.personresume;
 			} else if (strs[1].equals("enterprise")) {
-				role = category.enterprise;
+				role = Category.enterprise;
 			} else if (strs[1].equals("job")) {
-				role = category.job;
+				role = Category.job;
 			} else if (strs[1].equals("site")) {
-				role = category.site;
+				role = Category.site;
 			}
 		}else{
-			role = category.admin;
+			role = Category.admin;
 		}
 		
+		return role;
+	}
+	
+	@Step
+	public void singin(Category role){
 		Login login = new Login();
 		User user = new User();
 		TxtData textData = new TxtData();
@@ -48,7 +54,8 @@ public class API_Category {
 		case personresume:
 			File pfile = new File(fPath + "personToken.txt");
 			if (!pfile.exists() || System.currentTimeMillis() - pfile.lastModified() > 120000) {
-				String body = login.singin(user.getPerson());
+				login.singin(user.getPerson());
+				String body = login.getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
 				textData.writerText(fPath + "personToken.txt", token);
@@ -63,7 +70,8 @@ public class API_Category {
 		case enterprise:
 			File efile = new File(fPath + "enterpriseToken.txt");
 			if (!efile.exists() || System.currentTimeMillis() - efile.lastModified() > 120000) {
-				String body = login.singin(user.getEnterprise());
+				login.singin(user.getEnterprise());
+				String body = login.getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
 				textData.writerText(fPath + "enterpriseToken.txt", token);
@@ -78,7 +86,7 @@ public class API_Category {
 		case site:
 			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
-				login.adminSingin(user.getAdmin());
+				login.singin(user.getAdmin());
 				cookieMap = login.getCookie();
 
 				String cookie = null;
@@ -101,13 +109,5 @@ public class API_Category {
 		default:
 			break;
 		}
-	}
-	
-	public String getToke(){
-		return token;
-	}
-	
-	public Map<String, Object> getCookie(){
-		return cookieMap;
 	}
 }

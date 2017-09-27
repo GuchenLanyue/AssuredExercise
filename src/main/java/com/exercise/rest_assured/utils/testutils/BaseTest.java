@@ -53,7 +53,6 @@ public class BaseTest {
 		return filePath;
 	}
 	
-	@Step
 	public String getSrcDir(){
 		return srcDir;
 	}

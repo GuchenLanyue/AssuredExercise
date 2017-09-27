@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
-import com.exercise.rest_assured.apis.API_Category;
+import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.utils.testutils.BaseTest.RequestMethod;
 
 import io.qameta.allure.Step;
@@ -21,11 +21,7 @@ public class HttpMethods {
 	private Map<String, Object> params = null;
 	
 	@Step
-	public Response request(Map<String, Object> baseMap) {
-		
-		API_Category path = new API_Category();
-		path.analysis(baseMap.get("path").toString());
-		
+	public Response request(Map<String, Object> baseMap) {		
 		String requestURL = baseMap.get("baseURL").toString() + baseMap.get("path").toString();
 		Response response = null;
 		RequestMethod method = null;
@@ -115,13 +111,10 @@ public class HttpMethods {
 	
 	@Step
 	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
-		params = paramsMap;
-		
-		API_Category path = new API_Category();
-		path.analysis(baseMap.get("path").toString());
-		
+		params = paramsMap;		
 		if (params.containsKey("token")) {
-			String token = path.getToke();
+			Login login = new Login(baseMap.get("path").toString());
+			String token = login.getToken();
 			params.put("token", token);
 		}
 		
@@ -225,11 +218,10 @@ public class HttpMethods {
 	public Response request(Map<String,Object> cookieMap, Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		params = paramsMap;
 		
-		API_Category path = new API_Category();
-		path.analysis(baseMap.get("path").toString());
+		Login login = new Login(baseMap.get("path").toString());
 		
 		if (params.containsKey("token")) {
-			String token = path.getToke();
+			String token = login.getToken();
 			params.put("token", token);
 		}
 		

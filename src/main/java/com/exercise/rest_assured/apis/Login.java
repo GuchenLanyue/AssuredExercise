@@ -6,7 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.exercise.rest_assured.apis.API_Category.Category;
+import com.exercise.rest_assured.utils.testutils.User;
+
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
+import io.restassured.config.EncoderConfig;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
@@ -15,49 +20,66 @@ import io.restassured.response.Response;
 public class Login {
 	private Response response = null;
 	
-	@Step()
-	/**
-	 * 官网登录
-	 * */
-	public String singin(JsonPath user){
+	public Login() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Login(String user) {
+		// TODO Auto-generated constructor stub
+		API_Category api = new API_Category();
+		Category role = api.analysis(user);
+		switch (role) {
+		case person:
+		case personresume:
+			singin(new User().getPerson());
+			break;
+		case job:
+		case enterprise:
+			singin(new User().getEnterprise());
+			break;
+		case admin:
+		case site:
+			singin(new User().getAdmin());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	@Step("登录")
+	public void singin(JsonPath user){
 		response = given()
-//		.proxy("localhost", 8888)
-//		.log().all()
-		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-		.formParams(user.getMap("params"))
-	.when()
-		.post(user.getString("url"))
-	.then()
-//		.log().all()
-		.statusCode(200)
-	.extract()
-		.response();
-		
+	//		.proxy("localhost", 8888)
+	//		.log().all()
+			.header("Accept", "application/json")
+			.header("Accept-Encoding", "gzip, deflate")
+			.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+			.header("Cache-Control", "no-cache")
+			.config(RestAssured.config()
+					  .encoderConfig(EncoderConfig.encoderConfig()
+							    .defaultContentCharset("UTF-8")
+							    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+			.formParams(user.getMap("params"))
+		.when()
+			.post(user.getString("url"))
+		.then()
+			.statusCode(Integer.valueOf(user.getString("statusCode")).intValue())
+		.extract()
+			.response();
+	}
+	
+	public String getBody(){
 		String body = response.getBody().asString();
 		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
-		
 		return body;
 	}
 	
-	
-	@Step()
-	/**
-	 * 官网登录
-	 * */
-	public void adminSingin(JsonPath user){
+	public String getToken(){
+		String body = response.getBody().asString();
+		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
+		JsonPath json = new JsonPath(body).setRoot("value");
 		
-		response = given()
-//		.proxy("localhost", 8888)
-//		.log().all()
-		.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-		.formParams(user.getMap("params"))
-	.when()
-		.post(user.getString("url"))
-	.then()
-//		.log().all()
-//		.statusCode(200)
-	.extract()
-		.response();
+		return json.getString("token");
 	}
 	
 	public Map<String, Object> getCookie(){

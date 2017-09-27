@@ -8,6 +8,7 @@ import org.testng.Assert;
 import com.exercise.rest_assured.utils.HttpMethods;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -59,6 +60,7 @@ public class Basic {
 		current = baseInfo.getCurrentstate();
 	}
 	
+	@Step
 	public Map<String, Object> setParams(Map<String, Object> params){
 		setValue();
 		basicParams.put("sex", sex);
@@ -103,8 +105,8 @@ public class Basic {
 		return param;
 	}
 	
+	@Step
 	public JsonPath getbasic(){
-		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
 		baseMap.put("baseURL", url);
@@ -148,6 +150,7 @@ public class Basic {
 		return basicParams;
 	}
 	
+	@Step
 	public void checkBasic(JsonPath response){
 		for (Map.Entry<String,Object> mapEntry:basicParams.entrySet()) {
 			String actual = null;

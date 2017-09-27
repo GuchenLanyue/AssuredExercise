@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.exercise.rest_assured.utils.HttpMethods;
 
+import io.qameta.allure.Step;
+
 public class Delivery {
 	private String url = null;
 	
@@ -13,6 +15,7 @@ public class Delivery {
 		url = baseURL;
 	}
 	
+	@Step
 	public Map<String, Object> setParams(String job_id, Map<String, Object> params){
 		Map<String, Object> param = new HashMap<>();
 		param = params;
@@ -21,6 +24,7 @@ public class Delivery {
 		return param;
 	}
 	
+	@Step("投递简历")
 	public void addresume(String job_id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
