@@ -26,16 +26,20 @@ public class EnterpriseBaseinfo {
 	public Map<String, Object> setParams(Map<String, Object> params){
 		BaseInfo baseinfo = new BaseInfo(url);
 		param = params;
+		//设置企业性质
 		baseinfo.setenterprisenature();
 		param.put("nature", baseinfo.getEnterprisenature());
+		//设置行业
 		baseinfo.setIndustry();
 		param.put("industry", baseinfo.getIndustry());
 		Random random = new Random();
+		//设置是否已入驻(1:已入驻 2:未入驻)
 		int settled = random.nextInt(1)+1;
 		param.put("settled", settled);
 		File id_img = new File(src+"/img/Wolf_track_128px_1084084_easyicon.net.png");
 		File license_img = new File(src+"/img/search_cat_128px_1141878_easyicon.net.png");
 		File logo = new File(src+"/img/wolf_128px_504554_easyicon.net.png");
+		//上传图片
 		UplodeImage img = new UplodeImage();
 		param.put("id_img", img.upload(url, id_img));
 		param.put("license_img", img.upload(url, license_img));

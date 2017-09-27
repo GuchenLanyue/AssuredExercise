@@ -9,6 +9,7 @@ import java.util.Map;
 import com.exercise.rest_assured.apis.API_Category.Category;
 import com.exercise.rest_assured.utils.testutils.User;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
@@ -68,12 +69,14 @@ public class Login {
 			.response();
 	}
 	
+	@Description("获取登录接口返回的数据")
 	public String getBody(){
 		String body = response.getBody().asString();
 		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 		return body;
 	}
 	
+	@Description("获取token")
 	public String getToken(){
 		String body = response.getBody().asString();
 		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
@@ -82,6 +85,7 @@ public class Login {
 		return json.getString("token");
 	}
 	
+	@Description("获取cookie数据")
 	public Map<String, Object> getCookie(){
 		Map<String, Object> cookieMap = new HashMap<>();
 		Headers headers = response.getHeaders();		

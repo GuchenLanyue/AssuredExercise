@@ -7,6 +7,7 @@ import java.util.Map;
 import com.exercise.rest_assured.utils.TxtData;
 import com.exercise.rest_assured.utils.testutils.User;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 
@@ -15,10 +16,15 @@ public class API_Category {
 	private String token = null;
 	private Map<String, Object> cookieMap = new HashMap<>();
 	
+	//接口路径
 	public enum Category {
 		person, personresume, enterprise, job, site, admin, delivery
 	}
 
+	/**
+	 * @description 解析接口路径，对接口进行分类
+	 * @param path 接口路径
+	 * */
 	public Category analysis(String path) {
 		Category role = null;
 		String[] strs = null;
@@ -42,6 +48,7 @@ public class API_Category {
 		return role;
 	}
 	
+	@Description("对接口分类，不同类别的接口请求不同的登录接口")
 	@Step
 	public void singin(Category role){
 		Login login = new Login();

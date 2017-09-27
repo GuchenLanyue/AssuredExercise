@@ -14,21 +14,23 @@ import io.restassured.http.ContentType;
 
 public class Examine {
 	
-	@Step("审核职位")
+	@Step("job() 审核职位")
 	public void job(Map<String, Object> paramMap){
+		//登录后台
 		Login login = new Login(null);
-		
+		//获取职位的id及title等属性
 		Map<String, Object> queryMap = new HashMap<>();
 		String jobID = paramMap.get("jobID").toString();
 		String title = paramMap.get("title").toString();
 		String des = null;
+		//设置描述文本
 		if(paramMap.get("des")!=null){
 			des = paramMap.get("des").toString();
 		}else{
 			des = "通过";
 		}
-		
 		String status = paramMap.get("status").toString();
+		//该接口有query参数，设置query参数
 		queryMap.put("r", "job/examine/update");
 		queryMap.put("id", jobID);
 		

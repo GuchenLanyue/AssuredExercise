@@ -502,8 +502,8 @@ public class BaseInfo {
 		return body;
 	}
 	
-	@Step("setPositionData() 设置职位")
 	@Description("设置职位")
+	@Step("setPositionData() 设置职位")
 	public int[] setPosition(){
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/position.json";
 		File file = new File(filePath);
@@ -647,6 +647,7 @@ public class BaseInfo {
 	@Step(value = "setArea() 设置地区")
 	@Description("设置地区-随机值")
 	public int[] setArea(){
+		//相应数据太大，将数据存在本地
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/area.json";
 		File file = new File(filePath);
 		long time = System.currentTimeMillis() - file.lastModified();

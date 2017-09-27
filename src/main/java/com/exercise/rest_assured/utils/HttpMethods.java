@@ -3,6 +3,7 @@ package com.exercise.rest_assured.utils;
 import static io.restassured.RestAssured.given;
 
 import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ import io.restassured.response.Response;
 public class HttpMethods {
 	private Map<String, Object> params = null;
 	
-	@Step
+	@Step("request() 发起请求")
 	public Response request(Map<String, Object> baseMap) {		
 		String requestURL = baseMap.get("baseURL").toString() + baseMap.get("path").toString();
 		Response response = null;
@@ -109,7 +110,7 @@ public class HttpMethods {
 		return response;
 	}
 	
-	@Step
+	@Step("request() 发起请求")
 	public Response request(Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		params = paramsMap;		
 		if (params.containsKey("token")) {
@@ -214,7 +215,7 @@ public class HttpMethods {
 		return response;
 	}
 	
-	@Step
+	@Step("request() 发起请求")
 	public Response request(Map<String,Object> cookieMap, Map<String, Object> baseMap,Map<String, Object> paramsMap) {
 		params = paramsMap;
 		
@@ -318,11 +319,13 @@ public class HttpMethods {
 		return response;
 	}
 	
+	@Description("获取响应数据")
 	public String getBody(Response response){
 		String body = response.asString();
 		return body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 	}
 	
+	@Description("将请求数据添加到测试报告中")
 	public void requestLog(){
 		String requestBody = " ";
 		for(String key:params.keySet()){

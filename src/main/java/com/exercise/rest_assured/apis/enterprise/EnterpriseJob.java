@@ -22,7 +22,7 @@ public class EnterpriseJob {
 		url = baseURL;
 	}
 	
-	@Step("新增职位")
+	@Step("addJob() 新增职位")
 	public String addJob(){
 		String path = "/job/addjob";
 		Map<String, Object> baseMap = new HashMap<>();
@@ -48,24 +48,33 @@ public class EnterpriseJob {
 		param = params;
 		BaseInfo info = new BaseInfo(url);
 		
-		int education = info.getEducation();
-		jobParams.put("education", education);
+		//设置学历
+		info.seteducation();
+		jobParams.put("education", info.getEducation());
+		//设置工作年限
 		info.setworklife();
 		jobParams.put("experience", info.getWorklife());
+		//设置期望薪资
 		info.setSalary();
 		jobParams.put("salary", info.getSalary());
+		//设置职位
 		int[] positionData = info.setPosition();
 		jobParams.put("category", positionData[0]);
 		jobParams.put("categorys", positionData[1]);
+		//设置地区
 		int[] area = info.setArea();
 		jobParams.put("provice", area[0]);
 		jobParams.put("city", area[1]);
+		//地区有可能只有两级没有第三级
 		if (area.length<3) {
 			param.remove("country");
 		}else{
 			jobParams.put("country", area[2]);
 		}
+		//
+		//设置招聘人数
 		jobParams.put("number", new Random().nextInt(100)+1);
+		//设置职位性质(1全职2兼职3实习4校园)
 		jobParams.put("position_nature", new Random().nextInt(3)+1);
 		
 		for(String key:jobParams.keySet()){
@@ -79,9 +88,11 @@ public class EnterpriseJob {
 		return jobParams;
 	}
 	
-	@Step("获取用户职位列表")
 	/**
-	 * status 状态(1审核中2发布中3已下线4未通过)*/
+	 * @description 获取用户职位列表
+	 * @param status 状态(1审核中2发布中3已下线4未通过)
+	 * */
+	@Step("getUserJobList() 获取用户职位列表")
 	public List<String> getUserJobList(int status){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
@@ -105,9 +116,12 @@ public class EnterpriseJob {
 		
 		return ids;
 	}
-	
-	@Step("获取职位详情")
-	public JsonPath getUserJobShow(int id){
+	/**
+	 * @param id 职位id
+	 * @description 获取职位详情
+	 * */
+	@Step("getUserJobShow() 获取职位详情")
+	public JsonPath getUserJobShow(String id){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
 		params.put("token", "");
@@ -121,18 +135,24 @@ public class EnterpriseJob {
 		
 		String body = http.getBody(http.request(baseMap, params));
 		
-		JsonPath json = JsonPath.with(body).setRoot("value");
+		JsonPath json = JsonPath.with(body);
 		
 		return json;
 	}
 	
-	@Step("更新职位状态")
+	/**
+	 * @description 更新职位状态
+	 * @param list 职位id列表
+	 * @param status 职位状态
+	 * */
+	@Step("upStatus() 更新职位状态")
 	public void upStatus(List<String> list,String status){
 		String ids = null;
 		if(list.size()==0){
 			return;
 		}
 		
+		//将id连接成为字符串，中间用逗号隔开（接口要求）
 		for(String id:list){
 			ids += (id+",");
 		}
@@ -153,7 +173,33 @@ public class EnterpriseJob {
 		http.getBody(http.request(baseMap, params));
 	}
 	
-	@Step("获取用户投递的简历")
+	/**
+	 * @description 更新职位
+	 * @param params Map<String, Object>职位属性
+	 * */
+	@Step("upJob()更新职位")
+	public void upJob(Map<String, Object> params){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/job/upjob");
+
+		JsonPath jobShow = getUserJobShow(params.get("id").toString());
+		Map<String, Object> param = jobShow.getMap("value");
+		
+		for(String key:params.keySet()){
+			param.put(key, params.get(key));
+		}
+
+		HttpMethods http = new HttpMethods();
+		http.request(baseMap, param);
+	}
+	
+	/**
+	 * @description 获取用户投递的简历
+	 * @param job_id 工作id
+	 * */
+	@Step("getUserResume() 获取用户投递的简历")
 	public String getUserResume(String job_id){
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserresume";
