@@ -20,7 +20,7 @@ public class Evaluation {
 		url = baseURL;
 		
 	}
-	@Step("getEvaluation() 获取求职意向列表")
+	@Step("getEvaluation() 获取自我评价")
 	public String getEvaluation(){
 
 		Map<String, Object> baseMap = new HashMap<>();

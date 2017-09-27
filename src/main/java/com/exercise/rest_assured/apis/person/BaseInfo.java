@@ -44,7 +44,7 @@ public class BaseInfo {
 	
 	public BaseInfo(String url) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		baseURL = url;
 	}
 	
 	@Step("geteducation() 获取学历")

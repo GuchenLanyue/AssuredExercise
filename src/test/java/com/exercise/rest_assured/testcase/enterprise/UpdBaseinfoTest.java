@@ -14,7 +14,7 @@ import io.restassured.path.json.JsonPath;
 public class UpdBaseinfoTest extends BaseTest {
 	
 	@Test(dataProvider="SingleCase")
-	public void updbaseinfo_Test(Map<String, Object> params){
+	public void up_EBaseinfo_Test(Map<String, Object> params){
 		EnterpriseBaseinfo eBaseinfo = new EnterpriseBaseinfo(getBaseURL(),getSrcDir());
 		
 		setRequest("updbaseinfo", eBaseinfo.setParams(params));

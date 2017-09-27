@@ -328,6 +328,10 @@ public class HttpMethods {
 	@Description("将请求数据添加到测试报告中")
 	public void requestLog(){
 		String requestBody = " ";
+		if(params==null){
+			return;
+		}
+		
 		for(String key:params.keySet()){
 			String str = key+"="+params.get(key);
 			requestBody=requestBody+"&"+str;

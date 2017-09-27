@@ -9,7 +9,6 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.exercise.rest_assured.utils.HttpMethods;
-import com.exercise.rest_assured.utils.testutils.Parameter;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -33,6 +32,19 @@ public class Intention {
 		// TODO Auto-generated constructor stub
 		url = baseURL;
 		baseInfo = new BaseInfo(url);
+	}
+	
+	@Step("新增求职意向")
+	public String addIntentions(Map<String, Object> params){
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/intention");
+
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, setParams(params));
+		
+		return http.getBody(response);
 	}
 	
 	@Step("getIntentions() 获取求职意向列表")
@@ -59,15 +71,14 @@ public class Intention {
 
 	@Step
 	@Description("获取求职意向")
-	public String getIntention(String token, String srcDir){
-		
+	public String getIntention(String id){
 		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\getIntention.xlsx";
-		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "getintention");
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/getintention");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", token);
+		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		HttpMethods http = new HttpMethods();
@@ -91,6 +102,14 @@ public class Intention {
 		http.request(baseMap, paramsMap);
 	}
 	
+	@Step
+	@Description("清空所有求职意向")
+	public void cleanIntentions(){
+		for(String id:getIntentions()){
+			delIntention(id);
+		}
+	}
+	
 	public void setID(){
 		List<String> ids = getIntentions();
 
@@ -102,12 +121,12 @@ public class Intention {
 	}
 	
 	@Step
-	public Map<String, Object> setParams(String baseURL,Map<String, Object> params){
+	public Map<String, Object> setParams(Map<String, Object> params){
 		Map<String, Object> param = new HashMap<>();
 		param = params;
 		baseInfo.setIndustry();
 		intentionParam.put("industry", baseInfo.getIndustry());
-		setPosition(baseURL);
+		setPosition();
 		intentionParam.put("position", position);
 		intentionParam.put("positions", positions);
 		baseInfo.setSalary();
@@ -141,8 +160,8 @@ public class Intention {
 		return id;
 	}
 	
-	public void setPosition(String baseURL){
-		int[] positionData = new BaseInfo(baseURL).getPositionData();
+	public void setPosition(){
+		int[] positionData = baseInfo.getPositionData();
 		position = positionData[0];
 		positions = positionData[1];
 	}

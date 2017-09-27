@@ -2,6 +2,7 @@ package com.exercise.rest_assured.testcase.person;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.testng.annotations.Test;
 
@@ -15,26 +16,37 @@ public class IntentionTest extends BaseTest {
 		Intention intention = new Intention(getBaseURL());
 		params.remove("id");
 		params.put("token", "");
-		setRequest("intention", intention.setParams(getBaseURL(), params));
+		setRequest("intention", intention.setParams(params));
 		checkResponse(intention.getParams());
 	}
 
-	@Test(dataProvider = "SingleCase", description = "编辑求职意向",dependsOnMethods={"add_Intention_Test"})
+	@Test(dataProvider = "SingleCase", description = "编辑求职意向")
 	public void edit_Intention_Test(Map<String, Object> params) {
 		Intention intention = new Intention(getBaseURL());
 		intention.setID();
 		params.put("token", "");
 		params.put("id", intention.getID());
-		setRequest("intention", intention.setParams(getBaseURL(), params));
+		setRequest("intention", intention.setParams(params));
 		checkResponse(intention.getParams());
 	}
 
-	@Test(description = "删除求职意向",dependsOnMethods={"add_Intention_Test"})
-	public void del_Intention_Test() {
+	@Test(dataProvider = "SingleCase",description = "删除求职意向")
+	public void del_Intention_Test(Map<String, Object> params) {
 		Intention intention = new Intention(getBaseURL());
 		List<String> list = intention.getIntentions();
-		for (int i = 0; i < list.size(); i++) {
-			intention.delIntention(list.get(i));
+		if(list.size()==0){
+			intention.addIntentions(params);
+			list = intention.getIntentions();
 		}
+		Random random = new Random();
+		int index = random.nextInt(list.size());
+		String id = list.get(index);
+		intention.delIntention(id);
+	}
+	
+	@Test
+	public void clean(){
+		Intention intention = new Intention(getBaseURL());
+		intention.cleanIntentions();
 	}
 }

@@ -26,6 +26,7 @@
 	<test name="教育背景信息" preserve-order="true">
 		<groups>
 			<define name="EditEducation">
+			    <include name = "clean" />
 				<include name="add_Education_Test" />
 				<include name="edit_Education_Test" />
 				<include name="del_Education_Test" />
@@ -34,6 +35,7 @@
 		<classes>
 			<class name="com.exercise.rest_assured.testcase.person.EducationTest">
 				<methods>
+				    <include name = "clean" />
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />
 					<include name="del_Education_Test" />
@@ -45,6 +47,7 @@
 	<test name="培训信息" preserve-order="true">
 		<groups>
 			<define name="Train">
+			    <include name = "clean" />
 				<include name="add_Train_Test" />
 				<include name="edit_Train_Test" />
 				<include name="del_Train_Test" />
@@ -53,6 +56,7 @@
 		<classes>
 			<class name="com.exercise.rest_assured.testcase.person.TrainTest">
 				<methods>
+				    <include name = "clean" />
 					<include name="add_Train_Test" />
 					<include name="edit_Train_Test" />
 					<include name="del_Train_Test" />
@@ -64,6 +68,7 @@
 	<test name="工作经验" preserve-order="true">
 		<groups>
 			<define name="Job">
+			    <include name = "clean" />
 				<include name="add_Job_Test" />
 				<include name="edit_Job_Test" />
 				<include name="del_Job_Test" />
@@ -72,6 +77,7 @@
 		<classes>
 			<class name="com.exercise.rest_assured.testcase.person.JobTest">
 				<methods>
+				    <include name = "clean" />
 					<include name="add_Job_Test" />
 					<include name="edit_Job_Test" />
 					<include name="del_Job_Test" />
@@ -83,6 +89,7 @@
 	<test name="求职意向" preserve-order="true">
 		<groups>
 			<define name="Intention">
+			    <include name = "clean" />
 				<include name="add_Intention_Test" />
 				<include name="edit_Intention_Test" />
 				<include name="del_Intention_Test" />
@@ -91,6 +98,7 @@
 		<classes>
 			<class name="com.exercise.rest_assured.testcase.person.IntentionTest">
 				<methods>
+				    <include name = "clean" />
 					<include name="add_Intention_Test" />
 					<include name="edit_Intention_Test" />
 					<include name="del_Intention_Test" />

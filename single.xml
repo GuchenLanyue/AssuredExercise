@@ -18,7 +18,7 @@
 		    <!--  	
 			 <class name="com.exercise.rest_assured.Exercise">
 			-->
-			<class name="com.exercise.rest_assured.testcase.person.AddresumeTest">
+			<class name="com.exercise.rest_assured.testcase.person.EducationTest">
 				<methods>
 					<include name="add_Job_Test" />
 					<include name="edit_Job_Test" />

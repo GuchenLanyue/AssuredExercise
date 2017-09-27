@@ -2,6 +2,7 @@ package com.exercise.rest_assured.testcase.person;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,10 +20,7 @@ public class JobTest extends BaseTest{
 	@Issue("080")
 	public void add_Job_Test(Map<String, Object> params){
 		Job job = new Job(getBaseURL());
-		params.put("position", job.getPosition());
-		params.put("positions", job.getPositions());
-		params.put("token", "");
-		setRequest("job", params);
+		setRequest("job", job.setParams(params));
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
 		int position = Integer.valueOf(json.getString("position")).intValue();
@@ -34,7 +32,7 @@ public class JobTest extends BaseTest{
 		checkResponse();
 	}
 	
-	@Test(dataProvider="SingleCase",description="修改工作经验",dependsOnMethods={"add_Job_Test"})
+	@Test(dataProvider="SingleCase",description="修改工作经验")
 	public void edit_Job_Test(Map<String, Object> params){
 		Job job = new Job(getBaseURL());
 		List<String> ids = job.getJobs();
@@ -56,13 +54,23 @@ public class JobTest extends BaseTest{
 		checkResponse();
 	}
 	
-	@Test(description = "删除工作经验",dependsOnMethods={"add_Job_Test"})
+	@Test(dataProvider="SingleCase",description = "删除工作经验")
 	@Description("删除工作经验")
-	public void del_Job_Test(){
+	public void del_Job_Test(Map<String, Object> params){
 		Job job = new Job(getBaseURL());
 		List<String> list = job.getJobs();
-		for (int i = 0; i < list.size(); i++) {
-			job.delJob(list.get(i));
+		if(list.size()==0){
+			job.addJob(params);
+			list = job.getJobs();
 		}
+		Random random = new Random();
+		int index = random.nextInt(list.size());
+		String id = list.get(index);
+		job.delJob(id);
+	}
+	
+	public void clean(){
+		Job job = new Job(getBaseURL());
+		job.cleanJobs();
 	}
 }

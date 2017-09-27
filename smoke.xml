@@ -13,7 +13,7 @@
 			</define>
 		</groups>
 		<classes>
-			<class name="com.exercise.rest_assured.person.ProcessTest">
+			<class name="com.exercise.rest_assured.testcase.person.ProcessTest">
 				<methods>
 					<include name="processTest" />
 				</methods>

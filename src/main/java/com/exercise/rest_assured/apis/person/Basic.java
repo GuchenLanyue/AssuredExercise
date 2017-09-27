@@ -44,7 +44,6 @@ public class Basic {
 	}
 	
 	public void setValue(){
-//		BaseInfo baseInfo = new BaseInfo(baseURL);
 		sex = baseInfo.getSex();
 		education = baseInfo.getEducation();
 		healthy = baseInfo.getHealthy();

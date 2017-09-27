@@ -2,6 +2,9 @@ package com.exercise.rest_assured.apis.person;
 
 import static io.restassured.path.json.JsonPath.from;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +28,34 @@ public class Job {
 		baseInfo = new BaseInfo(url);
 		baseInfo.setPosition();
 		position = setPosition();
-		baseInfo = new BaseInfo(url);
 	}
 	
-	public void addJob(Map<String, String> params){
+	public Response addJob(Map<String, Object> params){
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/job");
 		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, setParams(params));
+		
+		return response;
 	}
 	
+	public Map<String, Object> setParams(Map<String, Object> param){
+		Map<String, Object> params = new HashMap<>();
+		params = param;
+		params.put("position", getPosition());
+		params.put("positions", getPositions());
+		List<String> dates = new ArrayList<>();
+		dates = getDate();
+		params.put("start_time", dates.get(0));
+		params.put("end_time", dates.get(1));
+		
+		return params;
+	}
+	
+	@Description("获取工作经验")
 	@Step
 	public List<String> getJobs(){
 		
@@ -87,6 +111,14 @@ public class Job {
 		http.request(baseMap, paramsMap);
 	}
 	
+	@Step
+	@Description("清空所有工作经验")
+	public void cleanJobs(){
+		for(String id:getJobs()){
+			delJob(id);
+		}
+	}
+	
 	public int[] setPosition() {
 		
 		return baseInfo.getPositionData();
@@ -98,6 +130,17 @@ public class Job {
 	
 	public int getPositions() {
 		return position[1];
+	}
+	
+	public List<String> getDate(){
+		List<String> dates = new ArrayList<>();
+		Date startDate =  baseInfo.randomDate("2000-01-01", "2017-01-01");
+		Date endDate = baseInfo.randomDate((new SimpleDateFormat("yyyy-MM-dd")).format(startDate), "2017-09-01");
+		
+		dates.add(startDate.toString());
+		dates.add(endDate.toString());
+		
+		return dates;
 	}
 		
 }

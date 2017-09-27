@@ -11,7 +11,6 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.exercise.rest_assured.utils.HttpMethods;
-import com.exercise.rest_assured.utils.testutils.Parameter;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -29,6 +28,21 @@ public class Train {
 		baseInfo = new BaseInfo(url);
 	}
 	
+	@Step("新增培训信息")
+	public String addTrain(Map<String, Object> params){
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/gettrain");
+
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap, setParam(params));
+		
+		return http.getBody(response);
+	}
+	
+	@Description("获取培训信息列表")
+	@Step
 	public List<String> getTrains(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
@@ -50,16 +64,14 @@ public class Train {
 	
 	@Step
 	@Description("获取培训信息")
-	public String getTrain(String baseURL,String token,String id,String srcDir){
-		
+	public String getTrain(String id){
 		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\getTrain.xlsx";
-		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "gettrain");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/gettrain");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", token);
+		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		HttpMethods http = new HttpMethods();
@@ -84,7 +96,15 @@ public class Train {
 	}
 	
 	@Step
-	public Map<String, Object> setParam(String baseURL,Map<String, Object> params){
+	@Description("清空所有培训信息")
+	public void cleanTrains(){
+		for(String id:getTrains()){
+			delTrain(id);
+		}
+	}
+	
+	@Step
+	public Map<String, Object> setParam(Map<String, Object> params){
 		
 		int education = baseInfo.getEducation();
 		Date start_time = baseInfo.randomDate("1900-1-1", "2017-9-12");

@@ -9,8 +9,6 @@ import java.util.Map;
 import org.testng.Assert;
 
 import com.exercise.rest_assured.utils.HttpMethods;
-import com.exercise.rest_assured.utils.TxtData;
-import com.exercise.rest_assured.utils.testutils.Parameter;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
@@ -22,6 +20,11 @@ public class Education {
 	private Map<String,Object> educationParam = new HashMap<>();
 	private BaseInfo baseInfo = null;
 	private String url = null;
+	
+	public Education() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Education(String baseURL) {
 		// TODO Auto-generated constructor stub
 		url = baseURL;
@@ -63,32 +66,31 @@ public class Education {
 	
 	@Step
 	@Description("添加教育背景信息")
-	public void addEducation(Map<String, Object> params,String srcDir){
+	public String addEducation(Map<String, Object> params){
 		
 		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\addEducationTest.xlsx";
-		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "education");
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/education");
 		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, params);
+		Response response = http.request(baseMap, setParams(params));
 		String body = http.getBody(response);
 		
-		JsonPath json = new JsonPath(body).setRoot("value");
-		String id = json.getString("id");
-		
-		TxtData textData = new TxtData();
-		String path = srcDir+"/case/";
-		textData.writerText(path+"eduID.txt", id);
+		return body;
 	}
 	
 	@Step
 	@Description("修改教育背景信息")
-	public Response editEducation(Map<String, Object> params,String srcDir){
+	public Response editEducation(Map<String, Object> params,String id){
+		getEducation(id);
 		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\editEducationTest.xlsx";
-		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "education");
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/education");
+		
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("id", id);
 		
 		HttpMethods http = new HttpMethods();
 		Response response = http.request(baseMap, params);
@@ -97,39 +99,16 @@ public class Education {
 	}
 	
 	@Step
-	@Description("删除教育背景信息")
-	public void delEducation(String baseURL, String id) {		
+	@Description("获取教育背景信息")
+	public String getEducation(String id){
+		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
 		baseMap.put("baseURL", url);
-		baseMap.put("path", "/personresume/deleducation");
+		baseMap.put("path", "/personresume/geteducation");
+
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
-		paramsMap.put("id", id);
-		
-		HttpMethods http = new HttpMethods();
-		
-		Response response = http.request(baseMap, paramsMap);
-		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/personresume/deleducation.Response.body:", body);
-			Assert.fail("/personresume/deleducation 请求失败！");
-		}
-	}
-	
-	@Step
-	@Description("获取教育背景信息")
-	public String getEducation(String baseURL,String token,String id,String srcDir){
-		
-		Map<String, Object> baseMap = new HashMap<>();
-		String file = srcDir + "\\case\\getEducation.xlsx";
-		Parameter parameter = new Parameter();
-		baseMap = parameter.setUrlData(file, "geteducation");
-		baseMap.put("baseURL", baseURL);
-		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", token);
 		paramsMap.put("id", id);
 		
 		HttpMethods http = new HttpMethods();
@@ -170,6 +149,36 @@ public class Education {
 		return educationIDs;
 	}
 	
+	@Step
+	@Description("删除教育背景信息")
+	public void delEducation(String id) {		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/personresume/deleducation");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		paramsMap.put("id", id);
+		
+		HttpMethods http = new HttpMethods();
+		
+		Response response = http.request(baseMap, paramsMap);
+		
+		if (response.getStatusCode()!=200) {
+			// TODO: handle exception
+			String body = response.getBody().asString();
+			Allure.addAttachment("/personresume/deleducation.Response.body:", body);
+			Assert.fail("/personresume/deleducation 请求失败！");
+		}
+	}
+	
+	@Step
+	@Description("清空所有教育背景信息")
+	public void cleanEducations(){
+		for(String id:getEducations()){
+			delEducation(id);
+		}
+	}
 	public int[] majorData(String baseURL){
 		return new BaseInfo(baseURL).getMajor();
 	}

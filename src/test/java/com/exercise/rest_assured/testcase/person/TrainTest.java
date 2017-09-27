@@ -2,6 +2,7 @@ package com.exercise.rest_assured.testcase.person;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -18,12 +19,12 @@ public class TrainTest extends BaseTest{
 		Train train = new Train(getBaseURL());
 		params.remove("id");
 		params.put("token", "");
-		setRequest("train", train.setParam(getBaseURL(), params));
+		setRequest("train", train.setParam(params));
 		
 		checkResponse(train.getParams());
 	}
 	
-	@Test(dataProvider = "SingleCase",description="修改培训信息",dependsOnMethods={"add_Train_Test"})
+	@Test(dataProvider = "SingleCase",description="修改培训信息")
 	@Description("修改培训信息")
 	public void edit_Train_Test(Map<String,Object> params){
 		Train train = new Train(getBaseURL());
@@ -36,19 +37,31 @@ public class TrainTest extends BaseTest{
 		}
 		params.put("id", id);
 		params.put("token", "");
-		params = train.setParam(getBaseURL(), params);
+		params = train.setParam(params);
 		setRequest("train", params);
 		
 		checkResponse(train.getParams());
 	}
 	
-	@Test(description="删除培训信息",dependsOnMethods={"add_Train_Test"})
+	@Test(dataProvider="SingleCase",description="删除培训信息")
 	@Description("删除培训信息")
-	public void del_Train_Test(){
+	public void del_Train_Test(Map<String, Object> params){
 		Train train = new Train(getBaseURL());
 		List<String> list = train.getTrains();
-		for (int i = 0; i < list.size(); i++) {
-			train.delTrain(list.get(i));
+		if(list.size()==0){
+			train.addTrain(params);
+			list = train.getTrains();
 		}
+		
+		Random random = new Random();
+		int index = random.nextInt(list.size());
+		String id = list.get(index);
+		train.delTrain(id);
+	}
+	
+	@Test
+	public void clean(){
+		Train train = new Train(getBaseURL());
+		train.cleanTrains();
 	}
 }
