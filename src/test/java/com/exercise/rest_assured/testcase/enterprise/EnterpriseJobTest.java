@@ -5,11 +5,9 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
-import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.admin.Examine;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
 import com.exercise.rest_assured.utils.testutils.BaseTest;
-import com.exercise.rest_assured.utils.testutils.User;
 
 import io.restassured.path.json.JsonPath;
 import junit.framework.Assert;
@@ -26,23 +24,23 @@ public class EnterpriseJobTest extends BaseTest {
 		job.checkInfo(path, response);
 		
 		//后台审核
-		Login login = new Login();
-		login.adminSingin(new User().getAdmin());
-		Examine examine = new Examine();
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("jobID", id);
 		paramMap.put("title", response.getString("title"));
 		paramMap.put("des", "不通过");
 		paramMap.put("status", "4");
-		examine.job(login.getCookie(), paramMap);
+		
+		Examine examine = new Examine();
+		examine.job(paramMap);
 	}
 	
 	@Test(dataProvider="SingleCase")
 	public void up_EnterpriseJob_Test(Map<String, Object> params){
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
 		Map<String, Object> param = new HashMap<>();
 		param = params;
 		String id = null;
+		
+		EnterpriseJob job = new EnterpriseJob(getBaseURL());
 		if(job.getUserJobList(4).size()==0){
 			Assert.fail("该用户没有审核未通过的职位");
 		}
@@ -57,22 +55,18 @@ public class EnterpriseJobTest extends BaseTest {
 	}
 	
 	@Test
-	public void up_EnterpriseJobStatus_Test(){
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
-		
+	public void up_EnterpriseJobStatus_Test(){		
 		//后台审核
-		Login login = new Login();
-		login.adminSingin(new User().getAdmin());
-		Examine examine = new Examine();
+		EnterpriseJob job = new EnterpriseJob(getBaseURL());
 		String id = job.getUserJobList(1).get(0);
-
-		Map<String, Object> paramMap = new HashMap<>();
 		
+		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("jobID", id);
 		paramMap.put("title", job.getUserJobShow(Integer.valueOf(id).intValue()).getString("title"));
 		paramMap.put("des", "通过");
 		paramMap.put("status", "2");
-		examine.job(login.getCookie(), paramMap);
+		Examine examine = new Examine();
+		examine.job(paramMap);
 
 		job.upStatus(job.getUserJobList(2), "3");
 	}

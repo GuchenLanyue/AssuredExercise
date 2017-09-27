@@ -34,9 +34,7 @@ public class Login {
 		.response();
 		
 		String body = response.getBody().asString();
-		while (body.charAt(0) != '{') {
-			body = body.substring(1, body.length());
-		};
+		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 		
 		return body;
 	}

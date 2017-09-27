@@ -1,21 +1,20 @@
 package com.exercise.rest_assured.apis.person;
 
-import static io.restassured.RestAssured.given;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.testng.Assert;
 
+import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.TxtData;
 
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
@@ -45,45 +44,27 @@ public class BaseInfo {
 	
 	public BaseInfo(String url) {
 		// TODO Auto-generated constructor stub
-		setBaseURL(url);
-	}
-	
-	public void setBaseURL(String url){
-		baseURL = url;
+		url = baseURL;
 	}
 	
 	@Step("geteducation() 获取学历")
 	@Description("获取学历")
-	public String education(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/geteducation")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String education(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/geteducation");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/geteducation.Response.body:", body);
-			Assert.fail("/basics/geteducation 请求失败！");
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
 		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-		
+		String body =http.getBody(response);
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
 
-		fileData.writerText(filePath+"education.json", json);
+		fileData.writerText(filePath+"education.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("seteducation() 设置学历")
@@ -99,7 +80,6 @@ public class BaseInfo {
 			json = new JsonPath(education());
 		}
 		
-		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -113,35 +93,22 @@ public class BaseInfo {
 	
 	@Step("getenterprisenature() 获取企业性质")
 	@Description("获取企业性质")
-	public String enterprisenature(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getenterprisenature")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String enterprisenature(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getenterprisenature");
+
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getenterprisenature.Response.body:", body);
-			Assert.fail("/basics/getenterprisenature 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"enterprisenature.json", json);
+		fileData.writerText(filePath+"enterprisenature.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setenterprisenature() 设置企业性质")
@@ -171,35 +138,21 @@ public class BaseInfo {
 	
 	@Step("getcompanysize() 获取公司规模")
 	@Description("获取公司规模")
-	public String companysize(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getcompanysize")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
-		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getcompanysize.Response.body:", body);
-			Assert.fail("/basics/getcompanysize 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+	public String companysize(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getcompanysize");
+
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"companysize.json", json);
+		fileData.writerText(filePath+"companysize.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setcompanysize() 设置公司规模")
@@ -230,34 +183,20 @@ public class BaseInfo {
 	@Step("getjoblevel() 获取职位级别")
 	@Description("获取职位级别")
 	public String joblevel(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getjoblevel")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getjoblevel");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getjoblevel.Response.body:", body);
-			Assert.fail("/basics/getjoblevel 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"joblevel.json", json);
+		fileData.writerText(filePath+"joblevel.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setjoblevel() 设置职位级别")
@@ -288,34 +227,20 @@ public class BaseInfo {
 	@Step("gethealthy() 获取健康状况")
 	@Description("获取健康状况")
 	public String healthy(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/gethealthy")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/gethealthy");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/gethealthy.Response.body:", body);
-			Assert.fail("/basics/gethealthy 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"healthy.json", json);
+		fileData.writerText(filePath+"healthy.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("sethealthy() 设置健康状况")
@@ -345,34 +270,20 @@ public class BaseInfo {
 	@Step("getworklife() 获取工作年限")
 	@Description("获取工作年限")
 	public String worklife(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getworklife")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getworklife");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getworklife.Response.body:", body);
-			Assert.fail("/basics/getworklife 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"worklife.json", json);
+		fileData.writerText(filePath+"worklife.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setworklife() 设置工作年限")
@@ -402,34 +313,21 @@ public class BaseInfo {
 	@Step("getgoodatlanguage() 获取擅长外语")
 	@Description("获取擅长外语")
 	public String goodatlanguage(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getgoodatlanguage")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getgoodatlanguage.Response.body:", body);
-			Assert.fail("/basics/getgoodatlanguage 请求失败！");
-		}
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getgoodatlanguage");
 		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"goodatlanguage.json", json);
+		fileData.writerText(filePath+"goodatlanguage.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setgoodatlanguage() 设置擅长外语")
@@ -458,35 +356,21 @@ public class BaseInfo {
 	
 	@Step("getmaritalstatus() 获取婚姻状况")
 	@Description("获取婚姻状况")
-	public String maritalstatus(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getmaritalstatus")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String maritalstatus(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getmaritalstatus");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getmaritalstatus.Response.body:", body);
-			Assert.fail("/basics/getmaritalstatus 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
+
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"maritalstatus.json", json);
+		fileData.writerText(filePath+"maritalstatus.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setmaritalstatus() 设置婚姻状况")
@@ -502,7 +386,6 @@ public class BaseInfo {
 			json = new JsonPath(maritalstatus());
 		}
 		
-		
 		Map<String, Object> list = json.get("value");
 		List<String> keys = new ArrayList<>();
 		for(String key:list.keySet()){
@@ -516,35 +399,21 @@ public class BaseInfo {
 	
 	@Step("getcurrentstate() 获取当前状态")
 	@Description("获取当前状态")
-	public String currentstate(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getcurrentstate")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String currentstate(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getcurrentstate");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getcurrentstate.Response.body:", body);
-			Assert.fail("/basics/getcurrentstate 请求失败！");
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"currentstate.json", json);
+		fileData.writerText(filePath+"currentstate.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setcurrentstate() 设置当前状态")
@@ -573,35 +442,21 @@ public class BaseInfo {
 	}
 	
 	@Description("获取行业列表")
-	public String industry(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getindustry")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String industry(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getindustry");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getindustry.Response.body:", body);
-			Assert.fail("/basics/getindustry 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"industry.json", json);
+		fileData.writerText(filePath+"industry.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setIndustry() 设置行业")
@@ -631,26 +486,20 @@ public class BaseInfo {
 	@Step
 	@Description("获取职位列表")
 	public String position(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getposition")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
-		String json = response.asString();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getposition");
 		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
-
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
+		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"position.json", json);
+		fileData.writerText(filePath+"position.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setPositionData() 设置职位")
@@ -684,26 +533,20 @@ public class BaseInfo {
 	@Step
 	@Description("获取专业列表")
 	public String major(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getmajor")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
-		String json = response.asString();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getmajor");
 		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"major.json", json);
+		fileData.writerText(filePath+"major.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setPositionData() 设置专业")
@@ -741,35 +584,21 @@ public class BaseInfo {
 	
 	@Step
 	@Description("获取期望薪资列表")
-	public String salary(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getsalary")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
+	public String salary(){		
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getsalary");
 		
-		if (response.getStatusCode()!=200) {
-			// TODO: handle exception
-			String body = response.getBody().asString();
-			Allure.addAttachment("/basics/getsalary.Response.body:", body);
-			Assert.fail("/basics/getsalary 请求失败！");
-		}
-		
-		String json = response.asString();
-		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"salary.json", json);
+		fileData.writerText(filePath+"salary.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step("setSalary() 设置期望薪资")
@@ -799,26 +628,20 @@ public class BaseInfo {
 	
 	@Description("获取地区")
 	public String area(){
-		Response response = given()
-				//.proxy("http://127.0.0.1:8888")
-				.contentType("application/x-www-form-urlencoded;charset=UTF-8")
-			.when()
-				.post(baseURL+"/basics/getarea")
-			.then()
-//				.statusCode(200)
-			.extract()
-				.response();
-		String json = response.asString();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", baseURL);
+		baseMap.put("path", "/basics/getarea");
 		
-		while (json.charAt(0)!='{') {
-			json = json.substring(1, json.length());
-		}
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(baseMap);
+		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
 		String filePath = System.getProperty("user.dir")+"/src/test/resources/base/";
-		fileData.writerText(filePath+"area.json", json);
+		fileData.writerText(filePath+"area.json", body);
 		
-		return json;
+		return body;
 	}
 	
 	@Step(value = "setArea() 设置地区")

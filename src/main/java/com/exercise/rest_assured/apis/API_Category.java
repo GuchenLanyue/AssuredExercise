@@ -78,7 +78,7 @@ public class API_Category {
 		case site:
 			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
-				login.singin(user.getAdmin());
+				login.adminSingin(user.getAdmin());
 				cookieMap = login.getCookie();
 
 				String cookie = null;

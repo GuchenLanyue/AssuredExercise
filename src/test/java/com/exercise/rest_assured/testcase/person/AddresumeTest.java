@@ -8,13 +8,11 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.admin.Examine;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
 import com.exercise.rest_assured.apis.person.Basic;
 import com.exercise.rest_assured.apis.person.Delivery;
 import com.exercise.rest_assured.utils.testutils.BaseTest;
-import com.exercise.rest_assured.utils.testutils.User;
 
 import io.restassured.path.json.JsonPath;
 
@@ -39,10 +37,8 @@ public class AddresumeTest extends BaseTest{
 			paramMap.put("des", jobPath.getString("des"));
 			paramMap.put("status", 2);
 			
-			Login login = new Login();
-			login.adminSingin(new User().getAdmin());
 			Examine examine = new Examine();
-			examine.job(login.getCookie(), paramMap);
+			examine.job(paramMap);
 		}else{
 			job_id = job.getUserJobList(2).get(0);
 		}

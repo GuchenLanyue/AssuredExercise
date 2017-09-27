@@ -3,8 +3,7 @@ package com.exercise.rest_assured.apis.person;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import com.exercise.rest_assured.utils.HttpMethods;
 
 public class Delivery {
 	private String url = null;
@@ -22,16 +21,16 @@ public class Delivery {
 		return param;
 	}
 	
-	public void addresume(String token, String job_id){
-		RestAssured.given()
-			.contentType(ContentType.URLENC)
-			.formParam("token", token)
-			.formParam("job_id", job_id)
-		.when()
-			.post(url + "/delivery/addresume")
-		.then()
-			.statusCode(200)
-		.extract()
-			.response();
+	public void addresume(String job_id){
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method","POST");
+		baseMap.put("baseURL", url);
+		baseMap.put("path", "/delivery/addresume");
+		Map<String, Object> paramsMap = new HashMap<>();
+		paramsMap.put("token", "");
+		paramsMap.put("job_id", job_id);
+		
+		HttpMethods http = new HttpMethods();
+		http.request(baseMap, paramsMap);
 	}
 }
