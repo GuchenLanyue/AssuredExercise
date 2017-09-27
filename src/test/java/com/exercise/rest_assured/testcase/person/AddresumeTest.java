@@ -46,11 +46,10 @@ public class AddresumeTest extends BaseTest{
 			paramMap.put("jobID", jobPath.getString("id"));
 			paramMap.put("title", jobPath.getString("title"));
 			paramMap.put("des", jobPath.getString("des"));
-			paramMap.put("status", 2);
 			
 			//审核通过该职位
 			Examine examine = new Examine();
-			examine.job(paramMap);
+			examine.job(job_id,"2");
 		}else{
 			//获取所有发布中职位
 			List<String> ids = job.getUserJobList(2);

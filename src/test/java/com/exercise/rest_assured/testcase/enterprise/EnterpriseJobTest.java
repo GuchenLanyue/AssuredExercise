@@ -27,10 +27,9 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("jobID", id);
 		paramMap.put("title", response.getString("title"));
 		paramMap.put("des", "不通过");
-		paramMap.put("status", "4");
 		
 		Examine examine = new Examine();
-		examine.job(paramMap);
+		examine.job(id,"4");
 	}
 	
 	@Test(dataProvider="SingleCase",description="更新职位")
@@ -64,7 +63,7 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("des", "通过");
 		paramMap.put("status", "2");
 		Examine examine = new Examine();
-		examine.job(paramMap);
+		examine.job(id,"2");
 
 		job.upStatus(job.getUserJobList(2), "3");
 	}

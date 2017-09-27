@@ -6,16 +6,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.exercise.rest_assured.apis.Login;
+import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 
 public class Examine {
+	private String url = null;
 	
+	public Examine() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Examine(String baseURL) {
+		// TODO Auto-generated constructor stub
+		url = baseURL;
+	}
+	
+	@Description("status 状态(1审核中2发布中3已下线4未通过)")
 	@Step("job() 审核职位")
-	public void job(Map<String, Object> paramMap){
+	public void job(String job_id,String status){
+		Map<String, Object> paramMap = new HashMap<>();
+		EnterpriseJob eJob = new EnterpriseJob(url);
+		JsonPath jobShow = eJob.getUserJobShow(job_id);
+		paramMap = jobShow.getMap("value");
 		//登录后台
 		Login login = new Login(null);
 		//获取职位的id及title等属性
@@ -27,9 +45,9 @@ public class Examine {
 		if(paramMap.get("des")!=null){
 			des = paramMap.get("des").toString();
 		}else{
-			des = "通过";
+			des = "这里是描述文本";
 		}
-		String status = paramMap.get("status").toString();
+
 		//该接口有query参数，设置query参数
 		queryMap.put("r", "job/examine/update");
 		queryMap.put("id", jobID);
