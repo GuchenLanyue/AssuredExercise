@@ -26,7 +26,7 @@ public class ExamineJobTest extends BaseTest{
 		int index = random.nextInt(jobs.size());
 		String job_id = jobs.get(index);
 		//审核通过
-		Examine examine = new Examine();
+		Examine examine = new Examine(getBaseURL());
 		examine.job(job_id,"2");
 		String status = eJob.getUserJobShow(job_id).setRoot("value").getString("status");
 		
@@ -35,7 +35,7 @@ public class ExamineJobTest extends BaseTest{
 	
 	@Test
 	public void offLine_Test(){
-		Examine examine = new Examine();
+		Examine examine = new Examine(getBaseURL());
 		EnterpriseJob eJob = new EnterpriseJob(getBaseURL());
 		List<String> jobs = eJob.getUserJobList(1);
 		if(jobs.size()==0){

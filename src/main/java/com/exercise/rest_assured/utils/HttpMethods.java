@@ -20,6 +20,11 @@ import io.restassured.response.Response;
 
 public class HttpMethods {
 	private Map<String, Object> params = null;
+
+	public HttpMethods() {
+		// TODO Auto-generated constructor stub
+		
+	}
 	
 	@Step("request() 发起请求")
 	public Response request(Map<String, Object> baseMap) {		
@@ -41,7 +46,7 @@ public class HttpMethods {
 		case POST:
 			if (!baseMap.containsKey("QueryString")) {
 				response = given()
-//						.proxy("127.0.0.1", 8888)
+						.proxy("127.0.0.1", 8888)
 	//					.log().all()
 //						.log().uri()
 //						.log().params()
@@ -137,26 +142,22 @@ public class HttpMethods {
 		case POST:
 			if (!baseMap.containsKey("QueryString")) {
 				response = given()
-//						.proxy("127.0.0.1", 8888)
-	//					.log().all()
-//						.log().uri()
-//						.log().params()
-						.header("Accept", "application/json")
-						.header("Accept-Encoding", "gzip, deflate")
-						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
-						.header("Cache-Control", "no-cache")
-						.config(RestAssured.config()
-								  .encoderConfig(EncoderConfig.encoderConfig()
-										    .defaultContentCharset("UTF-8")
-										    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
-						.formParams(paramsMap)
-					.when()
-						.post(requestURL)
-					.then()
-//						.log().body()
-						.statusCode(200)
-					.extract()
-						.response();
+					.proxy("127.0.0.1",8888)
+					.header("Accept", "application/json")
+					.header("Accept-Encoding", "gzip, deflate")
+					.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
+					.header("Cache-Control", "no-cache")
+					.config(RestAssured.config()
+						  .encoderConfig(EncoderConfig.encoderConfig()
+							    .defaultContentCharset("UTF-8")
+							    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+					.formParams(paramsMap)
+				.when()
+					.post(requestURL)
+				.then()
+					.statusCode(200)
+				.extract()
+					.response();
 			}else{
 				String queryString = baseMap.get("QueryString").toString();
 				String[] qParam = queryString.split("&");
@@ -167,10 +168,6 @@ public class HttpMethods {
 				}
 				
 				response = given()
-	//					.proxy("127.0.0.1", 8888)
-	//					.log().all()
-						.log().uri()
-						.log().params()
 						.header("Accept", "application/json")
 						.header("Accept-Encoding", "gzip, deflate")
 						.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
@@ -192,8 +189,6 @@ public class HttpMethods {
 			break;
 		case GET:	
 			response = given()
-//						.proxy("127.0.0.1", 8888)
-//						.log().all()
 					.config(RestAssured.config()
 							  .encoderConfig(EncoderConfig.encoderConfig()
 									    .defaultContentCharset("UTF-8")

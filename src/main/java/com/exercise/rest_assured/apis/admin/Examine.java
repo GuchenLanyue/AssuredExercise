@@ -35,10 +35,11 @@ public class Examine {
 		JsonPath jobShow = eJob.getUserJobShow(job_id);
 		paramMap = jobShow.getMap("value");
 		//登录后台
-		Login login = new Login(null);
+		Login login = new Login();
+		login.analysis(null);
+		
 		//获取职位的id及title等属性
 		Map<String, Object> queryMap = new HashMap<>();
-		String jobID = paramMap.get("jobID").toString();
 		String title = paramMap.get("title").toString();
 		String des = null;
 		//设置描述文本
@@ -50,7 +51,7 @@ public class Examine {
 
 		//该接口有query参数，设置query参数
 		queryMap.put("r", "job/examine/update");
-		queryMap.put("id", jobID);
+		queryMap.put("id", job_id);
 		
 		String requestURL = "http://nchr.release.microfastup.com/";
 		
@@ -62,7 +63,7 @@ public class Examine {
 							    .defaultContentCharset("UTF-8")
 							    .encodeContentTypeAs("multipart/form-data", ContentType.TEXT)))
 			.queryParams(queryMap)
-			.multiPart("JobSet[id]", jobID)
+			.multiPart("JobSet[id]", job_id)
 			.multiPart("JobSet[user_id]", "2")
 			.multiPart(new MultiPartSpecBuilder(title).controlName("JobSet[title]").charset("UTF-8").build())
 			.multiPart(new MultiPartSpecBuilder(des).controlName("JobSet[des]").charset("UTF-8").build())

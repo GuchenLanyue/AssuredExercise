@@ -28,7 +28,7 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("title", response.getString("title"));
 		paramMap.put("des", "不通过");
 		
-		Examine examine = new Examine();
+		Examine examine = new Examine(getBaseURL());
 		examine.job(id,"4");
 	}
 	
@@ -36,13 +36,17 @@ public class EnterpriseJobTest extends BaseTest {
 	public void up_EnterpriseJob_Test(Map<String, Object> params){
 		Map<String, Object> param = new HashMap<>();
 		param = params;
-		
+		String id = null;
 		EnterpriseJob job = new EnterpriseJob(getBaseURL());
 		if(job.getUserJobList(4).size()==0){
 			job.addJob();
+			Examine examine = new Examine(getBaseURL());
+			id = job.getUserJobList(1).get(0);
+			examine.job(id, "4");
+		}else{
+			job.getUserJobList(4).get(0);
 		}
 		
-		String id = job.getUserJobList(4).get(0);
 		param.put("id", id);
 		param.put("token", "");
 		param.put("content", "重新发布职位");
@@ -62,7 +66,7 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("title", jobShow.setRoot("value").getString("title"));
 		paramMap.put("des", "通过");
 		paramMap.put("status", "2");
-		Examine examine = new Examine();
+		Examine examine = new Examine(getBaseURL());
 		examine.job(id,"2");
 
 		job.upStatus(job.getUserJobList(2), "3");

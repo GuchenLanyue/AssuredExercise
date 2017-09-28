@@ -1,0 +1,467 @@
+{
+  "personresume": [
+    {
+      "description": "个人简历基本信息(创建和修改)",
+      "role": "person",
+      "path": "/personresume/basic"
+    },
+    {
+      "description": "获取个人简历基本信息",
+      "role": "person",
+      "path": "/personresume/getbasic"
+    },
+    {
+      "description": "创建或修改教育背景",
+      "role": "person",
+      "path": "/personresume/education"
+    },
+    {
+      "description": "获取教育背景信息",
+      "role": "person",
+      "path": "/personresume/geteducation"
+    },
+    {
+      "description": "删除教育背景",
+      "role": "person",
+      "path": "/personresume/deleducation"
+    },
+    {
+      "description": "获取教育背景信息列表",
+      "role": "person",
+      "path": "/personresume/geteducations"
+    },
+    {
+      "description": "创建或修改培训信息",
+      "role": "person",
+      "path": "/personresume/train"
+    },
+    {
+      "description": "获取培训信息",
+      "role": "person",
+      "path": "/personresume/gettrain"
+    },
+    {
+      "description": "删除培训信息",
+      "role": "person",
+      "path": "/personresume/deltrain"
+    },
+    {
+      "description": "获取培训信息列表",
+      "role": "person",
+      "path": "/personresume/gettrains"
+    },
+    {
+      "description": "创建或修改工作经验",
+      "role": "person",
+      "path": "/personresume/job"
+    },
+    {
+      "description": "获取工作经验",
+      "role": "person",
+      "path": "/personresume/getjob"
+    },
+    {
+      "description": "删除工作经验",
+      "role": "person",
+      "path": "/personresume/deljob"
+    },
+    {
+      "description": "获取工作经验列表",
+      "role": "person",
+      "path": "/personresume/getjobs"
+    },
+    {
+      "description": "创建或修改项目经验",
+      "role": "person",
+      "path": "/personresume/project"
+    },
+    {
+      "description": "获取项目经验",
+      "role": "person",
+      "path": "/personresume/getproject"
+    },
+    {
+      "description": "删除项目经验",
+      "role": "person",
+      "path": "/personresume/delproject"
+    },
+    {
+      "description": "获取项目经验列表",
+      "role": "person",
+      "path": "/personresume/getprojects"
+    },
+    {
+      "description": "创建或修改求职意向",
+      "role": "person",
+      "path": "/personresume/intention"
+    },
+    {
+      "description": "获取求职意向",
+      "role": "person",
+      "path": "/personresume/getintention"
+    },
+    {
+      "description": "删除求职意向",
+      "role": "person",
+      "path": "/personresume/delintention"
+    },
+    {
+      "description": "获取求职意向列表",
+      "role": "person",
+      "path": "/personresume/getintentions"
+    },
+    {
+      "description": "创建或修改自我评价",
+      "role": "person",
+      "path": "/personresume/evaluation"
+    },
+    {
+      "description": "获取自我评价",
+      "role": "person",
+      "path": "/personresume/getevaluation"
+    },
+    {
+      "description": "获取单个简历",
+      "role": "person",
+      "path": "/personresume/getresume"
+    }
+  ],
+  "ss": [
+    {
+      "description": "获取服务流程",
+      "role": "guest",
+      "path": "/ss/getprocess"
+    },
+    {
+      "description": "获取服务网点",
+      "role": "guest",
+      "path": "/ss/getnetwork"
+    },
+    {
+      "description": "获取定点医院",
+      "role": "guest",
+      "path": "/ss/gethospital"
+    }
+  ],
+  "delivery": [
+    {
+      "description": "投递简历",
+      "role": "person",
+      "path": "/delivery/addresume"
+    }
+  ],
+  "basics": [
+    {
+      "description": "获取企业性质",
+      "role": "guest",
+      "path": "/basics/getenterprisenature"
+    },
+    {
+      "description": "获取行业",
+      "role": "guest",
+      "path": "/basics/getindustry"
+    },
+    {
+      "description": "获取职位",
+      "role": "guest",
+      "path": "/basics/getposition"
+    },
+    {
+      "description": "获取城市",
+      "role": "guest",
+      "path": "/basics/getarea"
+    },
+    {
+      "description": "获取主修专业",
+      "role": "guest",
+      "path": "/basics/getmajor"
+    },
+    {
+      "description": "获取公司规模",
+      "role": "guest",
+      "path": "/basics/getcompanysize"
+    },
+    {
+      "description": "获取职位级别",
+      "role": "guest",
+      "path": "/basics/getjoblevel"
+    },
+    {
+      "description": "获取学历",
+      "role": "guest",
+      "path": "/basics/geteducation"
+    },
+    {
+      "description": "获取健康状况",
+      "role": "guest",
+      "path": "/basics/gethealthy"
+    },
+    {
+      "description": "获取工作年限",
+      "role": "guest",
+      "path": "/basics/getworklife"
+    },
+    {
+      "description": "获取当前状态",
+      "role": "guest",
+      "path": "/basics/getcurrentstate"
+    },
+    {
+      "description": "获取期望薪水",
+      "role": "guest",
+      "path": "/basics/getsalary"
+    },
+    {
+      "description": "擅长外语",
+      "role": "guest",
+      "path": "/basics/getgoodatlanguage"
+    },
+    {
+      "description": "婚育状态",
+      "role": "guest",
+      "path": "/basics/getmaritalstatus"
+    }
+  ],
+  "images": [
+    {
+      "description": "图片上传",
+      "role": "guest",
+      "path": "/images/uplodeimage"
+    }
+  ],
+  "enterprise": [
+    {
+      "description": "企业注册",
+      "role": "guest",
+      "path": "/enterprise/reg"
+    },
+    {
+      "description": "企业登陆",
+      "role": "guest",
+      "path": "/enterprise/login"
+    },
+    {
+      "description": "企业重置密码",
+      "role": "guest",
+      "path": "/enterprise/resetpwd"
+    },
+    {
+      "description": "修改企业基础信息",
+      "role": "enterprise",
+      "path": "/enterprise/updbaseinfo"
+    }
+  ],
+  "sell": [
+    {
+      "description": "供求信息个人中心搜索",
+      "role": "enterprise",
+      "path": "/sell/search"
+    },
+    {
+      "description": "供求信息首页搜索",
+      "role": "guest",
+      "path": "/sell/list"
+    },
+    {
+      "description": "详情",
+      "role": "guest",
+      "path": "/sell/details"
+    },
+    {
+      "description": "添加供求信息",
+      "role": "enterprise",
+      "path": "/sell/add"
+    },
+    {
+      "description": "修改供求信息",
+      "role": "enterprise",
+      "path": "/sell/update"
+    },
+    {
+      "description": "供求信息上下线",
+      "role": "enterprise",
+      "path": "/sell/upstatus"
+    },
+    {
+      "description": "添加供求信息基础数据",
+      "role": "enterprise",
+      "path": "/sell/datalist"
+    },
+    {
+      "description": "首页服务类别列表",
+      "role": "guest",
+      "path": "/sell/categorylist"
+    }
+  ],
+  "complaint": [
+    {
+      "description": "投诉建议",
+      "role": "guest",
+      "path": "/complaint/addsuggest"
+    },
+    {
+      "description": "投诉建议微站",
+      "role": "person",
+      "path": "/complaint/addfeedback"
+    },
+    {
+      "description": "获取微站用户投诉列表",
+      "role": "person",
+      "path": "/complaint/getfeedback"
+    }
+  ],
+  "service": [
+    {
+      "description": "获取服务窗口列表",
+      "role": "guest",
+      "path": "/service/getservicelist"
+    },
+    {
+      "description": "获取服务窗口详情",
+      "role": "guest",
+      "path": "/service/getserviceshow"
+    }
+  ],
+  "person": [
+    {
+      "description": "个人",
+      "role": "guest",
+      "path": "/person/reg"
+    },
+    {
+      "description": "个人登陆",
+      "role": "guest",
+      "path": "/person/login"
+    },
+    {
+      "description": "个人重置密码",
+      "role": "guest",
+      "path": "/person/resetpwd"
+    },
+    {
+      "description": "修改个人基础信息",
+      "role": "person",
+      "path": "/person/updbaseinfo"
+    }
+  ],
+  "sms": [
+    {
+      "description": "发送验证码",
+      "role": "guest",
+      "path": "/sms/sendcode"
+    },
+    {
+      "description": "验证验证码",
+      "role": "guest",
+      "path": "/sms/verifycode"
+    }
+  ],
+  "settledenterprise": [
+    {
+      "description": "入驻申请",
+      "role": "guest",
+      "path": "/settledenterprise/addapply"
+    },
+    {
+      "description": "获取入驻企业",
+      "role": "guest",
+      "path": "/settledenterprise/getselledlist"
+    },
+    {
+      "description": "获取入驻流程",
+      "role": "guest",
+      "path": "/settledenterprise/getprocess"
+    },
+    {
+      "description": "获取微站入驻申请",
+      "role": "guest",
+      "path": "/settledenterprise/getapplyms"
+    }
+  ],
+  "validatecode": [
+    {
+      "description": "获取验证码图片",
+      "role": "guest",
+      "path": "/validatecode/code/uuid/{uuid}"
+    },
+    {
+      "description": "校验验证码",
+      "role": "guest",
+      "path": "/validatecode/checkcode"
+    }
+  ],
+  "job": [
+    {
+      "description": "新增职位",
+      "role": "enterprise",
+      "path": "/job/addjob"
+    },
+    {
+      "description": "获取用户发布的职位",
+      "role": "enterprise",
+      "path": "/job/getuserjoblist"
+    },
+    {
+      "description": "获取职位列表",
+      "role": "guest",
+      "path": "/job/getjoblist"
+    },
+    {
+      "description": "获取用户发布职位详情",
+      "role": "enterprise",
+      "path": "/job/getuserjobshow"
+    },
+    {
+      "description": "获取职位详情",
+      "role": "guest",
+      "path": "/job/getjobshow"
+    },
+    {
+      "description": "招聘信息上下线",
+      "role": "enterprise",
+      "path": "/job/upstatus"
+    },
+    {
+      "description": "更新职位",
+      "role": "enterprise",
+      "path": "/job/upjob"
+    },
+    {
+      "description": "获取用户投递的简历",
+      "role": "enterprise",
+      "path": "/job/getuserresume"
+    },
+    {
+      "description": "获取企业信息",
+      "role": "guest",
+      "path": "/job/getenterpriseinfo"
+    }
+  ],
+  "info": [
+    {
+      "description": "获取轮播图",
+      "role": "guest",
+      "path": "/info/getcarouselfigure"
+    },
+    {
+      "description": "获取新闻资讯，政策指南",
+      "role": "guest",
+      "path": "/info/getnewlist"
+    },
+    {
+      "description": "搜索新闻资讯，政策指南",
+      "role": "guest",
+      "path": "/info/searchList"
+    },
+    {
+      "description": "获取新闻资讯、政策指南详情",
+      "role": "guest",
+      "path": "/info/getnewshow"
+    },
+    {
+      "description": "获取园区简介",
+      "role": "guest",
+      "path": "/info/getparkintroduction"
+    }
+  ]
+}
