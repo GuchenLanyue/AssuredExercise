@@ -87,7 +87,7 @@ public class Login {
 	}
 	
 	@Step("登录")
-	public void singin(JsonPath user){
+	public void login(JsonPath user){
 		response = given()
 			.proxy("localhost", 8888)
 	//		.log().all()
@@ -119,7 +119,7 @@ public class Login {
 		case person:
 			File pfile = new File(fPath + "personToken.txt");
 			if (!pfile.exists() || System.currentTimeMillis() - pfile.lastModified() > 120000) {
-				singin(user.getPerson());
+				login(user.getPerson());
 				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
@@ -134,7 +134,7 @@ public class Login {
 		case enterprise:
 			File efile = new File(fPath + "enterpriseToken.txt");
 			if (!efile.exists() || System.currentTimeMillis() - efile.lastModified() > 120000) {
-				singin(user.getEnterprise());
+				login(user.getEnterprise());
 				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
@@ -150,7 +150,7 @@ public class Login {
 		case admin:
 			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
-				singin(user.getAdmin());
+				login(user.getAdmin());
 				setCookie();
 
 				String cookie = null;
