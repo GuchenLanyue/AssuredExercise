@@ -46,7 +46,7 @@ public class HttpMethods {
 		case POST:
 			if (!baseMap.containsKey("QueryString")) {
 				response = given()
-						.proxy("127.0.0.1", 8888)
+//						.proxy("127.0.0.1", 8888)
 	//					.log().all()
 //						.log().uri()
 //						.log().params()
