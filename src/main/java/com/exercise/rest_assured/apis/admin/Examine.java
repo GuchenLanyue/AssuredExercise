@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.exercise.rest_assured.apis.Login;
+import com.exercise.rest_assured.apis.Login.Role;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
 
 import io.qameta.allure.Description;
@@ -76,5 +77,33 @@ public class Examine {
 //			.statusCode(200)
 		.extract()
 			.response();
+	}
+	
+	public void settled(){
+		//登录后台
+		Login login = new Login(Role.admin);
+		
+		String path = "/enterprise/settledapply/index/ajax/settled-apply-grid/SettledApply_sort/id.desc";
+		
+		RestAssured.given()
+//			.proxy("127.0.0.1", 8888)
+			.cookies(login.getCookie())
+			.config(RestAssured.config()
+					  .encoderConfig(EncoderConfig.encoderConfig()
+						    .defaultContentCharset("UTF-8")
+						    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
+			.queryParam("ajax", "settled-apply-grid")
+		.when()
+			.get("http://nchr.release.microfastup.com" + path)
+		.then()
+//			.log().body()
+			.statusCode(200)
+		.extract()
+			.response();
+	}
+	
+	public static void main(String[] args) {
+		Examine examine = new Examine();
+		examine.settled();
 	}
 }
