@@ -249,6 +249,11 @@
       "description": "修改企业基础信息",
       "role": "enterprise",
       "path": "/enterprise/updbaseinfo"
+    },
+    {
+      "description": "入住申请列表",
+      "role": "admin",
+      "path": "/enterprise/settledapply/index/ajax/settled-apply-grid/SettledApply_sort/id.desc"
     }
   ],
   "sell": [

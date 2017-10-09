@@ -112,9 +112,12 @@ public class Basic {
 		baseMap.put("path", "/personresume/getbasic");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
-		HttpMethods http = new HttpMethods();
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
 		
-		Response response = http.request(baseMap, paramsMap);
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception

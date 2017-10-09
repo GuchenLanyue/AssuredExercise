@@ -24,20 +24,24 @@ public class EnterpriseJob {
 	
 	@Step("addJob() 新增职位")
 	public String addJob(){
+		Map<String, Map<String,Object>> map = new HashMap<>();
+		
 		String path = "/job/addjob";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
+		map.put("base", baseMap);
 		
 		Map<String, Object> param = new HashMap<>();
 		param.put("title", "添加新职位");
 		param.put("address", "新华科技大厦A座15楼1501");
 		param.put("content", "测试新增职位接口");
 		param.put("token", "");
-
+		map.put("params", param);
+		
 		HttpMethods http = new HttpMethods();
-		String body = http.getBody(http.request(baseMap, setParams(param)));
+		String body = http.getBody(http.request(map));
 		
 		return body;
 	}
@@ -94,19 +98,24 @@ public class EnterpriseJob {
 	 * */
 	@Step("getUserJobList() 获取用户职位列表")
 	public List<String> getUserJobList(int status){
+		Map<String, Map<String,Object>> map = new HashMap<>();
+		
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
 		params.put("status", status);
 		params.put("token", "");
 		params.put("page", 1);
+		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
 		
-		String body = http.getBody(http.request(baseMap, params));
+		String body = http.getBody(http.request(map));
 		
 		JsonPath json = JsonPath.with(body).setRoot("value");
 		List<String> ids = new ArrayList<>();
@@ -122,18 +131,23 @@ public class EnterpriseJob {
 	 * */
 	@Step("getUserJobShow() 获取职位详情")
 	public JsonPath getUserJobShow(String id){
+		Map<String, Map<String,Object>> map = new HashMap<>();
+		
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
 		params.put("token", "");
 		params.put("id", id);
+		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
 		
-		String body = http.getBody(http.request(baseMap, params));
+		String body = http.getBody(http.request(map));
 		
 		JsonPath json = JsonPath.with(body);
 		
@@ -157,20 +171,23 @@ public class EnterpriseJob {
 			ids += (id+",");
 		}
 		ids = ids.substring(4, ids.length()-1);
-		
+		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/upstatus";
 		params.put("token", "");
 		params.put("ids", ids);
 		params.put("status", status);
+		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
 		
-		http.getBody(http.request(baseMap, params));
+		http.getBody(http.request(map));
 	}
 	
 	/**
@@ -178,21 +195,24 @@ public class EnterpriseJob {
 	 * @param params Map<String, Object>职位属性
 	 * */
 	@Step("upJob()更新职位")
-	public void upJob(Map<String, Object> params){		
+	public void upJob(Map<String, Object> params){
+		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", "/job/upjob");
-
+		map.put("base", baseMap);
+		
 		JsonPath jobShow = getUserJobShow(params.get("id").toString());
 		Map<String, Object> param = jobShow.getMap("value");
 		
 		for(String key:params.keySet()){
 			param.put(key, params.get(key));
 		}
-
+		
+		map.put("params", param);
 		HttpMethods http = new HttpMethods();
-		http.request(baseMap, param);
+		http.request(map);
 	}
 	
 	/**
@@ -201,18 +221,22 @@ public class EnterpriseJob {
 	 * */
 	@Step("getUserResume() 获取用户投递的简历")
 	public String getUserResume(String job_id){
+		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserresume";
 		params.put("token", "");
 		params.put("job_id", job_id);
+		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
 		baseMap.put("baseURL", url);
 		baseMap.put("path", path);
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
 		
-		return http.getBody(http.request(baseMap, params));
+		return http.getBody(http.request(map));
 	}
 	
 	@Step

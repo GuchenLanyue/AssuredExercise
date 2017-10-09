@@ -8,6 +8,7 @@ import java.util.Map;
 import com.exercise.rest_assured.apis.Login;
 import com.exercise.rest_assured.apis.Login.Role;
 import com.exercise.rest_assured.apis.enterprise.EnterpriseJob;
+import com.exercise.rest_assured.utils.HttpMethods;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -15,6 +16,7 @@ import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 
 public class Examine {
 	private String url = null;
@@ -80,30 +82,32 @@ public class Examine {
 	}
 	
 	public void settled(){
+		Map<String, Map<String,Object>> map = new HashMap<>();
+		
 		//登录后台
 		Login login = new Login(Role.admin);
+		map.put("cookies", login.getCookie());
 		
 		String path = "/enterprise/settledapply/index/ajax/settled-apply-grid/SettledApply_sort/id.desc";
 		
-		RestAssured.given()
-//			.proxy("127.0.0.1", 8888)
-			.cookies(login.getCookie())
-			.config(RestAssured.config()
-					  .encoderConfig(EncoderConfig.encoderConfig()
-						    .defaultContentCharset("UTF-8")
-						    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
-			.queryParam("ajax", "settled-apply-grid")
-		.when()
-			.get("http://nchr.release.microfastup.com" + path)
-		.then()
-//			.log().body()
-			.statusCode(200)
-		.extract()
-			.response();
+		Map<String, Object> baseMap = new HashMap<>();
+		baseMap.put("Method", "GET");
+		baseMap.put("baseURL", "http://nchr.release.microfastup.com");
+		baseMap.put("path", path);
+		map.put("base", baseMap);
+		
+		Map<String, Object> queryMap = new HashMap<>();
+		queryMap.put("ajax", "settled-apply-grid");
+		map.put("querys", queryMap);
+		
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(map);
+		String id = response.andReturn().htmlPath().getString("//*[@id=\"settled-apply-grid\"]/table/tbody/tr[1]/td[1]");
+		System.out.println(id);
 	}
 	
 	public static void main(String[] args) {
-		Examine examine = new Examine();
+		Examine examine = new Examine("http://nchr.release.microfastup.com");
 		examine.settled();
 	}
 }

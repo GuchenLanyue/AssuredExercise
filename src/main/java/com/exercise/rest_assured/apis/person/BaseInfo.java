@@ -55,8 +55,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/geteducation");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		
 		String body =http.getBody(response);
 		TxtData fileData = new TxtData();
@@ -99,8 +102,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getenterprisenature");
 
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		
 		String body =http.getBody(response);
 		
@@ -144,8 +150,12 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getcompanysize");
 
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
+		
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -188,8 +198,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getjoblevel");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -232,8 +245,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/gethealthy");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -275,8 +291,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getworklife");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -319,8 +338,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getgoodatlanguage");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
@@ -362,8 +384,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getmaritalstatus");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
@@ -405,8 +430,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getcurrentstate");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -448,8 +476,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getindustry");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();
@@ -491,8 +522,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getposition");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -538,8 +572,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getmajor");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -590,8 +627,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getsalary");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 		
 		TxtData fileData = new TxtData();
@@ -633,8 +673,11 @@ public class BaseInfo {
 		baseMap.put("baseURL", baseURL);
 		baseMap.put("path", "/basics/getarea");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap);
+		Response response = http.request(map);
 		String body =http.getBody(response);
 
 		TxtData fileData = new TxtData();

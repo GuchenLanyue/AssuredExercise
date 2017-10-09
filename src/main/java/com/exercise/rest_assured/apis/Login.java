@@ -44,7 +44,7 @@ public class Login {
 	
 	//接口路径
 	public enum Role {
-		person, enterprise, admin
+		person, enterprise, admin, guest
 	}
 
 	/**
@@ -76,7 +76,10 @@ public class Login {
 				role = Role.enterprise;
 			} else if (roleStr.equals("admin")) {
 				role = Role.admin;
-			} else{
+			} else if(roleStr.equals("guest")){
+				return Role.guest;
+			}else {
+				Assert.fail("没有设置角色："+roleStr);
 				return null;
 			}
 		}else{
@@ -89,7 +92,7 @@ public class Login {
 	@Step("登录")
 	public void login(JsonPath user){
 		response = given()
-			.proxy("localhost", 8888)
+//			.proxy("localhost", 8888)
 	//		.log().all()
 			.header("Accept", "application/json")
 			.header("Accept-Encoding", "gzip, deflate")

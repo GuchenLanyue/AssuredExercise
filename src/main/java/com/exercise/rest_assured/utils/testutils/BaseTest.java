@@ -17,6 +17,7 @@ import io.restassured.response.Response;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -128,8 +129,12 @@ public class BaseTest {
 			expectedJson = expectedMap.get("Path").toString();
 		}
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		saveResponseBody(response);
 	}
 
@@ -148,8 +153,12 @@ public class BaseTest {
 		
 		Map<String, Object>expectedMap  = parameter.setExpectedMap(filePath, caseName);
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		saveResponseBody(response);
 		expectedJson = expectedMap.get("Path").toString();
 	}

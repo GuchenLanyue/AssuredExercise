@@ -30,8 +30,12 @@ public class Evaluation {
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception

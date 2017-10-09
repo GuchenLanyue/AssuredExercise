@@ -50,7 +50,8 @@ public class Settled {
 		return params;
 	}
 	
-	public String addEnterprise(){		
+	public String addEnterprise(){
+		
 		String path = "/settledenterprise/addapply";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
@@ -85,8 +86,11 @@ public class Settled {
 		//营业执照
 		param.put("img", "/attach/image/object/201709/28/20170928175522_60822.jpg");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", param);
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap,setParams(param));
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;
@@ -102,9 +106,12 @@ public class Settled {
 		Map<String, Object> param = new HashMap<>();
 		param.put("page", page);
 		param.put("pages", pages);
-		
+
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", param);
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap,param);
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;
@@ -121,8 +128,12 @@ public class Settled {
 		param.put("page", "1");
 		param.put("pages", "30");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", param);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap,param);
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;

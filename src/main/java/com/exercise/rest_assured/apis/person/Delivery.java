@@ -34,7 +34,11 @@ public class Delivery {
 		paramsMap.put("token", "");
 		paramsMap.put("job_id", job_id);
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		http.request(baseMap, paramsMap);
+		http.request(map);
 	}
 }

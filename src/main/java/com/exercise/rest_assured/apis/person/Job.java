@@ -36,8 +36,11 @@ public class Job {
 		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/job");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, setParams(params));
+		Response response = http.request(map);
 		
 		return response;
 	}
@@ -66,8 +69,12 @@ public class Job {
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
 
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		String json = response.getBody().asString();
 		json = json.substring(json.indexOf("{"), json.lastIndexOf("}")+1);
 		
@@ -90,8 +97,12 @@ public class Job {
 		paramsMap.put("token", token);
 		paramsMap.put("id", id);
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;
@@ -107,8 +118,12 @@ public class Job {
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
 		paramsMap.put("id", id);
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		http.request(baseMap, paramsMap);
+		http.request(map);;
 	}
 	
 	@Step

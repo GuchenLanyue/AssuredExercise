@@ -73,8 +73,11 @@ public class Education {
 		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/education");
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, setParams(params));
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;
@@ -92,8 +95,12 @@ public class Education {
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("id", id);
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, params);
+		Response response = http.request(map);
 		
 		return response;
 	}
@@ -111,8 +118,12 @@ public class Education {
 		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
+		
 		HttpMethods http = new HttpMethods();
-		Response response = http.request(baseMap, paramsMap);
+		Response response = http.request(map);
 		String body = http.getBody(response);
 		
 		return body;
@@ -127,9 +138,12 @@ public class Education {
 		baseMap.put("path", "/personresume/geteducations");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
-		HttpMethods http = new HttpMethods();
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
 		
-		Response response = http.request(baseMap, paramsMap);
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
@@ -160,9 +174,12 @@ public class Education {
 		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
-		HttpMethods http = new HttpMethods();
+		Map<String, Map<String, Object>> map = new HashMap<>();
+		map.put("base", baseMap);
+		map.put("params", paramsMap);
 		
-		Response response = http.request(baseMap, paramsMap);
+		HttpMethods http = new HttpMethods();
+		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {
 			// TODO: handle exception
