@@ -11,13 +11,13 @@ import com.exercise.rest_assured.utils.testutils.BaseTest;
 public class Clean extends BaseTest{
 	@Test
 	public void clean(){
-		Job job = new Job(getBaseURL());
+		Job job = new Job(getbasePath());
 		job.cleanJobs();
-		Intention intention = new Intention(getBaseURL());
+		Intention intention = new Intention(getbasePath());
 		intention.cleanIntentions();
-		Education education = new Education(getBaseURL());
+		Education education = new Education(getbasePath());
 		education.cleanEducations();
-		Train train = new Train(getBaseURL());
+		Train train = new Train(getbasePath());
 		train.cleanTrains();
 	}
 }

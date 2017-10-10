@@ -16,9 +16,9 @@ public class EnterpriseBaseinfo {
 	private String url = null;
 	private String src = null;
 	
-	public EnterpriseBaseinfo(String baseURL,String srcDir) {
+	public EnterpriseBaseinfo(String basePath,String srcDir) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 		src = srcDir;
 	}
 	

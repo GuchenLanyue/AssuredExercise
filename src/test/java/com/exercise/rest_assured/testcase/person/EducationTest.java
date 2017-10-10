@@ -15,7 +15,7 @@ public class EducationTest extends BaseTest{
 
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
 	public void add_Education_Test(Map<String,Object> params){
-		Education edu = new Education(getBaseURL());
+		Education edu = new Education(getbasePath());
 //		params.put("token", "");
 		
 		setRequest("education", edu.setParams(params));
@@ -27,7 +27,7 @@ public class EducationTest extends BaseTest{
 	@Description("修改教育背景信息")
 	public void edit_Education_Test(Map<String,Object> params){
 		
-		Education edu = new Education(getBaseURL());
+		Education edu = new Education(getbasePath());
 		List<String> ids = edu.getEducations();
 		String id = null;
 		if (ids.size()>0) {
@@ -47,7 +47,7 @@ public class EducationTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description = "删除教育背景信息")
 	@Description("删除教育背景信息")
 	public void del_Education_Test(Map<String, Object> params){
-		Education education = new Education(getBaseURL());
+		Education education = new Education(getbasePath());
 		List<String> list = education.getEducations();
 		if(list.size()==0){
 			education.addEducation(params);
@@ -61,7 +61,7 @@ public class EducationTest extends BaseTest{
 	
 	@Test
 	public void clean(){
-		Education education = new Education(getBaseURL());
+		Education education = new Education(getbasePath());
 		education.cleanEducations();
 	}
 }

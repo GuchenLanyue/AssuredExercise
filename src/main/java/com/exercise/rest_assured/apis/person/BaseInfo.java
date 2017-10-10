@@ -41,11 +41,11 @@ public class BaseInfo {
 	private int currentstate = 0;
 	private String goodatlanguage = null;
 	private String maritalstatus = null;
-	private String baseURL = null;
+	private String basePath = null;
 	
 	public BaseInfo(String url) {
 		// TODO Auto-generated constructor stub
-		baseURL = url;
+		basePath = url;
 	}
 	
 	@Step("geteducation() 获取学历")
@@ -53,13 +53,13 @@ public class BaseInfo {
 	public String education(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/geteducation");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -101,13 +101,13 @@ public class BaseInfo {
 	public String enterprisenature(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getenterprisenature");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -149,13 +149,13 @@ public class BaseInfo {
 	public String companysize(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getcompanysize");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -197,13 +197,13 @@ public class BaseInfo {
 	public String joblevel(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getjoblevel");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -244,13 +244,13 @@ public class BaseInfo {
 	public String healthy(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/gethealthy");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -290,13 +290,13 @@ public class BaseInfo {
 	public String worklife(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getworklife");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -337,13 +337,13 @@ public class BaseInfo {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getgoodatlanguage");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -383,13 +383,13 @@ public class BaseInfo {
 	public String maritalstatus(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getmaritalstatus");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -429,13 +429,13 @@ public class BaseInfo {
 	public String currentstate(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getcurrentstate");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -475,13 +475,13 @@ public class BaseInfo {
 	public String industry(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getindustry");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -521,13 +521,13 @@ public class BaseInfo {
 	public String position(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getposition");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -571,13 +571,13 @@ public class BaseInfo {
 	public String major(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getmajor");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -626,13 +626,13 @@ public class BaseInfo {
 	public String salary(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getsalary");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -672,13 +672,13 @@ public class BaseInfo {
 	public String area(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		baseMap.put("path", "/basics/getarea");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 

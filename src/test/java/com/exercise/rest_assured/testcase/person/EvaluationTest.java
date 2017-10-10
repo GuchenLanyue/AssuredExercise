@@ -19,7 +19,7 @@ public class EvaluationTest extends BaseTest{
 	
 	@Test(dataProvider = "SingleCase",description="修改自我评价",dependsOnMethods={"add_Evaluation_Test"})
 	public void edit_Evaluation_Test(Map<String, Object> params){
-		Evaluation evaluation = new Evaluation(getBaseURL());
+		Evaluation evaluation = new Evaluation(getbasePath());
 		String id = evaluation.getEvaluation();
 		params.put("id", id);
 //		params.put("token", "");

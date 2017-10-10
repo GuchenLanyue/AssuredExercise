@@ -10,9 +10,9 @@ import io.qameta.allure.Step;
 public class Delivery {
 	private String url = null;
 	
-	public Delivery(String baseURL) {
+	public Delivery(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	@Step
@@ -28,7 +28,7 @@ public class Delivery {
 	public void addresume(String job_id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/delivery/addresume");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");

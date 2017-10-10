@@ -4,7 +4,7 @@
 	<parameter name="platform" value="GuanWang" />
 	<parameter name="sourcesDir" value="/src/test/resources" />
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
-	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
+	<parameter name="basePath" value="http://nchr.release.microfastup.com/nchr" />
 	
 	<test name="单独用例测试" preserve-order="true">
 		<groups>
@@ -18,7 +18,7 @@
 		    <!--  	
 			 <class name="com.exercise.rest_assured.Exercise">
 			-->
-			<class name="com.exercise.rest_assured.testcase.enterprise.UpdBaseinfoTest">
+			<class name="com.exercise.rest_assured.testcase.Clean">
 				<methods>
 					<include name="add_Education_Test" />
 					<include name="edit_Education_Test" />

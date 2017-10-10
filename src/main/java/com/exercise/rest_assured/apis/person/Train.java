@@ -22,9 +22,9 @@ public class Train {
 	private BaseInfo baseInfo = null;
 	private String url = null;
 	
-	public Train(String baseURL) {
+	public Train(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 		baseInfo = new BaseInfo(url);
 	}
 	
@@ -32,7 +32,7 @@ public class Train {
 	public String addTrain(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/gettrain");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
@@ -49,7 +49,7 @@ public class Train {
 	public List<String> getTrains(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/gettrains");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");
@@ -74,7 +74,7 @@ public class Train {
 	public String getTrain(String id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/gettrain");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
@@ -97,7 +97,7 @@ public class Train {
 	public void delTrain(String id) {
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/deltrain");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");

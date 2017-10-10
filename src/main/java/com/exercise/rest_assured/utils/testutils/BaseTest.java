@@ -30,7 +30,7 @@ public class BaseTest {
 	private String method = null;
 	private String responseStr = null;
 	private String expectedJson = null;
-	private String baseURL = null;
+	private String basePath = null;
 	private String caseName = null;
 	private String filePath = null;
 	
@@ -46,8 +46,8 @@ public class BaseTest {
 		srcDir = System.getProperty("user.dir")+context.getCurrentXmlTest().getParameter("sourcesDir");
 	}
 	
-	public void setBaseURL(ITestContext context){
-		baseURL = context.getCurrentXmlTest().getParameter("BaseURL");
+	public void setbasePath(ITestContext context){
+		basePath = context.getCurrentXmlTest().getParameter("basePath");
 	}
 	
 	public String getFilePath(){
@@ -58,8 +58,8 @@ public class BaseTest {
 		return srcDir;
 	}
 	
-	public String getBaseURL(){
-		return baseURL;
+	public String getbasePath(){
+		return basePath;
 	}
 	
 	public String getBodyStr(){
@@ -74,7 +74,7 @@ public class BaseTest {
 	public void BeforeTest(ITestContext context) {
 		System.out.println(context.getName()+" Start!");
 		setSrcDir(context);
-		setBaseURL(context);
+		setbasePath(context);
 	}
 	
 	@DataProvider(name = "CaseList")
@@ -117,7 +117,7 @@ public class BaseTest {
 	public void setRequest(String api,Map<String, Object> paramsMap) {
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		
 		if (paramsMap.containsKey("Case")) {
 			caseName = paramsMap.get("Case").toString();
@@ -133,7 +133,7 @@ public class BaseTest {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		saveResponseBody(response);
 	}
@@ -143,7 +143,7 @@ public class BaseTest {
 		this.filePath = filePath;
 		Parameter parameter = new Parameter();
 		Map<String, Object> baseMap = parameter.setUrlData(filePath, api);
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		this.caseName = caseName;
 		Map<String, Object> paramsMap = parameter.setParams(filePath, caseName);
 		
@@ -157,7 +157,7 @@ public class BaseTest {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods(baseURL);
+		HttpMethods http = new HttpMethods(basePath);
 		Response response = http.request(map);
 		saveResponseBody(response);
 		expectedJson = expectedMap.get("Path").toString();

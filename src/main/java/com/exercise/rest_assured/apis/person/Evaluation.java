@@ -15,9 +15,9 @@ import io.restassured.response.Response;
 public class Evaluation {
 	private String url = null;
 	
-	public Evaluation(String baseURL) {
+	public Evaluation(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	@Step("getEvaluation() 获取自我评价")
@@ -25,7 +25,7 @@ public class Evaluation {
 
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/getevaluation");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");

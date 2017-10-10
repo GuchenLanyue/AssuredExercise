@@ -19,9 +19,9 @@ public class Settled {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Settled(String baseURL) {
+	public Settled(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	public Map<String, Object> setParams(Map<String, Object> param){
@@ -55,7 +55,7 @@ public class Settled {
 		String path = "/settledenterprise/addapply";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -100,7 +100,7 @@ public class Settled {
 		String path = "/settledenterprise/getselledlist";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -121,7 +121,7 @@ public class Settled {
 		String path = "/settledenterprise/getselledlist";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();

@@ -28,9 +28,9 @@ public class Intention {
 	private BaseInfo baseInfo = null;
 	private String url = null;
 	
-	public Intention(String baseURL) {
+	public Intention(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 		baseInfo = new BaseInfo(url);
 	}
 	
@@ -38,7 +38,7 @@ public class Intention {
 	public String addIntentions(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/intention");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
@@ -55,7 +55,7 @@ public class Intention {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/getintentions");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");
@@ -81,7 +81,7 @@ public class Intention {
 	public String getIntention(String id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/getintention");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
@@ -104,7 +104,7 @@ public class Intention {
 	public void delIntention(String id) {		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/delintention");
 		Map<String, Object> paramsMap = new HashMap<>();
 		//paramsMap.put("token", "");

@@ -37,10 +37,10 @@ public class Basic {
 	private BaseInfo baseInfo = null;
 	private String url = null;
 	
-	public Basic(String baseURL) {
+	public Basic(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
-		baseInfo = new BaseInfo(baseURL);
+		url = basePath;
+		baseInfo = new BaseInfo(basePath);
 	}
 	
 	public void setValue(){
@@ -108,7 +108,7 @@ public class Basic {
 	public JsonPath getbasic(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/getbasic");
 		Map<String, Object> paramsMap = new HashMap<>();
 		Map<String, Map<String, Object>> map = new HashMap<>();

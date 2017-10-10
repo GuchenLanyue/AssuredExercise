@@ -17,7 +17,7 @@ import static io.restassured.RestAssured.given;
 public class UplodeImage {
 	
 	@Step("上传图片")
-	public String upload(String baseURL,File file){
+	public String upload(String basePath,File file){
 		if(!file.exists()){
 			Assert.fail("File not found:"+file.getAbsolutePath());
 		}
@@ -26,7 +26,7 @@ public class UplodeImage {
 			.multiPart("image",file.getName(),"text/plain")
 			.multiPart("image",file,"image/jpeg")
 		.when()
-			.post(baseURL+"/images/uplodeimage")
+			.post(basePath+"/images/uplodeimage")
 		.then()
 		.extract()
 			.response();

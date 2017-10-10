@@ -15,7 +15,7 @@ public class ExamineJobTest extends BaseTest{
 
 	@Test
 	public void onLine_Test(){
-		EnterpriseJob eJob = new EnterpriseJob(getBaseURL());
+		EnterpriseJob eJob = new EnterpriseJob(getbasePath());
 		List<String> jobs = eJob.getUserJobList(1);
 		if(jobs.size()==0){
 			eJob.addJob();
@@ -26,7 +26,7 @@ public class ExamineJobTest extends BaseTest{
 		int index = random.nextInt(jobs.size());
 		String job_id = jobs.get(index);
 		//审核通过
-		Examine examine = new Examine(getBaseURL());
+		Examine examine = new Examine(getbasePath());
 		examine.job(job_id,"2");
 		String status = eJob.getUserJobShow(job_id).setRoot("value").getString("status");
 		
@@ -35,8 +35,8 @@ public class ExamineJobTest extends BaseTest{
 	
 	@Test
 	public void offLine_Test(){
-		Examine examine = new Examine(getBaseURL());
-		EnterpriseJob eJob = new EnterpriseJob(getBaseURL());
+		Examine examine = new Examine(getbasePath());
+		EnterpriseJob eJob = new EnterpriseJob(getbasePath());
 		List<String> jobs = eJob.getUserJobList(1);
 		if(jobs.size()==0){
 			eJob.addJob();

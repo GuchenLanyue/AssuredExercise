@@ -2,7 +2,7 @@
   "person": {
     "base": {
       "Method": "POST",
-      "baseURL": "http://nchr.release.microfastup.com/nchr",
+      "basePath": "http://nchr.release.microfastup.com/nchr",
       "path": "/person/login"
     },
     "params": {
@@ -16,7 +16,7 @@
   "enterprise": {
     "base": {
       "Method": "POST",
-      "baseURL": "http://nchr.release.microfastup.com/nchr",
+      "basePath": "http://nchr.release.microfastup.com/nchr",
       "path": "/enterprise/login"
     },
     "params": {
@@ -30,7 +30,7 @@
   "admin": {
     "base": {
       "Method": "POST",
-      "baseURL": "http://nchr.release.microfastup.com",
+      "basePath": "http://nchr.release.microfastup.com",
       "path": "/site/login"
     },
     "params": {

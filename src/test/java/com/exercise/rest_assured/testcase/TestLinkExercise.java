@@ -72,7 +72,7 @@ public class TestLinkExercise extends BaseTest{
 		for(Object key:json.getMap("apis").keySet()){
 			Map<String, Object> baseMap = new LinkedHashMap<>();
 			baseMap.put("Method","POST");
-			baseMap.put("baseURL", "http://nchr.release.microfastup.com/api_doc/");
+			baseMap.put("basePath", "http://nchr.release.microfastup.com/api_doc/");
 			baseMap.put("path", key.toString()+".json");
 			
 			Map<String, Object> cookieMap = new LinkedHashMap<>();
@@ -92,7 +92,7 @@ public class TestLinkExercise extends BaseTest{
 									    .defaultContentCharset("UTF-8")
 									    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
 				.when()
-					.get(baseMap.get("baseURL").toString()+baseMap.get("path").toString())
+					.get(baseMap.get("basePath").toString()+baseMap.get("path").toString())
 				.then()
 //					.log().body()
 //					.statusCode(200)

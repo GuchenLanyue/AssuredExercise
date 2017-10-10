@@ -17,9 +17,9 @@ public class EnterpriseJob {
 	private Map<String,Object> jobParams = new HashMap<>();
 	private String url = null;
 	
-	public EnterpriseJob(String baseURL) {
+	public EnterpriseJob(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	@Step("addJob() 新增职位")
@@ -29,7 +29,7 @@ public class EnterpriseJob {
 		String path = "/job/addjob";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
@@ -109,7 +109,7 @@ public class EnterpriseJob {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
@@ -141,7 +141,7 @@ public class EnterpriseJob {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
@@ -181,7 +181,7 @@ public class EnterpriseJob {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
@@ -199,7 +199,7 @@ public class EnterpriseJob {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/job/upjob");
 		map.put("base", baseMap);
 		
@@ -230,7 +230,7 @@ public class EnterpriseJob {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		

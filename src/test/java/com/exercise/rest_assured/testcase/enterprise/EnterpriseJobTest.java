@@ -15,7 +15,7 @@ public class EnterpriseJobTest extends BaseTest {
 	
 	@Test(dataProvider="SingleCase")
 	public void add_EnterpriseJob_Test(Map<String, Object> params){
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
+		EnterpriseJob job = new EnterpriseJob(getbasePath());
 		setRequest("addjob", job.setParams(params));
 		String path = getSrcDir()+getExpectedJson();
 		String id = job.getUserJobList(1).get(0);
@@ -28,7 +28,7 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("title", response.getString("title"));
 		paramMap.put("des", "不通过");
 		
-		Examine examine = new Examine(getBaseURL());
+		Examine examine = new Examine(getbasePath());
 		examine.job(id,"4");
 	}
 	
@@ -37,10 +37,10 @@ public class EnterpriseJobTest extends BaseTest {
 		Map<String, Object> param = new HashMap<>();
 		param = params;
 		String id = null;
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
+		EnterpriseJob job = new EnterpriseJob(getbasePath());
 		if(job.getUserJobList(4).size()==0){
 			job.addJob();
-			Examine examine = new Examine(getBaseURL());
+			Examine examine = new Examine(getbasePath());
 			id = job.getUserJobList(1).get(0);
 			examine.job(id, "4");
 		}else{
@@ -58,7 +58,7 @@ public class EnterpriseJobTest extends BaseTest {
 	@Test
 	public void up_EnterpriseJobStatus_Test(){		
 		//后台审核
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
+		EnterpriseJob job = new EnterpriseJob(getbasePath());
 		String id = job.getUserJobList(1).get(0);
 		JsonPath jobShow = job.getUserJobShow(id);
 		Map<String, Object> paramMap = new HashMap<>();
@@ -66,7 +66,7 @@ public class EnterpriseJobTest extends BaseTest {
 		paramMap.put("title", jobShow.setRoot("value").getString("title"));
 		paramMap.put("des", "通过");
 		paramMap.put("status", "2");
-		Examine examine = new Examine(getBaseURL());
+		Examine examine = new Examine(getbasePath());
 		examine.job(id,"2");
 
 		job.upStatus(job.getUserJobList(2), "3");

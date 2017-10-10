@@ -13,7 +13,7 @@ public class IntentionTest extends BaseTest {
 
 	@Test(dataProvider = "SingleCase", description = "增加求职意向")
 	public void add_Intention_Test(Map<String, Object> params) {
-		Intention intention = new Intention(getBaseURL());
+		Intention intention = new Intention(getbasePath());
 		params.remove("id");
 		params.put("token", "");
 		setRequest("intention", intention.setParams(params));
@@ -22,7 +22,7 @@ public class IntentionTest extends BaseTest {
 
 	@Test(dataProvider = "SingleCase", description = "编辑求职意向")
 	public void edit_Intention_Test(Map<String, Object> params) {
-		Intention intention = new Intention(getBaseURL());
+		Intention intention = new Intention(getbasePath());
 		intention.setID();
 		params.put("token", "");
 		params.put("id", intention.getID());
@@ -32,7 +32,7 @@ public class IntentionTest extends BaseTest {
 
 	@Test(dataProvider = "SingleCase",description = "删除求职意向")
 	public void del_Intention_Test(Map<String, Object> params) {
-		Intention intention = new Intention(getBaseURL());
+		Intention intention = new Intention(getbasePath());
 		List<String> list = intention.getIntentions();
 		if(list.size()==0){
 			intention.addIntentions(params);
@@ -46,7 +46,7 @@ public class IntentionTest extends BaseTest {
 	
 	@Test
 	public void clean(){
-		Intention intention = new Intention(getBaseURL());
+		Intention intention = new Intention(getbasePath());
 		intention.cleanIntentions();
 	}
 }

@@ -22,9 +22,9 @@ public class Job {
 	private int[] position =null;
 	private String url = null;
 	
-	public Job(String baseURL) {
+	public Job(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 		baseInfo = new BaseInfo(url);
 		baseInfo.setPosition();
 		position = setPosition();
@@ -33,7 +33,7 @@ public class Job {
 	public Response addJob(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/job");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
@@ -64,7 +64,7 @@ public class Job {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/getjobs");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
@@ -85,13 +85,13 @@ public class Job {
 
 	@Step
 	@Description("获取工作经验")
-	public String getJob(String baseURL,String token,String id,String srcDir){
+	public String getJob(String basePath,String token,String id,String srcDir){
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		String file = srcDir + "\\case\\getJob.xlsx";
 		Parameter parameter = new Parameter();
 		baseMap = parameter.setUrlData(file, "getjob");
-		baseMap.put("baseURL", baseURL);
+		baseMap.put("basePath", basePath);
 		
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", token);
@@ -113,7 +113,7 @@ public class Job {
 	public void delJob(String id) {
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		//baseMap.put("baseURL", url);
+		//baseMap.put("basePath", url);
 		baseMap.put("path", "/personresume/deljob");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");

@@ -25,9 +25,9 @@ public class Examine {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Examine(String baseURL) {
+	public Examine(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	@Description("status 状态(1审核中2发布中3已下线4未通过)")
@@ -93,7 +93,7 @@ public class Examine {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "GET");
-		baseMap.put("baseURL", "http://nchr.release.microfastup.com");
+		baseMap.put("basePath", "http://nchr.release.microfastup.com");
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		

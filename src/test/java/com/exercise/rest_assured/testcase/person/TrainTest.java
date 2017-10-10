@@ -16,7 +16,7 @@ public class TrainTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建培训信息")
 	@Description("创建培训信息")
 	public void add_Train_Test(Map<String,Object> params){
-		Train train = new Train(getBaseURL());
+		Train train = new Train(getbasePath());
 		params.remove("id");
 		params.put("token", "");
 		setRequest("train", train.setParam(params));
@@ -27,7 +27,7 @@ public class TrainTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="修改培训信息")
 	@Description("修改培训信息")
 	public void edit_Train_Test(Map<String,Object> params){
-		Train train = new Train(getBaseURL());
+		Train train = new Train(getbasePath());
 		List<String> ids = train.getTrains();
 		String id = null;
 		if (ids.size()>0) {
@@ -46,7 +46,7 @@ public class TrainTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="删除培训信息")
 	@Description("删除培训信息")
 	public void del_Train_Test(Map<String, Object> params){
-		Train train = new Train(getBaseURL());
+		Train train = new Train(getbasePath());
 		List<String> list = train.getTrains();
 		if(list.size()==0){
 			train.addTrain(params);
@@ -61,7 +61,7 @@ public class TrainTest extends BaseTest{
 	
 	@Test
 	public void clean(){
-		Train train = new Train(getBaseURL());
+		Train train = new Train(getbasePath());
 		train.cleanTrains();
 	}
 }

@@ -16,7 +16,7 @@ public class UpdBaseinfoTest extends BaseTest {
 	
 	@Test(dataProvider="SingleCase")
 	public void up_EBaseinfo_Test(Map<String, Object> params){
-		EnterpriseBaseinfo eBaseinfo = new EnterpriseBaseinfo(getBaseURL(),getSrcDir());
+		EnterpriseBaseinfo eBaseinfo = new EnterpriseBaseinfo(getbasePath(),getSrcDir());
 		
 		setRequest("updbaseinfo", eBaseinfo.setParams(params));
 		Login login = new Login(Role.enterprise);

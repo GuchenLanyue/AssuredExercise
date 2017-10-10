@@ -4,7 +4,7 @@
 	<parameter name="platform" value="GuanWang" />
 	<parameter name="sourcesDir" value="/src/test/resources" />
 	<parameter name="CaseList" value="/case/CaseList.xlsx" />
-	<parameter name="BaseURL" value="http://nchr.release.microfastup.com/nchr" />
+	<parameter name="basePath" value="http://nchr.release.microfastup.com/nchr" />
 
 	<test name="基本信息" preserve-order="true">
 		<groups>

@@ -19,7 +19,7 @@ public class JobTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description="增加工作经验")
 	@Issue("080")
 	public void add_Job_Test(Map<String, Object> params){
-		Job job = new Job(getBaseURL());
+		Job job = new Job(getbasePath());
 		setRequest("job", job.setParams(params));
 		
 		JsonPath json = new JsonPath(getBodyStr()).setRoot("value");
@@ -34,7 +34,7 @@ public class JobTest extends BaseTest{
 	
 	@Test(dataProvider="SingleCase",description="修改工作经验")
 	public void edit_Job_Test(Map<String, Object> params){
-		Job job = new Job(getBaseURL());
+		Job job = new Job(getbasePath());
 		List<String> ids = job.getJobs();
 		
 		String id = null;
@@ -57,7 +57,7 @@ public class JobTest extends BaseTest{
 	@Test(dataProvider="SingleCase",description = "删除工作经验")
 	@Description("删除工作经验")
 	public void del_Job_Test(Map<String, Object> params){
-		Job job = new Job(getBaseURL());
+		Job job = new Job(getbasePath());
 		List<String> list = job.getJobs();
 		if(list.size()==0){
 			job.addJob(params);
@@ -70,7 +70,7 @@ public class JobTest extends BaseTest{
 	}
 	
 	public void clean(){
-		Job job = new Job(getBaseURL());
+		Job job = new Job(getbasePath());
 		job.cleanJobs();
 	}
 }

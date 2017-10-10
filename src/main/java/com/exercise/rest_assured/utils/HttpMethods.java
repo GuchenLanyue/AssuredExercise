@@ -30,9 +30,9 @@ public class HttpMethods {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public HttpMethods(String baseURL) {
+	public HttpMethods(String basePath) {
 		// TODO Auto-generated constructor stub
-		url = baseURL;
+		url = basePath;
 	}
 	
 	@Step("request() 发起请求")
@@ -65,7 +65,7 @@ public class HttpMethods {
 		if(url!=null){
 			requestURL = url + map.get("base").get("path").toString();
 		}else{
-			requestURL = map.get("base").get("baseURL").toString()
+			requestURL = map.get("base").get("basePath").toString()
 					+ map.get("base").get("path").toString();
 		}
 		
@@ -113,7 +113,7 @@ public class HttpMethods {
 		if(url!=null){
 			requestURL = url + map.get("base").get("path").toString();
 		}else{
-			requestURL = map.get("base").get("baseURL").toString()
+			requestURL = map.get("base").get("basePath").toString()
 					+ map.get("base").get("path").toString();
 		}
 		
@@ -189,7 +189,7 @@ public class HttpMethods {
 		String path = "/enterprise/settledapply/index/ajax/settled-apply-grid/SettledApply_sort/id.desc";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "GET");
-		baseMap.put("baseURL", "http://nchr.release.microfastup.com");
+		baseMap.put("basePath", "http://nchr.release.microfastup.com");
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		

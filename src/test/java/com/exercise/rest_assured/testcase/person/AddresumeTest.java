@@ -23,12 +23,12 @@ public class AddresumeTest extends BaseTest{
 	@Description("投递简历接口测试")
 	@Test(dataProvider="SingleCase")
 	public void add_Resume_Test(Map<String, Object> params){
-		EnterpriseJob job = new EnterpriseJob(getBaseURL());
+		EnterpriseJob job = new EnterpriseJob(getbasePath());
 		String job_id = null;
 		
 		//如果没有发布中的职位就上线一个职位
 		if(job.getUserJobList(2).size()==0){
-			EnterpriseJob eJob = new EnterpriseJob(getBaseURL());
+			EnterpriseJob eJob = new EnterpriseJob(getbasePath());
 			//如果没有审核中的职位就新增一个职位
 			if(job.getUserJobList(1).size()==0){
 				eJob.addJob();
@@ -48,7 +48,7 @@ public class AddresumeTest extends BaseTest{
 			paramMap.put("des", jobPath.getString("des"));
 			
 			//审核通过该职位
-			Examine examine = new Examine(getBaseURL());
+			Examine examine = new Examine(getbasePath());
 			examine.job(job_id,"2");
 		}else{
 			//获取所有发布中职位
@@ -60,7 +60,7 @@ public class AddresumeTest extends BaseTest{
 		}
 		
 		//投递简历
-		Delivery delivery = new Delivery(getBaseURL());
+		Delivery delivery = new Delivery(getbasePath());
 		setRequest("addresume", delivery.setParams(job_id, params));
 		//获取职位详情
 		String body = job.getUserResume(job_id);
@@ -68,7 +68,7 @@ public class AddresumeTest extends BaseTest{
 		int list_nums = JsonPath.with(body).setRoot("value").getInt("list_nums");
 		if(list_nums>0){
 			List<String> resumes = JsonPath.with(body).setRoot("value").getList("list.id");
-			Basic basic = new Basic(getBaseURL());
+			Basic basic = new Basic(getbasePath());
 			basic.getbasic();
 			String id = String.valueOf(basic.getID());
 			//验证简历id是否存在于list中
