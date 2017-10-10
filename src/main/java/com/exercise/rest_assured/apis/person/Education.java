@@ -70,13 +70,13 @@ public class Education {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+//		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/education");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -89,7 +89,7 @@ public class Education {
 		getEducation(id);
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+//		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/education");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
@@ -99,7 +99,7 @@ public class Education {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		return response;
@@ -111,18 +111,18 @@ public class Education {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+//		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/geteducation");
 
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+//		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -134,15 +134,15 @@ public class Education {
 	public List<String> getEducations(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+//		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/geteducations");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+//		paramsMap.put("token", "");
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {
@@ -168,17 +168,17 @@ public class Education {
 	public void delEducation(String id) {		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+//		baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/deleducation");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+//		paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {

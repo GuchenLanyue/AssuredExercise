@@ -1,4 +1,11 @@
 {
+  "site": [
+    {
+      "description": "后台登陆",
+      "role": "guest",
+      "path": "/site/login"
+    }
+  ],
   "personresume": [
     {
       "description": "个人简历基本信息(创建和修改)",

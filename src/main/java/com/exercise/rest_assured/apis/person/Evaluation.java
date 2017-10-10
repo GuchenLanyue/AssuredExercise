@@ -18,23 +18,23 @@ public class Evaluation {
 	public Evaluation(String baseURL) {
 		// TODO Auto-generated constructor stub
 		url = baseURL;
-		
 	}
+	
 	@Step("getEvaluation() 获取自我评价")
 	public String getEvaluation(){
 
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/getevaluation");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {

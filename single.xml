@@ -9,20 +9,20 @@
 	<test name="单独用例测试" preserve-order="true">
 		<groups>
 			<define name="Education">
-				<include name="add_Job_Test" />
-				<include name="edit_Job_Test" />
-				<include name="del_Job_Test" />
+				<include name="add_Education_Test" />
+				<include name="edit_Education_Test" />
+				<include name="del_Education_Test" />
 			</define>
 		</groups>
 		<classes>
 		    <!--  	
 			 <class name="com.exercise.rest_assured.Exercise">
 			-->
-			<class name="com.exercise.rest_assured.testcase.enterprise.SettledTest">
+			<class name="com.exercise.rest_assured.testcase.enterprise.UpdBaseinfoTest">
 				<methods>
-					<include name="add_Job_Test" />
-					<include name="edit_Job_Test" />
-					<include name="del_Job_Test" />
+					<include name="add_Education_Test" />
+					<include name="edit_Education_Test" />
+					<include name="del_Education_Test" />
 				</methods>
 			</class>
 		</classes>

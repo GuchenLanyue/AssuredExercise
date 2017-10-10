@@ -28,17 +28,17 @@ public class Delivery {
 	public void addresume(String job_id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/delivery/addresume");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		paramsMap.put("job_id", job_id);
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		http.request(map);
 	}
 }

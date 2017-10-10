@@ -68,6 +68,7 @@ public class Examine {
 			.queryParams(queryMap)
 			.multiPart("JobSet[id]", job_id)
 			.multiPart("JobSet[user_id]", "2")
+			//解决中文乱码的问题
 			.multiPart(new MultiPartSpecBuilder(title).controlName("JobSet[title]").charset("UTF-8").build())
 			.multiPart(new MultiPartSpecBuilder(des).controlName("JobSet[des]").charset("UTF-8").build())
 			.multiPart("JobSet[status]", status)
@@ -100,7 +101,7 @@ public class Examine {
 		queryMap.put("ajax", "settled-apply-grid");
 		map.put("querys", queryMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String id = response.andReturn().htmlPath().getString("//*[@id=\"settled-apply-grid\"]/table/tbody/tr[1]/td[1]");
 		System.out.println(id);

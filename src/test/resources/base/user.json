@@ -1,6 +1,10 @@
 {
   "person": {
-    "url": "http://nchr.release.microfastup.com/nchr/person/login",
+    "base": {
+      "Method": "POST",
+      "baseURL": "http://nchr.release.microfastup.com/nchr",
+      "path": "/person/login"
+    },
     "params": {
       "username": "灰太狼",
       "password": "123456",
@@ -10,7 +14,11 @@
     "statusCode": 200
   },
   "enterprise": {
-    "url": "http://nchr.release.microfastup.com/nchr/enterprise/login",
+    "base": {
+      "Method": "POST",
+      "baseURL": "http://nchr.release.microfastup.com/nchr",
+      "path": "/enterprise/login"
+    },
     "params": {
       "username": "大水杯科技",
       "password": "111111",
@@ -20,7 +28,11 @@
     "statusCode": 200
   },
   "admin": {
-    "url": "http://nchr.release.microfastup.com/site/login",
+    "base": {
+      "Method": "POST",
+      "baseURL": "http://nchr.release.microfastup.com",
+      "path": "/site/login"
+    },
     "params": {
       "UserLogin[username]": "admin",
       "UserLogin[password]": "111111",

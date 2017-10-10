@@ -29,7 +29,7 @@ public class EnterpriseJob {
 		String path = "/job/addjob";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
@@ -40,7 +40,7 @@ public class EnterpriseJob {
 		param.put("token", "");
 		map.put("params", param);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		String body = http.getBody(http.request(map));
 		
 		return body;
@@ -103,17 +103,17 @@ public class EnterpriseJob {
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjoblist";
 		params.put("status", status);
-		params.put("token", "");
+		//params.put("token", "");
 		params.put("page", 1);
 		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		
 		String body = http.getBody(http.request(map));
 		
@@ -135,17 +135,17 @@ public class EnterpriseJob {
 		
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserjobshow";
-		params.put("token", "");
+		//params.put("token", "");
 		params.put("id", id);
 		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		
 		String body = http.getBody(http.request(map));
 		
@@ -174,18 +174,18 @@ public class EnterpriseJob {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/upstatus";
-		params.put("token", "");
+		//params.put("token", "");
 		params.put("ids", ids);
 		params.put("status", status);
 		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		
 		http.getBody(http.request(map));
 	}
@@ -199,7 +199,7 @@ public class EnterpriseJob {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/job/upjob");
 		map.put("base", baseMap);
 		
@@ -211,7 +211,7 @@ public class EnterpriseJob {
 		}
 		
 		map.put("params", param);
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		http.request(map);
 	}
 	
@@ -224,17 +224,17 @@ public class EnterpriseJob {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		Map<String, Object> params = new HashMap<>();
 		String path = "/job/getuserresume";
-		params.put("token", "");
+		//params.put("token", "");
 		params.put("job_id", job_id);
 		map.put("params", params);
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		
 		return http.getBody(http.request(map));
 	}

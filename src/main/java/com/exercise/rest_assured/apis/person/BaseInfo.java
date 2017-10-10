@@ -58,7 +58,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -105,7 +105,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -153,7 +153,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		
 		String body =http.getBody(response);
@@ -201,7 +201,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -248,7 +248,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -294,7 +294,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -341,7 +341,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -387,7 +387,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -433,7 +433,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -479,7 +479,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 
@@ -525,7 +525,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -575,7 +575,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -630,7 +630,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 		
@@ -676,7 +676,7 @@ public class BaseInfo {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		String body =http.getBody(response);
 

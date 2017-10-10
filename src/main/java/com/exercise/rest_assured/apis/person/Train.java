@@ -32,13 +32,13 @@ public class Train {
 	public String addTrain(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/gettrain");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		return http.getBody(response);
@@ -49,16 +49,16 @@ public class Train {
 	public List<String> getTrains(){		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/gettrains");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		String json = response.getBody().asString();
@@ -74,18 +74,18 @@ public class Train {
 	public String getTrain(String id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/gettrain");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -97,16 +97,16 @@ public class Train {
 	public void delTrain(String id) {
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/deltrain");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		http.request(map);
 	}
 	

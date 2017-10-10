@@ -11,7 +11,7 @@ public class EvaluationTest extends BaseTest{
 
 	@Test(dataProvider = "SingleCase",description="创建自我评价")
 	public void add_Evaluation_Test(Map<String, Object> params){
-		params.put("token", "");
+//		params.put("token", "");
 		params.remove("id");
 		setRequest("evaluation", params);
 		checkResponse();
@@ -22,7 +22,7 @@ public class EvaluationTest extends BaseTest{
 		Evaluation evaluation = new Evaluation(getBaseURL());
 		String id = evaluation.getEvaluation();
 		params.put("id", id);
-		params.put("token", "");
+//		params.put("token", "");
 		setRequest("evaluation", params);
 		checkResponse();
 	}

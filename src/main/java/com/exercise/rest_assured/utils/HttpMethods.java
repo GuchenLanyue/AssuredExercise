@@ -24,9 +24,15 @@ public class HttpMethods {
 	private Map<String,Object> queryMap = new HashMap<>();
 	private Map<String,Object> paramMap = new HashMap<>();
 	private String requestURL = null;
+	private String url = null;
 	
 	public HttpMethods() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public HttpMethods(String baseURL) {
+		// TODO Auto-generated constructor stub
+		url = baseURL;
 	}
 	
 	@Step("request() 发起请求")
@@ -57,9 +63,13 @@ public class HttpMethods {
 		}
 	}
 	
-	private Response post(Map<String, Map<String,Object>> map){
-		requestURL = map.get("base").get("baseURL").toString() 
-				+ map.get("base").get("path").toString();
+	public Response post(Map<String, Map<String,Object>> map){
+		if(url!=null){
+			requestURL = url + map.get("base").get("path").toString();
+		}else{
+			requestURL = map.get("base").get("baseURL").toString()
+					+ map.get("base").get("path").toString();
+		}
 		
 		if(map.containsKey("headers")){
 			headerMap = map.get("headers");
@@ -96,9 +106,13 @@ public class HttpMethods {
 			return response;
 	}
 	
-	private Response get(Map<String, Map<String,Object>> map){
-		requestURL = map.get("base").get("baseURL").toString() 
-				+ map.get("base").get("path").toString();
+	public Response get(Map<String, Map<String,Object>> map){
+		if(url!=null){
+			requestURL = url + map.get("base").get("path").toString();
+		}else{
+			requestURL = map.get("base").get("baseURL").toString()
+					+ map.get("base").get("path").toString();
+		}
 		
 		if(map.containsKey("headers")){
 			headerMap = map.get("headers");
@@ -165,15 +179,6 @@ public class HttpMethods {
 		baseMap.put("baseURL", "http://nchr.release.microfastup.com");
 		baseMap.put("path", path);
 		map.put("base", baseMap);
-		
-//		Login login = new Login(Role.admin);
-//		map.put("cookies", login.getCookie());
-		
-//		Map<String, Object> headerMap = new HashMap<>();
-//		map.put("headers", headerMap);
-		
-//		Map<String, Object> paramMap = new HashMap<>();
-//		map.put("params", paramMap);
 		
 		Map<String, Object> queryMap = new HashMap<>();
 		queryMap.put("ajax", "settled-apply-grid");

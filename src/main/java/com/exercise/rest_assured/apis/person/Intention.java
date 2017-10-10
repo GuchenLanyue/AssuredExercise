@@ -38,13 +38,13 @@ public class Intention {
 	public String addIntentions(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/intention");
 
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		return http.getBody(response);
@@ -55,16 +55,16 @@ public class Intention {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/getintentions");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		String json = response.asString();
@@ -81,18 +81,18 @@ public class Intention {
 	public String getIntention(String id){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/getintention");
 		
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -104,16 +104,16 @@ public class Intention {
 	public void delIntention(String id) {		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/delintention");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
+		//paramsMap.put("token", "");
 		paramsMap.put("id", id);
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		http.request(map);
 	}
 	

@@ -33,13 +33,13 @@ public class Job {
 	public Response addJob(Map<String, Object> params){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/job");
 		
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		return response;
@@ -64,7 +64,7 @@ public class Job {
 		
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/getjobs");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
@@ -73,7 +73,7 @@ public class Job {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String json = response.getBody().asString();
 		json = json.substring(json.indexOf("{"), json.lastIndexOf("}")+1);
@@ -101,7 +101,7 @@ public class Job {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -113,7 +113,7 @@ public class Job {
 	public void delJob(String id) {
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/deljob");
 		Map<String, Object> paramsMap = new HashMap<>();
 		paramsMap.put("token", "");
@@ -122,7 +122,7 @@ public class Job {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		http.request(map);;
 	}
 	

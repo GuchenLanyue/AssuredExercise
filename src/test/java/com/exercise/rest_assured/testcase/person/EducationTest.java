@@ -16,7 +16,7 @@ public class EducationTest extends BaseTest{
 	@Test(dataProvider = "SingleCase",description="创建教育背景信息")
 	public void add_Education_Test(Map<String,Object> params){
 		Education edu = new Education(getBaseURL());
-		params.put("token", "");
+//		params.put("token", "");
 		
 		setRequest("education", edu.setParams(params));
 

@@ -133,7 +133,7 @@ public class BaseTest {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		saveResponseBody(response);
 	}
@@ -157,7 +157,7 @@ public class BaseTest {
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(baseURL);
 		Response response = http.request(map);
 		saveResponseBody(response);
 		expectedJson = expectedMap.get("Path").toString();

@@ -108,15 +108,14 @@ public class Basic {
 	public JsonPath getbasic(){
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method","POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", "/personresume/getbasic");
 		Map<String, Object> paramsMap = new HashMap<>();
-		paramsMap.put("token", "");
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", paramsMap);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		
 		if (response.getStatusCode()!=200) {

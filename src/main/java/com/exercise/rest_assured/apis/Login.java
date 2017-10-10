@@ -1,21 +1,18 @@
 package com.exercise.rest_assured.apis;
 
-import static io.restassured.RestAssured.given;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.JsonUtils;
 import com.exercise.rest_assured.utils.TxtData;
 import com.exercise.rest_assured.utils.testutils.User;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
-import io.restassured.config.EncoderConfig;
 import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
@@ -24,6 +21,7 @@ import junit.framework.Assert;
 
 public class Login {
 	private Response response = null;
+	private String body = null;
 	private String token = null;
 	private Map<String, Object> cookieMap = new HashMap<>();
 	private String src = System.getProperty("user.dir")+"/src/test/resources";
@@ -91,24 +89,16 @@ public class Login {
 	
 	@Step("登录")
 	public void login(JsonPath user){
-		response = given()
-//			.proxy("localhost", 8888)
-	//		.log().all()
-			.header("Accept", "application/json")
-			.header("Accept-Encoding", "gzip, deflate")
-			.header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6")
-			.header("Cache-Control", "no-cache")
-			.config(RestAssured.config()
-					  .encoderConfig(EncoderConfig.encoderConfig()
-							    .defaultContentCharset("UTF-8")
-							    .appendDefaultContentCharsetToContentTypeIfUndefined(false)))
-			.formParams(user.getMap("params"))
-		.when()
-			.post(user.getString("url"))
-		.then()
-			.statusCode(Integer.valueOf(user.getString("statusCode")).intValue())
-		.extract()
-			.response();
+		Map<String, Map<String,Object>> map = new HashMap<>();
+		Map<String,	Object> baseMap = new HashMap<>();
+		Map<String,	Object> paramMap = new HashMap<>();
+		baseMap = user.getMap("base");
+		paramMap = user.getMap("params");
+		map.put("base", baseMap);
+		map.put("params", paramMap);
+		HttpMethods http = new HttpMethods();
+		response = http.post(map);
+		setBody(response);
 	}
 	
 	@Description("对接口分类，不同类别的接口请求不同的登录接口")
@@ -123,13 +113,14 @@ public class Login {
 			File pfile = new File(fPath + "personToken.txt");
 			if (!pfile.exists() || System.currentTimeMillis() - pfile.lastModified() > 120000) {
 				login(user.getPerson());
-				String body = getBody();
+//				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
 				textData.writerText(fPath + "personToken.txt", token);
-				textData.writerText(fPath + "person_txt", body);
+				textData.writerText(fPath + "person.txt", body);
 			} else {
 				TxtData data = new TxtData();
+				body = data.readTxtFile(fPath + "person.txt");
 				token = data.readTxtFile(fPath + "personToken.txt");
 			}
 
@@ -138,18 +129,18 @@ public class Login {
 			File efile = new File(fPath + "enterpriseToken.txt");
 			if (!efile.exists() || System.currentTimeMillis() - efile.lastModified() > 120000) {
 				login(user.getEnterprise());
-				String body = getBody();
+//				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
 				textData.writerText(fPath + "enterpriseToken.txt", token);
-				textData.writerText(fPath + "enterprise_txt", body);
+				textData.writerText(fPath + "enterprise.txt", body);
 			} else {
 				TxtData data = new TxtData();
+				body = data.readTxtFile(fPath + "enterprise.txt");
 				token = data.readTxtFile(fPath + "enterpriseToken.txt");
 			}
 
 			break;
-			
 		case admin:
 			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
@@ -178,10 +169,14 @@ public class Login {
 		}
 	}
 	
+	@Description("保存登录接口返回的数据")
+	public void setBody(Response response){
+		body = response.getBody().asString();
+		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
+	}
+	
 	@Description("获取登录接口返回的数据")
 	public String getBody(){
-		String body = response.getBody().asString();
-		body = body.substring(body.indexOf("{"), body.lastIndexOf("}")+1);
 		return body;
 	}
 	

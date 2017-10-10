@@ -55,7 +55,7 @@ public class Settled {
 		String path = "/settledenterprise/addapply";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -89,7 +89,7 @@ public class Settled {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", param);
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -100,7 +100,7 @@ public class Settled {
 		String path = "/settledenterprise/getselledlist";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -110,7 +110,7 @@ public class Settled {
 		Map<String, Map<String, Object>> map = new HashMap<>();
 		map.put("base", baseMap);
 		map.put("params", param);
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
@@ -121,7 +121,7 @@ public class Settled {
 		String path = "/settledenterprise/getselledlist";
 		Map<String, Object> baseMap = new HashMap<>();
 		baseMap.put("Method", "POST");
-		baseMap.put("baseURL", url);
+		//baseMap.put("baseURL", url);
 		baseMap.put("path", path);
 		
 		Map<String, Object> param = new HashMap<>();
@@ -132,7 +132,7 @@ public class Settled {
 		map.put("base", baseMap);
 		map.put("params", param);
 		
-		HttpMethods http = new HttpMethods();
+		HttpMethods http = new HttpMethods(url);
 		Response response = http.request(map);
 		String body = http.getBody(response);
 		
