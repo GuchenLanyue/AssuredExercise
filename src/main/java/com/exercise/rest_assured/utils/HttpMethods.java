@@ -40,12 +40,10 @@ public class HttpMethods {
 		Login login = new Login();
 		Role role = login.analysis(map.get("base").get("path").toString());
 		if(role.equals(Role.admin)){
-			login.singin(role);
+			login.loginStatus(role);
 			map.put("cookies", login.getCookie());
-		}else if(role.equals(Role.guest)) {
-			
-		}else{
-			login.singin(role);
+		}else if(role.equals(Role.person)|role.equals(Role.enterprise)) {
+			login.loginStatus(role);
 			String token = login.getToken();
 			Map<String, Object> params = new HashMap<>();
 			params = map.get("params");
@@ -87,7 +85,7 @@ public class HttpMethods {
 		Response response = given()
 //				.proxy("127.0.0.1", 8888)
 //				.log().all()
-//				.log().uri()
+				.log().uri()
 //				.log().params()
 				.headers(headerMap)
 				.cookies(cookieMap)
@@ -100,10 +98,15 @@ public class HttpMethods {
 			.when()
 				.post(requestURL)
 			.then()
+//				.log().body()
 //				.statusCode(200)
+				.log().status()
 			.extract()
 				.response();
-			return response;
+
+		responseLog(response);
+		
+		return response;
 	}
 	
 	public Response get(Map<String, Map<String,Object>> map){
@@ -130,7 +133,7 @@ public class HttpMethods {
 		Response response = given()
 //				.proxy("127.0.0.1", 8888)
 //				.log().all()
-//				.log().uri()
+				.log().uri()
 //				.log().params()
 				.headers(headerMap)
 				.cookies(cookieMap)
@@ -143,10 +146,15 @@ public class HttpMethods {
 			.when()
 				.get(requestURL)
 			.then()
+//				.log().body()
+				.log().status()
 //				.statusCode(200)
 			.extract()
 				.response();
-			return response;
+		
+		responseLog(response);
+		
+		return response;
 	}
 	
 	@Description("获取响应数据")
@@ -168,6 +176,11 @@ public class HttpMethods {
 		}
 		
 		Allure.addAttachment("RequestBody:", requestBody.substring(requestBody.indexOf('&')+1, requestBody.length()));
+	}
+	
+	@Description("将响应数据添加到测试报告中")
+	public void responseLog(Response response){		
+		Allure.addAttachment("Response Body:", response.getBody().asString());
 	}
 	
 	public static void main(String[] args) {

@@ -32,12 +32,12 @@ public class Login {
 	
 	public Login(String path) {
 		// TODO Auto-generated constructor stub
-		singin(analysis(path));
+		loginStatus(analysis(path));
 	}
 	
 	public Login(Role role) {
 		// TODO Auto-generated constructor stub
-		singin(role);
+		loginStatus(role);
 	}
 	
 	//接口路径
@@ -88,7 +88,7 @@ public class Login {
 	}
 	
 	@Step("登录")
-	public void login(JsonPath user){
+	public void signin(JsonPath user){
 		Map<String, Map<String,Object>> map = new HashMap<>();
 		Map<String,	Object> baseMap = new HashMap<>();
 		Map<String,	Object> paramMap = new HashMap<>();
@@ -103,7 +103,7 @@ public class Login {
 	
 	@Description("对接口分类，不同类别的接口请求不同的登录接口")
 	@Step
-	public void singin(Role role){
+	public void loginStatus(Role role){
 		User user = new User();
 		TxtData textData = new TxtData();
 		String fPath = System.getProperty("user.dir") + "\\src\\test\\resources\\case\\";
@@ -112,7 +112,7 @@ public class Login {
 		case person:
 			File pfile = new File(fPath + "personToken.txt");
 			if (!pfile.exists() || System.currentTimeMillis() - pfile.lastModified() > 120000) {
-				login(user.getPerson());
+				signin(user.getPerson());
 //				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
@@ -128,7 +128,7 @@ public class Login {
 		case enterprise:
 			File efile = new File(fPath + "enterpriseToken.txt");
 			if (!efile.exists() || System.currentTimeMillis() - efile.lastModified() > 120000) {
-				login(user.getEnterprise());
+				signin(user.getEnterprise());
 //				String body = getBody();
 				JsonPath json = new JsonPath(body).setRoot("value");
 				token = json.getString("token");
@@ -144,7 +144,7 @@ public class Login {
 		case admin:
 			File afile = new File(fPath + "adminCookie.txt");
 			if (!afile.exists() || System.currentTimeMillis() - afile.lastModified() > 120000) {
-				login(user.getAdmin());
+				signin(user.getAdmin());
 				setCookie();
 
 				String cookie = null;

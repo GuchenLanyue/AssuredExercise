@@ -1,7 +1,12 @@
 package com.exercise.rest_assured.apis;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -31,6 +36,30 @@ public class UplodeImage {
 		}
 		JsonPath json = JsonPath.with(body).setRoot("value");
 		
+		imgLog(file);
 		return json.getString("imgurl");
+	}
+	
+	@Attachment(value="Image Log",type="image/png")
+	public byte[] imgLog(File file){
+        byte[] buffer = null;  
+        try {  
+            FileInputStream fis = new FileInputStream(file);  
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);  
+            byte[] b = new byte[1000];  
+            int n;  
+            while ((n = fis.read(b)) != -1) {  
+                bos.write(b, 0, n);  
+            }  
+            fis.close();  
+            bos.close();  
+            buffer = bos.toByteArray();  
+        } catch (FileNotFoundException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } 
+        
+        return buffer; 
 	}
 }

@@ -15,6 +15,7 @@ import org.testng.Assert;
 import com.exercise.rest_assured.utils.HttpMethods;
 import com.exercise.rest_assured.utils.TxtData;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.restassured.path.json.JsonPath;
@@ -92,6 +93,7 @@ public class BaseInfo {
 		Random random = new Random();
 		int index = random.nextInt(keys.size());
 		education = Integer.valueOf(keys.get(index)).intValue();
+		Allure.addAttachment("education", String.valueOf(education).toString());
 	}
 	
 	@Step("getenterprisenature() 获取企业性质")
